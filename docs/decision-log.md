@@ -78,6 +78,15 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — red team bound to opened clauses
+
+Red team bound https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/2 to the opened clauses.
+
+- F-01: Agree, including ECSS-E-ST-10C Rev.1 clause 5.2.3.4a.
+- F-02: Agree on ECSS-Q-ST-70C Rev.2 clause 4.4a.
+- F-03: Agree on ECSS-E-ST-10-03C Rev.1 clause 4.5.2a, no rideshare-guide section.
+- F-04: stays in dispute on ECSS-Q-ST-30C Rev.1 clause 6.4.2.2a. The clause requires the analysis and does not require a second camera.
+
 ### 26 Oct 2026 — three standards opened
 
 `Files_ECSS.zip` opened. 317 names under `Files_PDF/`. Updated https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/3. Opened only ECSS-E-ST-10C Rev.1 (15 February 2017), ECSS-Q-ST-30C Rev.1 (15 February 2017), and ECSS-Q-ST-70C Rev.2 (15 October 2019). The rideshare guide is not in the zip.
