@@ -310,16 +310,62 @@ async function readReply(response, sender, id, locale) {
   if (!sender.isDestroyed()) sender.send("chat:done", { id, reply });
 }
 
-async function postChat(messages, key) {
+const CHAT_MODEL = "grok-4";
+const CHAT_MODEL_FALLBACK = "grok-4.7";
+
+function keyRejected(locale) {
+  return locale === "pt" ? "A chave foi recusada." : "The key was rejected.";
+}
+
+function redact(text, key) {
+  let out = String(text || "");
+  if (key) out = out.split(key).join("[redacted]");
+  out = out.replace(/xai-[A-Za-z0-9_-]{6,}/g, "[redacted]");
+  out = out.replace(/Bearer\s+\S+/gi, "Bearer [redacted]");
+  return out.replace(/\s+/g, " ").trim().slice(0, 500);
+}
+
+function modelRejected(status, message, model) {
+  const text = String(message || "").toLowerCase();
+  if (/api key|unauthorized|permission|quota|rate limit/.test(text)) return false;
+  if (model && text.includes(String(model).toLowerCase()) && /model|not found|does not exist|unknown|unsupported|invalid/.test(text)) {
+    return true;
+  }
+  if (/model[_ -]?not[_ -]?found|unknown[_ -]?model|invalid[_ -]?model|no such model/.test(text)) return true;
+  if (status === 404 && /model/.test(text)) return true;
+  return /model/.test(text) && /(not found|does not exist|unknown|unsupported|unavailable|no such)/.test(text);
+}
+
+async function postChat(messages, key, model) {
   return fetch("https://api.x.ai/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${key}`,
     },
-    body: JSON.stringify({ model: "grok-4", stream: true, messages }),
-    signal: AbortSignal.timeout(60000),
+    body: JSON.stringify({ model, stream: true, messages }),
+    signal: AbortSignal.timeout(180000),
   });
+}
+
+async function failureDetail(response, key) {
+  const raw = await response.text().catch(() => "");
+  let message = "";
+  try {
+    const json = JSON.parse(raw);
+    if (typeof json.error === "string") message = json.error;
+    else if (json.error && typeof json.error.message === "string") message = json.error.message;
+    else if (typeof json.message === "string") message = json.message;
+    else if (typeof json.code === "string" && !message) message = json.code;
+  } catch {
+    message = raw;
+  }
+  return { status: response.status, message: redact(message, key) };
+}
+
+function failureLine(detail, locale) {
+  if (detail.status === 401) return keyRejected(locale);
+  return detail.message ? `${detail.status} ${detail.message}` : String(detail.status);
 }
 
 ipcMain.on("chat:ask", (event, request) => {
@@ -335,13 +381,38 @@ ipcMain.on("chat:ask", (event, request) => {
     }
     try {
       const built = messagesFor(request);
-      let response = await postChat(built.messages, key);
-      if (!response.ok && built.pictured) {
-        response = await postChat(built.plainMessages, key);
+      let model = CHAT_MODEL;
+      let response = await postChat(built.messages, key, model);
+      if (!response.ok) {
+        const detail = await failureDetail(response, key);
+        if (detail.status === 401) {
+          await reveal(sender, id, keyRejected(locale));
+          return;
+        }
+        if (modelRejected(detail.status, detail.message, model)) {
+          model = CHAT_MODEL_FALLBACK;
+          response = await postChat(built.messages, key, model);
+        } else if (built.pictured) {
+          response = await postChat(built.plainMessages, key, model);
+        } else {
+          await reveal(sender, id, failureLine(detail, locale));
+          return;
+        }
+      }
+      if (!response.ok && built.pictured && model === CHAT_MODEL_FALLBACK) {
+        response = await postChat(built.plainMessages, key, model);
+      }
+      if (!response.ok) {
+        const detail = await failureDetail(response, key);
+        await reveal(sender, id, failureLine(detail, locale));
+        return;
       }
       await readReply(response, sender, id, locale);
-    } catch {
-      if (!sender.isDestroyed()) await reveal(sender, id, calmFail(locale));
+    } catch (err) {
+      if (sender.isDestroyed()) return;
+      const message = redact(err && err.message ? err.message : "", key);
+      const name = err && err.name ? err.name : "Error";
+      await reveal(sender, id, message ? `${name}: ${message}` : name);
     }
   })();
 });
