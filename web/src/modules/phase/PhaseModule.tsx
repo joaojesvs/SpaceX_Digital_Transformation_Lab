@@ -138,50 +138,22 @@ export function PhaseModule({ locale }: { locale: "en" | "pt" }) {
   const htmlLang = locale === "pt" ? "pt-PT" : "en";
 
   return (
-    <section className="astraea-phase" lang={htmlLang} aria-labelledby="astraea-phase-title">
-      <p className="ap-kicker">{text.kicker}</p>
+    <section className="astraea-phase scan-page" lang={htmlLang} aria-labelledby="astraea-phase-title">
       <h1 className="ap-title" id="astraea-phase-title">
         {text.title}
       </h1>
-      <p className="ap-lede">{text.lede}</p>
-      <p className="ap-note">{text.note}</p>
-
-      <div className="ap-ask">
-        <article className="ap-ask-card ap-ask-now">
-          <p className="ap-eyebrow">{text.pdrEyebrow}</p>
-          <h2>{text.pdrTitle}</h2>
-          {text.pdrBody.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </article>
-        <article className="ap-ask-card ap-ask-next">
-          <p className="ap-eyebrow">{text.cdrEyebrow}</p>
-          <h2>{text.cdrTitle}</h2>
-          {text.cdrBody.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </article>
-      </div>
-
-      <h2 className="ap-order">{text.order}</h2>
-      <ol className="ap-rail">
-        {GATE_ORDER.map((code, index) => {
+      <ul className="scan-list">
+        {GATE_ORDER.map((code) => {
           const state = gateState(code);
           return (
-            <li
-              key={code}
-              className={`ap-step ap-step-${state}`}
-              aria-current={state === "now" ? "step" : undefined}
-            >
-              <span className="ap-index">{String(index + 1).padStart(2, "0")}</span>
-              <span className="ap-code">{code}</span>
-              <span className="ap-name">{text.names[code]}</span>
-              <span className="ap-state">{text.states[state]}</span>
-              <span className="ap-gloss">{text.gloss[code]}</span>
+            <li key={code} className={`scan-row review is-${state}`} aria-current={state === "now" ? "step" : undefined}>
+              <span className="scan-id">{code}</span>
+              <span className="scan-title">{text.names[code]}</span>
+              <span className="scan-status">{text.states[state]}</span>
             </li>
           );
         })}
-      </ol>
+      </ul>
     </section>
   );
 }

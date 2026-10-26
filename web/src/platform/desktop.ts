@@ -11,10 +11,31 @@ export type SessionPatch = {
   note?: Note;
 };
 
+export type ChatTurn = {
+  role: "user" | "assistant";
+  content: string;
+};
+
+export type ChatAttachment = {
+  name: string;
+  kind: "image" | "text" | "file";
+  dataUrl?: string;
+  text?: string;
+};
+
+export type ChatRequest = {
+  id: string;
+  locale: Locale;
+  text: string;
+  history: ChatTurn[];
+  attachment?: ChatAttachment;
+};
+
 export type DesktopBridge = {
   getSession: () => Promise<SessionSnapshot>;
   patchSession: (patch: SessionPatch) => Promise<SessionSnapshot>;
   onSession: (listener: (snapshot: SessionSnapshot) => void) => () => void;
+  ask: (request: ChatRequest, onToken: (token: string) => void, onDone: (reply: string) => void) => () => void;
   close: () => void;
   minimize: () => void;
   zoom: () => void;

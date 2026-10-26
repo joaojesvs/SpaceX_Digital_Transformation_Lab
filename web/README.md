@@ -24,8 +24,8 @@ Open http://localhost:5173
 
 ## What is on screen
 
-The shell is a left rail, a top bar, and the gold circle on every module. Missions is an overview: four demo stat cards, a budget ring, an allocation chart, and a recent-activity list. Demo figures are €2,400,000 total, €1,100,000 spent, €1,300,000 left, split camera €980,000, platform €720,000, AIT €460,000, operations €240,000. Findings read 3 agreed and 1 in dispute. PDR is now and CDR is next. Halcyon-3 and Cinder-2 stay on the list. The circle opens a chat thread. Replies stay inside the opened findings and the phase list.
+The shell is a left rail, a top bar, and the gold circle on every module. Missions is an overview: the mission header, a findings count (3 agreed, 1 in dispute), and recent review activity. PDR is now and CDR is next. Halcyon-3 and Cinder-2 stay on the list. Budget figures stay in the Budget module. The circle opens a chat. Enter sends. A round + attaches a file to the next message only.
 
-All eight panels are real. The chat answers only from the opened findings and the phase list.
+All eight panels are real. In the desktop app the reply is requested from the Electron main process. Set `XAI_API_KEY` in `web/.env` (see `web/.env.example`). The key is not read by the renderer.
 
 `npm run build` typechecks and writes `web/dist`.

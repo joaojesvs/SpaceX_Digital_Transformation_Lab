@@ -236,86 +236,39 @@ const copy: Record<"en" | "pt", ComplianceCopy> = {
 
 export function ComplianceModule({ locale }: { locale: "en" | "pt" }) {
   const text = copy[locale];
-  const agreedCount = text.findings.filter((item) => item.status === "agreed").length;
-  const disputeCount = text.findings.length - agreedCount;
   const htmlLang = locale === "pt" ? "pt-PT" : "en";
 
   return (
-    <section className="astraea-compliance" lang={htmlLang} aria-labelledby="astraea-compliance-title">
-      <p className="ac-kicker">{text.kicker}</p>
+    <section className="astraea-compliance scan-page" lang={htmlLang} aria-labelledby="astraea-compliance-title">
       <h1 className="ac-title" id="astraea-compliance-title">
         {text.title}
       </h1>
-      <p className="ac-lede">{text.lede}</p>
-      <p className="ac-legend">{text.legend}</p>
-      <ul className="ac-counts">
-        <li>
-          {agreedCount} {text.agreedCount}
-        </li>
-        <li>
-          {disputeCount} {text.disputeCount}
-        </li>
-        <li>
-          {text.closed.length} {text.waitingCount}
-        </li>
-      </ul>
-
-      <h2 className="ac-section">{text.judged}</h2>
-      <div className="ac-stack">
+      <ul className="scan-list">
         {text.findings.map((item) => (
-          <article key={item.id} className={`ac-card ac-card-${item.status}`} id={`compliance-${item.id}`}>
-            <div className="ac-card-top">
-              <p className="ac-id">{item.id}</p>
-              <p className={item.status === "agreed" ? "ac-pill ac-pill-agreed" : "ac-pill ac-pill-dispute"}>
-                {item.status === "agreed" ? text.agreed : text.dispute}
-              </p>
-            </div>
-            <p className="ac-layer">{item.layer}</p>
-            <h3>{item.title}</h3>
-            <ul className="ac-clauses">
-              {item.clauses.map((clause) => (
-                <li key={clause}>{clause}</li>
-              ))}
-            </ul>
-            {item.body.map((paragraph) => (
-              <p className="ac-body" key={paragraph}>
-                {paragraph}
-              </p>
-            ))}
-            <p className="ac-change">
-              <span>{text.change}</span>
-              {item.change}
-            </p>
-            {item.dispute ? (
-              <p className="ac-dispute">
-                <span>{text.differ}</span>
-                {item.dispute}
-              </p>
-            ) : null}
-          </article>
+          <li key={item.id} className="scan-row" id={`compliance-${item.id}`}>
+            <span className="scan-id">{item.id}</span>
+            <span className="scan-title">{item.title}</span>
+            <span className={item.status === "agreed" ? "scan-status is-agreed" : "scan-status is-dispute"}>
+              {item.status === "agreed" ? text.agreed : text.dispute}
+            </span>
+            <span className="scan-clause" title={item.clauses.join(" · ")}>
+              {item.clauses.join(" · ")}
+            </span>
+          </li>
         ))}
-      </div>
-
-      <h2 className="ac-section">{text.waiting}</h2>
-      <div className="ac-stack">
         {text.closed.map((item) => (
-          <article key={item.id} className="ac-card ac-card-wait" id={`compliance-${item.id}`}>
-            <div className="ac-card-top">
-              <p className="ac-id">{text.layerWord}</p>
-              <p className="ac-pill ac-pill-wait">{text.notOpened}</p>
-              <p className="ac-not-pass">{text.notPass}</p>
-            </div>
-            <h3>{item.title}</h3>
-            {item.body.map((paragraph) => (
-              <p className="ac-body" key={paragraph}>
-                {paragraph}
-              </p>
-            ))}
-          </article>
+          <li key={item.id} className="scan-row" id={`compliance-${item.id}`}>
+            <span className="scan-id">{text.layerWord}</span>
+            <span className="scan-title">{item.title}</span>
+            <span className="scan-status is-wait">
+              {text.notOpened}
+              {" · "}
+              {text.notPass}
+            </span>
+            <span className="scan-clause" />
+          </li>
         ))}
-      </div>
-
-      <p className="ac-footnote">{text.footnote}</p>
+      </ul>
     </section>
   );
 }

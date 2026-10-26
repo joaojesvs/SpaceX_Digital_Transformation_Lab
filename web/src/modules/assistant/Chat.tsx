@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { answer, interpret, prompts, type Intent } from "../../platform/answers";
+import { answer } from "../../platform/answers";
+import { desktopBridge, type ChatAttachment, type ChatTurn } from "../../platform/desktop";
+import type { Note } from "../../platform/notes";
 import { useSession } from "../../platform/session";
 
 const copy = {
@@ -9,59 +11,156 @@ const copy = {
     pt: "Constatações abertas e a lista de fases.",
   },
   close: { en: "Close", pt: "Fechar" },
-  send: { en: "Send", pt: "Enviar" },
   ask: { en: "Ask Astrea", pt: "Perguntar à Astrea" },
   you: { en: "You", pt: "Tu" },
+  attach: { en: "Attach a file", pt: "Anexar um ficheiro" },
+  remove: { en: "Remove file", pt: "Retirar ficheiro" },
   placeholder: {
     en: "Message Astrea",
     pt: "Mensagem para a Astrea",
   },
   typing: { en: "Astrea is writing", pt: "A Astrea está a escrever" },
+  missing: { en: "The key is not set.", pt: "A chave não está definida." },
 };
+
+const TEXT_EXT = /\.(txt|md|csv|json)$/i;
+
+type Draft = {
+  id: string;
+  text: string;
+  attachmentName?: string;
+  reply: string;
+  live: boolean;
+  at: string;
+};
+
+function readAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(typeof reader.result === "string" ? reader.result : "");
+    reader.onerror = () => reject(reader.error ?? new Error("unreadable"));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function readAttachment(file: File): Promise<ChatAttachment> {
+  const name = file.name;
+  const image = file.type.startsWith("image/");
+  if (image) {
+    if (file.size > 2_800_000) return { name, kind: "file" };
+    try {
+      const dataUrl = await readAsDataUrl(file);
+      if (dataUrl.startsWith("data:image/") && dataUrl.length < 4_000_000) return { name, kind: "image", dataUrl };
+    } catch {
+      return { name, kind: "file" };
+    }
+    return { name, kind: "file" };
+  }
+  const textFile = file.type.startsWith("text/") || file.type === "application/json" || TEXT_EXT.test(name);
+  if (textFile && file.size <= 64_000) {
+    try {
+      const text = (await file.text()).replace(/\s+/g, " ").trim().slice(0, 6000);
+      if (text) return { name, kind: "text", text };
+    } catch {
+      return { name, kind: "file" };
+    }
+  }
+  return { name, kind: "file" };
+}
+
+function priorTurns(notes: Note[], locale: "en" | "pt"): ChatTurn[] {
+  return notes
+    .filter((note) => note.kind === "question")
+    .flatMap((note) => {
+      const assistant = note.reply || (note.intent ? answer(locale, note.intent) : "");
+      const turns: ChatTurn[] = [{ role: "user", content: note.text }];
+      if (assistant) turns.push({ role: "assistant", content: assistant });
+      return turns;
+    });
+}
 
 export function Chat() {
   const { chatOpen } = useSession();
   const reduced = useReducedMotion() === true;
-  return (
-    <AnimatePresence>
-      {chatOpen ? <ChatSheet reduced={reduced} /> : null}
-    </AnimatePresence>
-  );
+  return <AnimatePresence>{chatOpen ? <ChatSheet reduced={reduced} /> : null}</AnimatePresence>;
 }
 
 function ChatSheet({ reduced }: { reduced: boolean }) {
   const { locale, notes, addQuestion, setChatOpen } = useSession();
   const [text, setText] = useState("");
-  const [pending, setPending] = useState<{ text: string; intent: Intent } | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [draft, setDraft] = useState<Draft | null>(null);
   const field = useRef<HTMLTextAreaElement>(null);
   const thread = useRef<HTMLDivElement>(null);
+  const picker = useRef<HTMLInputElement>(null);
+  const stopAsk = useRef<(() => void) | null>(null);
   const publish = useRef(addQuestion);
   publish.current = addQuestion;
-  const questions = notes.filter((note) => note.kind === "question");
+  const questions = notes.filter((note) => note.kind === "question" && note.id !== draft?.id);
 
   useEffect(() => {
     field.current?.focus();
   }, []);
 
+  useEffect(() => () => stopAsk.current?.(), []);
+
   useEffect(() => {
     const node = thread.current;
     if (node) node.scrollTop = node.scrollHeight;
-  }, [questions.length, pending]);
+  }, [questions.length, draft, draft?.reply]);
 
   useEffect(() => {
-    if (!pending) return;
-    const timer = window.setTimeout(() => {
-      publish.current(pending.text, pending.intent);
-      setPending(null);
-    }, reduced ? 0 : 700);
-    return () => window.clearTimeout(timer);
-  }, [pending, reduced]);
+    if (!draft || draft.live) return;
+    const saved = notes.find((note) => note.id === draft.id && note.reply);
+    if (saved) setDraft(null);
+  }, [notes, draft]);
 
-  function send(value: string) {
-    const trimmed = value.trim();
-    if (!trimmed || pending) return;
+  async function revealLocal(id: string, line: string, note: { text: string; attachmentName?: string; at: string }) {
+    let built = "";
+    const step = reduced ? line.length : 8;
+    for (let i = 0; i < line.length; i += step) {
+      built += line.slice(i, i + step);
+      const snapshot = built;
+      setDraft((current) => (current && current.id === id ? { ...current, reply: snapshot } : current));
+      if (!reduced) await new Promise((resolve) => window.setTimeout(resolve, 24));
+    }
+    setDraft((current) => (current && current.id === id ? { ...current, reply: line, live: false } : current));
+    publish.current(note.text, undefined, { id, attachmentName: note.attachmentName, reply: line, at: note.at });
+  }
+
+  async function send() {
+    const trimmed = text.trim();
+    if ((!trimmed && !file) || draft?.live) return;
+    const id = crypto.randomUUID();
+    const at = new Date().toISOString();
+    const chosen = file;
+    const attachmentName = chosen?.name;
+    const message = trimmed || attachmentName || "";
     setText("");
-    setPending({ text: trimmed, intent: interpret(trimmed) });
+    setFile(null);
+    setDraft({ id, text: message, attachmentName, reply: "", live: true, at });
+    publish.current(message, undefined, { id, attachmentName, at });
+    const attachment = chosen ? await readAttachment(chosen) : undefined;
+    const history = priorTurns(
+      notes.filter((note) => note.kind === "question"),
+      locale,
+    );
+    const bridge = desktopBridge();
+    if (!bridge) {
+      await revealLocal(id, copy.missing[locale], { text: message, attachmentName, at });
+      return;
+    }
+    stopAsk.current?.();
+    stopAsk.current = bridge.ask(
+      { id, locale, text: trimmed, history, attachment },
+      (token) => {
+        setDraft((current) => (current && current.id === id ? { ...current, reply: current.reply + token } : current));
+      },
+      (reply) => {
+        setDraft((current) => (current && current.id === id ? { ...current, reply, live: false } : current));
+        publish.current(message, undefined, { id, attachmentName, reply, at });
+      },
+    );
   }
 
   return (
@@ -87,66 +186,106 @@ function ChatSheet({ reduced }: { reduced: boolean }) {
           <p>{copy.hint[locale]}</p>
         </article>
         {questions.map((note) => (
-          <div key={note.id} className="exchange">
-            <article className="bubble you">
-              <p className="who">{copy.you[locale]}</p>
-              <p>{note.text}</p>
-            </article>
-            <article className="bubble astrea">
-              <p className="who">Astrea</p>
-              <p>{note.intent ? answer(locale, note.intent) : ""}</p>
-            </article>
-          </div>
+          <Exchange key={note.id} locale={locale} text={note.text} attachmentName={note.attachmentName} reply={spoken(note, locale)} />
         ))}
-        {pending ? (
-          <div className="exchange">
-            <article className="bubble you">
-              <p className="who">{copy.you[locale]}</p>
-              <p>{pending.text}</p>
-            </article>
-            <article className="bubble astrea" aria-label={copy.typing[locale]}>
-              <p className="who">Astrea</p>
-              <p className="typing" aria-hidden="true">
-                <span />
-                <span />
-                <span />
-              </p>
-            </article>
-          </div>
+        {draft ? (
+          <Exchange
+            locale={locale}
+            text={draft.text}
+            attachmentName={draft.attachmentName}
+            reply={draft.reply}
+            live={draft.live}
+          />
         ) : null}
-      </div>
-      <div className="chips" role="group" aria-label={copy.ask[locale]}>
-        {prompts.map((prompt) => (
-          <button key={prompt.intent} type="button" onClick={() => send(prompt[locale])} disabled={pending !== null}>
-            {prompt[locale]}
-          </button>
-        ))}
       </div>
       <form
         className="composer"
         onSubmit={(event) => {
           event.preventDefault();
-          send(text);
+          void send();
         }}
       >
-        <textarea
-          ref={field}
-          rows={1}
-          value={text}
-          placeholder={copy.placeholder[locale]}
-          aria-label={copy.ask[locale]}
-          onChange={(event) => setText(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" && !event.shiftKey) {
-              event.preventDefault();
-              send(text);
-            }
+        <div className="composer-main">
+          {file ? (
+            <p className="composer-file">
+              <span>{file.name}</span>
+              <button type="button" onClick={() => setFile(null)} aria-label={copy.remove[locale]}>
+                ×
+              </button>
+            </p>
+          ) : null}
+          <textarea
+            ref={field}
+            rows={1}
+            value={text}
+            placeholder={copy.placeholder[locale]}
+            aria-label={copy.ask[locale]}
+            onChange={(event) => setText(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
+                event.preventDefault();
+                void send();
+              }
+            }}
+          />
+        </div>
+        <button type="button" className="plus" aria-label={copy.attach[locale]} onClick={() => picker.current?.click()}>
+          +
+        </button>
+        <input
+          ref={picker}
+          type="file"
+          hidden
+          accept="image/*,.pdf,.doc,.docx,.txt,.md,.csv,.json,text/plain,application/pdf"
+          onChange={(event) => {
+            setFile(event.target.files?.[0] ?? null);
+            event.target.value = "";
           }}
         />
-        <button type="submit" disabled={pending !== null || text.trim() === ""}>
-          {copy.send[locale]}
-        </button>
       </form>
     </motion.section>
+  );
+}
+
+function spoken(note: Note, locale: "en" | "pt"): string {
+  if (note.reply) return note.reply;
+  if (note.intent) return answer(locale, note.intent);
+  return "";
+}
+
+function Exchange({
+  locale,
+  text,
+  attachmentName,
+  reply,
+  live,
+}: {
+  locale: "en" | "pt";
+  text: string;
+  attachmentName?: string;
+  reply: string;
+  live?: boolean;
+}) {
+  const showFile = attachmentName && attachmentName !== text;
+  return (
+    <div className="exchange">
+      <article className="bubble you">
+        <p className="who">{copy.you[locale]}</p>
+        <p>{text}</p>
+        {showFile ? <p className="bubble-file">{attachmentName}</p> : null}
+      </article>
+      <article className="bubble astrea" aria-label={live && !reply ? copy.typing[locale] : undefined}>
+        <p className="who">Astrea</p>
+        {reply ? (
+          <p>{reply}</p>
+        ) : (
+          <p className="typing" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </p>
+        )}
+      </article>
+    </div>
   );
 }

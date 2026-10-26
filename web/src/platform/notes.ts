@@ -5,5 +5,7 @@ export type Note = {
   kind: "log" | "question";
   text: string;
   intent?: Intent;
+  attachmentName?: string;
+  reply?: string;
   at: string;
 };

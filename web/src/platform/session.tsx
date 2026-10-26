@@ -13,7 +13,11 @@ type SessionValue = {
   setView: (view: ViewId) => void;
   notes: Note[];
   addLog: (text: string) => void;
-  addQuestion: (text: string, intent: Intent) => void;
+  addQuestion: (
+    text: string,
+    intent?: Intent,
+    extras?: { id?: string; attachmentName?: string; reply?: string; at?: string },
+  ) => void;
   chatOpen: boolean;
   setChatOpen: (open: boolean) => void;
   desktop: boolean;
@@ -73,10 +77,18 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         if (!trimmed) return;
         publish(makeNote("log", trimmed));
       },
-      addQuestion: (text, intent) => {
+      addQuestion: (text, intent, extras) => {
         const trimmed = text.trim();
         if (!trimmed) return;
-        publish(makeNote("question", trimmed, intent));
+        publish({
+          id: extras?.id ?? crypto.randomUUID(),
+          kind: "question",
+          text: trimmed,
+          intent,
+          attachmentName: extras?.attachmentName,
+          reply: extras?.reply,
+          at: extras?.at ?? new Date().toISOString(),
+        });
       },
       chatOpen,
       setChatOpen,

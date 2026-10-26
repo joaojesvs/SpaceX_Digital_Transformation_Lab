@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, screen, Menu } = require("electron");
+const fs = require("fs");
 const path = require("path");
 
 if (typeof process.getuid === "function" && process.getuid() === 0) {
@@ -95,14 +96,254 @@ function createWidget() {
   });
 }
 
+function cleanNote(note) {
+  const next = {
+    id: String(note.id),
+    kind: note.kind === "log" ? "log" : "question",
+    text: String(note.text).slice(0, 8000),
+    at: typeof note.at === "string" ? note.at : new Date().toISOString(),
+  };
+  if (typeof note.intent === "string") next.intent = note.intent.slice(0, 40);
+  if (typeof note.attachmentName === "string" && note.attachmentName.trim()) {
+    next.attachmentName = note.attachmentName.trim().slice(0, 240);
+  }
+  if (typeof note.reply === "string") next.reply = note.reply.slice(0, 16000);
+  return next;
+}
+
 ipcMain.handle("session:get", () => session);
 ipcMain.handle("session:patch", (_event, patch) => {
   if (patch && (patch.locale === "en" || patch.locale === "pt")) session.locale = patch.locale;
-  if (patch && patch.note && typeof patch.note.text === "string" && patch.note.text.trim()) {
-    session.notes = [...session.notes, patch.note];
+  if (patch && patch.note && typeof patch.note.id === "string" && typeof patch.note.text === "string") {
+    const note = cleanNote(patch.note);
+    const index = session.notes.findIndex((item) => item.id === note.id);
+    if (index >= 0) {
+      const next = session.notes.slice();
+      next[index] = { ...next[index], ...note };
+      session.notes = next;
+    } else if (note.text.trim()) {
+      session.notes = [...session.notes, note];
+    }
   }
   broadcast();
   return session;
+});
+
+function readApiKey() {
+  const file = path.join(__dirname, "..", ".env");
+  let raw = "";
+  try {
+    raw = fs.readFileSync(file, "utf8");
+  } catch {
+    return "";
+  }
+  for (const line of raw.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eq = trimmed.indexOf("=");
+    if (eq < 1) continue;
+    if (trimmed.slice(0, eq).trim() !== "XAI_API_KEY") continue;
+    let value = trimmed.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    return value.trim();
+  }
+  return "";
+}
+
+const SYSTEM_PROMPT = `You are Astrea, speaking inside a desktop tool for one mission.
+
+Lumen-1 is a 6U optical camera, a Falcon 9 rideshare piggyback. The open review is PDR. The next review is CDR. The review order is MCR, SRR, MDR, SDR, PDR, CDR, PRR, TRR, SAR, ORR, FRR. Earlier reviews are not passed. Do not mark them passed.
+
+Only these findings are opened:
+
+F-01, agreed, critical. Missing verification method for REQ-IMG-03, on-orbit modulation transfer of at least 0.15 at Nyquist. ECSS-E-ST-10-02C Rev.1 5.2.1e requires method, product level, and stage in the verification matrix. 5.2.2.1a lists test, analysis, review of design, or inspection. ECSS-E-ST-10C Rev.1 5.2.3.4a and 5.2.3.4b require the method on the requirement and in the matrix. No procedure is on the register. Do not invent one that closes REQ-IMG-03.
+
+F-02, agreed, critical. Missing contamination and outgassing control on the optic. ECSS-Q-ST-70C Rev.2 4.4a requires a contamination and cleanliness control programme. 4.4c applies because the optic is contamination-critical. 5.1.4b requires outgassing screening. 5.1.4c requires every organic material, including the silicone stake, to be evaluated. No procedure on the register closes this.
+
+F-03, agreed, critical. Missing qualification against the rideshare mechanical environment. ECSS-E-ST-10-03C Rev.1 4.5.2a asks for qualification evidence in the intended environments, with qualification margins, on a qualification model or under a protoflight approach. 4.5.1b puts launch-segment compatibility in the test programme. 5.1b treats a camera as electronic (type a) and optical (type i). Table 5-1, via 5.2a, marks sinusoidal vibration and shock as required for both, and random vibration as required for the electronic type. None of those tests is planned. The SpaceX rideshare payload user's guide is not opened. Do not state a section, a load, or a vibration number.
+
+F-04, in dispute. Reliability is asserted with no FMEA. REQ-REL-01 states 0.95 over two years. ECSS-Q-ST-30C Rev.1 6.4.2.2a requires an FMEA, or a FMECA when criticality is included. 6.4.2.2b requires the analysis to name potential failure modes and class them. The clause requires the analysis, not a second camera. A person decides. Do not close the dispute.
+
+ISO is not opened. Do not name an ISO clause and do not call ISO a pass.
+
+You may answer a real question. If the opened record does not contain the fact, say it is not opened. Never invent an ECSS clause, an ISO pass, or a rideshare load. Be concise.`;
+
+function calmMissing(locale) {
+  return locale === "pt" ? "A chave não está definida." : "The key is not set.";
+}
+
+function calmFail(locale) {
+  return locale === "pt" ? "A Astrea não conseguiu responder agora." : "Astrea could not answer just now.";
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function reveal(sender, id, text) {
+  let built = "";
+  const step = 12;
+  for (let i = 0; i < text.length; i += step) {
+    if (sender.isDestroyed()) return built;
+    const token = text.slice(i, i + step);
+    built += token;
+    sender.send("chat:token", { id, token });
+    await sleep(18);
+  }
+  if (!sender.isDestroyed()) sender.send("chat:done", { id, reply: built });
+  return built;
+}
+
+function historyTurns(history) {
+  if (!Array.isArray(history)) return [];
+  return history
+    .filter(
+      (turn) =>
+        turn &&
+        (turn.role === "user" || turn.role === "assistant") &&
+        typeof turn.content === "string" &&
+        turn.content.trim(),
+    )
+    .slice(-12)
+    .map((turn) => ({ role: turn.role, content: turn.content.slice(0, 8000) }));
+}
+
+function imageData(attachment) {
+  const url = attachment && attachment.dataUrl;
+  return typeof url === "string" && url.startsWith("data:image/") && url.length > 32 && url.length < 4_000_000
+    ? url
+    : "";
+}
+
+function userContent(text, attachment) {
+  const lines = [];
+  if (text) lines.push(text);
+  if (attachment && typeof attachment.name === "string" && attachment.name.trim()) {
+    const name = attachment.name.trim().slice(0, 180);
+    if (attachment.kind === "text" && typeof attachment.text === "string" && attachment.text.trim()) {
+      lines.push(`File ${name}: ${attachment.text.replace(/\s+/g, " ").trim().slice(0, 6000)}`);
+    } else {
+      lines.push(attachment.kind === "image" ? `Image attached: ${name}` : `File attached: ${name}`);
+    }
+  }
+  const contentText = lines.join("\n").slice(0, 12000);
+  const picture = attachment && attachment.kind === "image" ? imageData(attachment) : "";
+  if (picture) {
+    return {
+      pictured: true,
+      content: [
+        { type: "text", text: contentText || attachment.name },
+        { type: "image_url", image_url: { url: picture } },
+      ],
+    };
+  }
+  return { pictured: false, content: contentText || " " };
+}
+
+function messagesFor(request) {
+  const locale = request.locale === "pt" ? "pt" : "en";
+  const built = userContent(typeof request.text === "string" ? request.text.trim().slice(0, 8000) : "", request.attachment);
+  const messages = [
+    {
+      role: "system",
+      content: `${SYSTEM_PROMPT}\n\nAnswer in ${locale === "pt" ? "Portuguese" : "English"}.`,
+    },
+    ...historyTurns(request.history),
+    { role: "user", content: built.content },
+  ];
+  const plain = userContent(
+    typeof request.text === "string" ? request.text.trim().slice(0, 8000) : "",
+    request.attachment ? { ...request.attachment, kind: "file", dataUrl: undefined } : undefined,
+  );
+  return { locale, messages, pictured: built.pictured, plainMessages: messages.slice(0, -1).concat([{ role: "user", content: plain.content }]) };
+}
+
+async function readReply(response, sender, id, locale) {
+  if (!response.ok || !response.body) {
+    await reveal(sender, id, calmFail(locale));
+    return;
+  }
+  const type = response.headers.get("content-type") || "";
+  if (!type.includes("text/event-stream")) {
+    const json = await response.json().catch(() => null);
+    const text = json && json.choices && json.choices[0] && json.choices[0].message && json.choices[0].message.content;
+    await reveal(sender, id, typeof text === "string" && text.trim() ? text : calmFail(locale));
+    return;
+  }
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  let reply = "";
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const parts = buffer.split(/\n/);
+    buffer = parts.pop() || "";
+    for (const line of parts) {
+      const trimmed = line.trim();
+      if (!trimmed.startsWith("data:")) continue;
+      const data = trimmed.slice(5).trim();
+      if (!data || data === "[DONE]") continue;
+      let json = null;
+      try {
+        json = JSON.parse(data);
+      } catch {
+        json = null;
+      }
+      const token = json && json.choices && json.choices[0] && json.choices[0].delta && json.choices[0].delta.content;
+      if (typeof token === "string" && token && !sender.isDestroyed()) {
+        reply += token;
+        sender.send("chat:token", { id, token });
+      }
+    }
+  }
+  if (!reply.trim()) {
+    await reveal(sender, id, calmFail(locale));
+    return;
+  }
+  if (!sender.isDestroyed()) sender.send("chat:done", { id, reply });
+}
+
+async function postChat(messages, key) {
+  return fetch("https://api.x.ai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${key}`,
+    },
+    body: JSON.stringify({ model: "grok-4", stream: true, messages }),
+    signal: AbortSignal.timeout(60000),
+  });
+}
+
+ipcMain.on("chat:ask", (event, request) => {
+  const sender = event.sender;
+  const id = request && typeof request.id === "string" ? request.id : "";
+  const locale = request && request.locale === "pt" ? "pt" : "en";
+  if (!id) return;
+  void (async () => {
+    const key = readApiKey();
+    if (!key) {
+      await reveal(sender, id, calmMissing(locale));
+      return;
+    }
+    try {
+      const built = messagesFor(request);
+      let response = await postChat(built.messages, key);
+      if (!response.ok && built.pictured) {
+        response = await postChat(built.plainMessages, key);
+      }
+      await readReply(response, sender, id, locale);
+    } catch {
+      if (!sender.isDestroyed()) await reveal(sender, id, calmFail(locale));
+    }
+  })();
 });
 
 ipcMain.on("window:close", (event) => {
