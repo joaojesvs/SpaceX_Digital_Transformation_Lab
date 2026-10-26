@@ -19,8 +19,8 @@ process.stdout.write("Card index reloaded from committed JSON. Regulations are n
 process.stdout.write(`Directory: ${dir}\n`);
 process.stdout.write(
   library.driveFolderUrl === ""
-    ? "Drive folder URL: empty. Not contacted.\n"
-    : `Drive folder URL: ${library.driveFolderUrl}. Not contacted.\n`,
+    ? "Drive file id: empty. Not contacted.\n"
+    : `Drive file id: ${library.driveFolderUrl}. Not contacted.\n`,
 );
 process.stdout.write(`Accepted (${accepted.length}): ${accepted.map((card) => card.id).join(", ") || "(none)"}\n`);
 if (skipped.length === 0) {

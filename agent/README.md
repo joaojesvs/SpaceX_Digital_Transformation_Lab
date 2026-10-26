@@ -22,7 +22,7 @@ npm --prefix agent --silent run reload
 
 `reload` accepts `--cards <directory>` for a replacement index. Pyrotechnics, explosives, and propulsion are refused. Cards outside the locked slice are skipped. The agent does not read regulation files.
 
-Regulations stay on Google Drive. The only config field is `driveFolderUrl` in `agent/config.json`. Leave it empty until João sends the folder link. The demo never opens that URL.
+Regulations stay on Google Drive. The only config field is `driveFolderUrl` in `agent/config.json`. It holds the file id `1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo`. The demo never downloads that file.
 
 Source system: the engineering baseline in `agent/data/baseline.json`.
 

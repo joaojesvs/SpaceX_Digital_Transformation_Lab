@@ -7,7 +7,7 @@ export function formatReport(report: AuditReport, lang: Lang): string {
     label(lead, "Lead language", "Língua principal") + ": " + (lead === "en" ? "English" : "português"),
     report.mission[lead],
     label(lead, "Source system", "Sistema de origem") + ": " + label(lead, "engineering baseline", "linha de base de engenharia") + ` (${report.baselineId})`,
-    label(lead, "Drive folder URL", "URL da pasta Drive") + ": " + (report.driveFolderUrl === "" ? label(lead, "empty, not contacted", "vazia, sem contacto") : `${report.driveFolderUrl} (${label(lead, "not contacted", "sem contacto")})`),
+    label(lead, "Drive file id", "Id do ficheiro Drive") + ": " + (report.driveFolderUrl === "" ? label(lead, "empty, not contacted", "vazio, sem contacto") : `${report.driveFolderUrl} (${label(lead, "not contacted", "sem contacto")})`),
     label(lead, "Network", "Rede") + ": " + label(lead, "no", "não"),
     label(lead, "Cards loaded", "Cartões carregados") + `: ${report.cardsLoaded.length}`,
     "",
