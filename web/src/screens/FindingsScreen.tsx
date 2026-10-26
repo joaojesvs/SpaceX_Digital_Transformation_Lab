@@ -15,14 +15,18 @@ export function Findings({ lang, cards }: FindingsProps) {
       {cards.map((card) => {
         const text = card[lang];
         return (
-          <article key={card.id} className="card" id={`finding-${card.id}`}>
-            <p className={`verdict ${card.verdict}`}>
-              {card.verdict === "agree" ? copy.agreed[lang] : copy.disputed[lang]}
+          <article
+            key={card.id}
+            className={card.verdict === "dispute" ? "card is-open" : "card"}
+            id={`finding-${card.id}`}
+          >
+            <p className={card.verdict === "agree" ? "pill agree" : "pill open"}>
+              {card.verdict === "agree" ? copy.agreed[lang] : copy.open[lang]}
             </p>
             <h2>{text.title}</h2>
             <p className="clause">{card.clauseId}</p>
             <section className="field">
-              <h3>{copy.trigger[lang]}</h3>
+              <h3>{copy.projectLine[lang]}</h3>
               {card.lineNumbers.map((lineNumber) => {
                 const line = lines.get(lineNumber);
                 return (
@@ -34,14 +38,14 @@ export function Findings({ lang, cards }: FindingsProps) {
               })}
             </section>
             <section className="field">
-              <h3>{card.verdict === "agree" ? copy.why[lang] : copy.whyDisputed[lang]}</h3>
-              <p>{text.whyCritical}</p>
-            </section>
-            <section className="field">
               <h3>{copy.change[lang]}</h3>
               <p>{text.change}</p>
             </section>
-            <section className="field">
+            <section className="field quiet">
+              <h3>{card.verdict === "agree" ? copy.why[lang] : copy.whyDisputed[lang]}</h3>
+              <p>{text.whyCritical}</p>
+            </section>
+            <section className="field quiet">
               <h3>{copy.versus[lang]}</h3>
               <p>{text.agreement}</p>
               {card.verdict === "dispute" ? (

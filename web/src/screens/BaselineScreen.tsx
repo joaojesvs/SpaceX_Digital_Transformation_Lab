@@ -9,12 +9,15 @@ type IntroProps = {
 export function Intro({ lang, onRun }: IntroProps) {
   return (
     <section className="intro">
-      <h1>{copy.introTitle[lang]}</h1>
-      <p className="lede">{copy.introBody[lang]}</p>
-      <button type="button" className="btn" onClick={onRun}>
-        {copy.run[lang]}
-      </button>
-      <p className="whisper">{copy.source[lang]}</p>
+      <div className="sheet">
+        <h1>{copy.introTitle[lang]}</h1>
+        <p className="lede">{copy.introBody[lang]}</p>
+        <button type="button" className="btn" onClick={onRun}>
+          {copy.run[lang]}
+        </button>
+        <p className="checks">{copy.checksLine[lang]}</p>
+        <p className="whisper">{copy.source[lang]}</p>
+      </div>
     </section>
   );
 }

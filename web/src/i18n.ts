@@ -37,6 +37,10 @@ export const copy = {
     en: "Lumen-1 is loaded. Run review reads that file and the opened clause cards.",
     pt: "O Lumen-1 está carregado. Correr revisão lê esse ficheiro e os cartões de cláusula abertos.",
   },
+  checksLine: {
+    en: "Verification, contamination, launch qualification, and failure analysis.",
+    pt: "Verificação, contaminação, qualificação de lançamento e análise de falhas.",
+  },
   findingsTitle: { en: "Findings", pt: "Constatações" },
   baselineLead: {
     en: "Lumen-1 is loaded from the committed engineering baseline. Run review reads that file and the opened clause cards. No model and no network.",
@@ -90,7 +94,9 @@ export const copy = {
   change: { en: "Recommended change", pt: "Alteração recomendada" },
   versus: { en: "Agreement versus dispute", pt: "Acordo ou disputa" },
   agreed: { en: "Agreed", pt: "Em acordo" },
+  open: { en: "Open", pt: "Em aberto" },
   disputed: { en: "In dispute", pt: "Em disputa" },
+  projectLine: { en: "Project line", pt: "Linha do projeto" },
   critical: { en: "Critical", pt: "Crítico" },
   alsoOpened: { en: "Also opened", pt: "Também abertas" },
   baselineLang: { en: "Baseline language: English", pt: "Língua da linha de base: inglês" },

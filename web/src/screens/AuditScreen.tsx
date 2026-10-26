@@ -17,7 +17,7 @@ export function Thread({ lang, review, shown }: ThreadProps) {
     <ol className="thread" aria-live="polite">
       {steps.map((step, index) => (
         <li className="msg" key={`${step.kind}-${index}`}>
-          {index === 0 ? <p className="who">{copy.name[lang]}</p> : null}
+          <p className="who">{copy.name[lang]}</p>
           {step.kind === "baseline" ? (
             <>
               <p>
