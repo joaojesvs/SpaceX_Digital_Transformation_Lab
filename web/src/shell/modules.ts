@@ -9,6 +9,7 @@ export const modules: { id: ModuleId; en: string; pt: string }[] = [
   { id: "tests", en: "Tests", pt: "Ensaios" },
   { id: "correspondence", en: "Correspondence", pt: "Correspondência" },
   { id: "team", en: "Team", pt: "Equipa" },
+  { id: "blueprints", en: "Blueprints", pt: "Desenhos" },
 ];
 
 export function moduleLabel(id: ModuleId, locale: Locale): string {

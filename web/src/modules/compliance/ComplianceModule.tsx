@@ -1,274 +1,133 @@
-import "./compliance.css";
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-type FindingStatus = "agreed" | "dispute";
+type Locale = "en" | "pt";
 
-type Finding = {
-  id: string;
-  status: FindingStatus;
-  layer: string;
-  title: string;
-  clauses: string[];
-  body: string[];
-  change: string;
-  dispute?: string;
-};
+const rows = {
+  en: [
+    { id: "F-01", title: "Missing verification method for REQ-IMG-03 (optical MTF).", status: "Agreed · critical", clause: "ECSS-E-ST-10-02C Rev.1 5.2.1e · ECSS-E-ST-10C Rev.1 5.2.3.4a", tone: "agreed" },
+    { id: "F-02", title: "Missing contamination and outgassing control on the optic.", status: "Agreed · critical", clause: "ECSS-Q-ST-70C Rev.2 4.4a", tone: "agreed" },
+    { id: "F-03", title: "Missing qualification against the rideshare mechanical environment.", status: "Agreed · critical", clause: "ECSS-E-ST-10-03C Rev.1 4.5.2a", tone: "agreed" },
+    { id: "F-04", title: "Reliability asserted with no FMEA.", status: "In dispute", clause: "ECSS-Q-ST-30C Rev.1 6.4.2.2a", tone: "dispute" },
+    { id: "ISO", title: "ISO", status: "Not opened · Not a pass", clause: "", tone: "wait" },
+    { id: "Rideshare", title: "SpaceX Rideshare Payload User's Guide", status: "Not opened · Not a pass", clause: "", tone: "wait" },
+  ],
+  pt: [
+    { id: "F-01", title: "Método de verificação em falta no REQ-IMG-03 (MTF ótica).", status: "Acordado · crítico", clause: "ECSS-E-ST-10-02C Rev.1 5.2.1e · ECSS-E-ST-10C Rev.1 5.2.3.4a", tone: "agreed" },
+    { id: "F-02", title: "Controlo de contaminação e desgaseificação em falta na ótica.", status: "Acordado · crítico", clause: "ECSS-Q-ST-70C Rev.2 4.4a", tone: "agreed" },
+    { id: "F-03", title: "Qualificação em falta face ao ambiente mecânico do rideshare.", status: "Acordado · crítico", clause: "ECSS-E-ST-10-03C Rev.1 4.5.2a", tone: "agreed" },
+    { id: "F-04", title: "Fiabilidade afirmada sem FMEA.", status: "Em disputa", clause: "ECSS-Q-ST-30C Rev.1 6.4.2.2a", tone: "dispute" },
+    { id: "ISO", title: "ISO", status: "Não aberto · Não é uma aprovação", clause: "", tone: "wait" },
+    { id: "Rideshare", title: "Guia do utilizador de carga útil Rideshare da SpaceX", status: "Não aberto · Não é uma aprovação", clause: "", tone: "wait" },
+  ],
+} as const;
 
-type WaitingRow = {
-  id: string;
-  title: string;
-  body: string[];
-};
+const board = {
+  en: [
+    { n: 3, label: "Contradicted", hint: "Agreed gaps" },
+    { n: 0, label: "In order", hint: "Opened and clear" },
+    { n: 2, label: "Not opened", hint: "ISO and the guide" },
+    { n: 1, label: "In dispute", hint: "F-04" },
+  ],
+  pt: [
+    { n: 3, label: "Contraditados", hint: "Falhas em acordo" },
+    { n: 0, label: "Em ordem", hint: "Aberto e limpo" },
+    { n: 2, label: "Não abertos", hint: "ISO e o guia" },
+    { n: 1, label: "Em disputa", hint: "F-04" },
+  ],
+} as const;
 
-type ComplianceCopy = {
-  kicker: string;
-  title: string;
-  lede: string;
-  legend: string;
-  judged: string;
-  waiting: string;
-  layerWord: string;
-  agreed: string;
-  dispute: string;
-  notOpened: string;
-  notPass: string;
-  change: string;
-  differ: string;
-  agreedCount: string;
-  disputeCount: string;
-  waitingCount: string;
-  footnote: string;
-  findings: Finding[];
-  closed: WaitingRow[];
-};
-
-const copy: Record<"en" | "pt", ComplianceCopy> = {
+const detail = {
   en: {
-    kicker: "Lumen-1",
-    title: "Compliance",
-    lede: "Cross-check of the layers for this camera. Only four findings are judged.",
-    legend:
-      "Agreed means both auditors agree the gap is real. It is not a pass. An unopened layer is not a pass.",
-    judged: "Judged",
-    waiting: "Not opened",
-    layerWord: "Layer",
-    agreed: "Agreed · critical",
-    dispute: "In dispute",
-    notOpened: "Not opened",
-    notPass: "Not a pass",
-    change: "Change",
-    differ: "Where they differ",
-    agreedCount: "agreed findings",
-    disputeCount: "in dispute",
-    waitingCount: "not opened",
-    footnote: "This cross-check is not a compliance certificate.",
-    findings: [
-      {
-        id: "F-01",
-        status: "agreed",
-        layer: "Verification",
-        title: "Missing verification method for REQ-IMG-03 (optical MTF).",
-        clauses: ["ECSS-E-ST-10-02C Rev.1 5.2.1e", "ECSS-E-ST-10C Rev.1 5.2.3.4a"],
-        body: [
-          "Both auditors agree this gap is critical at PDR.",
-          "REQ-IMG-03 sets an on-orbit modulation transfer function of at least 0.15 at Nyquist. The verification matrix leaves method, level, and stage empty.",
-          "ECSS-E-ST-10-02C Rev.1 5.2.1e requires a verification strategy in that matrix: the methods, the product level, and the stage. ECSS-E-ST-10C Rev.1 5.2.3.4a requires a verification method on each requirement in the technical specification. The row has neither, so the requirement cannot be closed.",
-        ],
-        change:
-          "Set REQ-IMG-03 to test, at equipment level, in qualification, on an optical bench that measures modulation transfer at Nyquist.",
-      },
-      {
-        id: "F-02",
-        status: "agreed",
-        layer: "Contamination",
-        title: "Missing contamination / outgassing control on the optic.",
-        clauses: ["ECSS-Q-ST-70C Rev.2 4.4a"],
-        body: [
-          "Both auditors agree this gap is critical at PDR.",
-          "The lens, the silicone stake, the anodized baffle, and the coated filter sit in view of the detector. The baseline has no cleanliness level, no contamination budget, and no outgassing control. The integration line is to assemble on a clean bench.",
-          "ECSS-Q-ST-70C Rev.2 4.4a requires a contamination and cleanliness control programme. The baseline does not have one. A film or a particle on this optic lowers the modulation the image requirements ask for.",
-        ],
-        change:
-          "Add the cleanliness programme and an outgassing evaluation of every material in view of the detector, including the silicone, and give that requirement a verification method.",
-      },
-      {
-        id: "F-03",
-        status: "agreed",
-        layer: "Launch qualification",
-        title: "Missing qualification against the rideshare mechanical environment.",
-        clauses: ["ECSS-E-ST-10-03C Rev.1 4.5.2a"],
-        body: [
-          "Both auditors agree this gap is critical at PDR.",
-          "REQ-MEC-01 says the camera survives the Falcon 9 rideshare mechanical environment and keeps optical alignment. The campaign marks random vibration, sine, shock, static load, and acoustic as not applicable, because the dispenser vendor covers launch. There is no qualification model and no protoflight model.",
-          "ECSS-E-ST-10-03C Rev.1 4.5.2a asks for qualification evidence that the item meets its specification in the intended environments, with the qualification margins, on a qualification model or under a protoflight approach. That evidence is missing. The rideshare guide is not opened, so no section and no load factor are stated.",
-        ],
-        change:
-          "Plan a qualification or protoflight campaign for a flight-representative camera against the rideshare mechanical environment, and point REQ-MEC-01 at that campaign. Fill the environment levels when the guide is opened.",
-      },
-      {
-        id: "F-04",
-        status: "dispute",
-        layer: "Reliability",
-        title: "Reliability asserted with no FMEA.",
-        clauses: ["ECSS-Q-ST-30C Rev.1 6.4.2.2a"],
-        body: [
-          "REQ-REL-01 states 0.95 over two years. The file shows one detector, one controller, and one power feed. The only evidence is that the detector is commercial and that cameras of this class have flown. There is no failure-modes analysis.",
-          "ECSS-Q-ST-30C Rev.1 6.4.2.2a requires the analysis, not a second camera.",
-        ],
-        change:
-          "Do not add a second camera to close this row. The human decides whether to drop 0.95 until an FMEA exists, or to keep the single string once the analysis records that architecture and the accepted consequences.",
-        dispute:
-          "Both auditors see the missing analysis. They do not agree that a single string is the non-conformance. A science camera on a rideshare CubeSat can stay one string if the analysis records that architecture and the accepted consequences. The human decides.",
-      },
+    back: "Back",
+    more: "See more",
+    fail: "Where it fails",
+    close: "How to close it",
+    note: "Improvement",
+    cards: [
+      { id: "F-01", tone: "agreed", state: "Agreed", fail: "REQ-IMG-03, optical MTF, has no verification method.", close: "Name the method on that row.", note: "The image chain cannot close while the row is empty." },
+      { id: "F-02", tone: "agreed", state: "Agreed", fail: "The optic has no contamination or outgassing control.", close: "Add the cleanliness programme and an outgassing check.", note: "A film on this optic lowers the modulation." },
+      { id: "F-03", tone: "agreed", state: "Agreed", fail: "No qualification against the rideshare mechanical environment.", close: "Plan the qualification. Fill levels when the guide is opened.", note: "No load number. The guide is not opened." },
+      { id: "F-04", tone: "dispute", state: "In dispute", fail: "Reliability is asserted. There is no FMEA.", close: "The clause requires the analysis, not a second camera.", note: "This row stays in dispute. A person decides." },
     ],
     closed: [
-      {
-        id: "iso",
-        title: "ISO",
-        body: [
-          "No ISO document was opened for Lumen-1. No clause is named, and nothing in this row is judged.",
-        ],
-      },
-      {
-        id: "rideshare-guide",
-        title: "SpaceX Rideshare Payload User's Guide",
-        body: [
-          "The guide was not opened. No section and no load factor are stated. The blank row is not evidence that the rideshare environment is met.",
-        ],
-      },
+      { id: "ISO", text: "Not opened. Not a pass. No clause is named." },
+      { id: "Guide", text: "The rideshare guide is not opened. No section and no load." },
     ],
   },
   pt: {
-    kicker: "Lumen-1",
-    title: "Conformidade",
-    lede: "Cruzamento das camadas desta câmara. Só quatro achados são julgados.",
-    legend:
-      "Acordado significa que os dois auditores concordam que a falha é real. Não é uma aprovação. Uma camada por abrir não é uma aprovação.",
-    judged: "Julgados",
-    waiting: "Por abrir",
-    layerWord: "Camada",
-    agreed: "Acordado · crítico",
-    dispute: "Em disputa",
-    notOpened: "Não aberto",
-    notPass: "Não é uma aprovação",
-    change: "Alteração",
-    differ: "Onde divergem",
-    agreedCount: "achados acordados",
-    disputeCount: "em disputa",
-    waitingCount: "por abrir",
-    footnote: "Este cruzamento não é um certificado de conformidade.",
-    findings: [
-      {
-        id: "F-01",
-        status: "agreed",
-        layer: "Verificação",
-        title: "Método de verificação em falta no REQ-IMG-03 (MTF ótica).",
-        clauses: ["ECSS-E-ST-10-02C Rev.1 5.2.1e", "ECSS-E-ST-10C Rev.1 5.2.3.4a"],
-        body: [
-          "Os dois auditores concordam que esta falha é crítica na PDR.",
-          "O REQ-IMG-03 fixa uma função de transferência de modulação em órbita de pelo menos 0,15 em Nyquist. A matriz de verificação deixa método, nível e fase por preencher.",
-          "A ECSS-E-ST-10-02C Rev.1 5.2.1e exige uma estratégia de verificação nessa matriz: os métodos, o nível de produto e a fase. A ECSS-E-ST-10C Rev.1 5.2.3.4a exige um método de verificação em cada requisito da especificação técnica. A linha não tem nenhum dos dois, por isso o requisito não pode ser fechado.",
-        ],
-        change:
-          "Pôr o REQ-IMG-03 como ensaio, ao nível do equipamento, na qualificação, num banco ótico que meça a transferência de modulação em Nyquist.",
-      },
-      {
-        id: "F-02",
-        status: "agreed",
-        layer: "Contaminação",
-        title: "Controlo de contaminação / desgaseificação em falta na ótica.",
-        clauses: ["ECSS-Q-ST-70C Rev.2 4.4a"],
-        body: [
-          "Os dois auditores concordam que esta falha é crítica na PDR.",
-          "A lente, o silicone de fixação, o baffle anodizado e o filtro com revestimento estão na vista do detetor. A linha de base não tem nível de limpeza, orçamento de contaminação, nem controlo de desgaseificação. A integração é montar num banco limpo.",
-          "A ECSS-Q-ST-70C Rev.2 4.4a exige um programa de controlo de contaminação e limpeza. A linha de base não o tem. Uma película ou uma partícula nesta ótica baixa a modulação que os requisitos de imagem pedem.",
-        ],
-        change:
-          "Acrescentar o programa de limpeza e uma avaliação de desgaseificação de cada material na vista do detetor, incluindo o silicone, e dar a esse requisito um método de verificação.",
-      },
-      {
-        id: "F-03",
-        status: "agreed",
-        layer: "Qualificação de lançamento",
-        title: "Qualificação em falta face ao ambiente mecânico do rideshare.",
-        clauses: ["ECSS-E-ST-10-03C Rev.1 4.5.2a"],
-        body: [
-          "Os dois auditores concordam que esta falha é crítica na PDR.",
-          "O REQ-MEC-01 diz que a câmara sobrevive ao ambiente mecânico do rideshare da Falcon 9 e mantém o alinhamento ótico. A campanha marca vibração aleatória, seno, choque, carga estática e acústica como não aplicáveis, porque o fornecedor do dispenser cobre o lançamento. Não há modelo de qualificação nem modelo protoflight.",
-          "A ECSS-E-ST-10-03C Rev.1 4.5.2a pede evidência de qualificação de que o item cumpre a especificação nos ambientes previstos, com as margens de qualificação, num modelo de qualificação ou numa abordagem protoflight. Essa evidência não existe. O guia de rideshare não foi aberto, por isso não há secção nem fator de carga.",
-        ],
-        change:
-          "Planear uma campanha de qualificação ou protoflight de uma câmara representativa de voo contra o ambiente mecânico do rideshare, e apontar o REQ-MEC-01 para essa campanha. Preencher os níveis do ambiente quando o guia for aberto.",
-      },
-      {
-        id: "F-04",
-        status: "dispute",
-        layer: "Fiabilidade",
-        title: "Fiabilidade afirmada sem FMEA.",
-        clauses: ["ECSS-Q-ST-30C Rev.1 6.4.2.2a"],
-        body: [
-          "O REQ-REL-01 declara 0,95 ao longo de dois anos. O ficheiro mostra um detetor, um controlador e uma alimentação. A única evidência é que o detetor é comercial e que câmaras desta classe já voaram. Não há análise de modos de falha.",
-          "A ECSS-Q-ST-30C Rev.1 6.4.2.2a exige a análise, não uma segunda câmara.",
-        ],
-        change:
-          "Não acrescentar uma segunda câmara para fechar esta linha. A pessoa decide se retira o 0,95 até existir uma FMEA, ou se mantém a cadeia simples quando a análise registar essa arquitetura e as consequências aceites.",
-        dispute:
-          "Os dois auditores veem a análise em falta. Não concordam que uma cadeia simples seja a não-conformidade. Uma câmara científica num CubeSat de rideshare pode manter uma cadeia simples se a análise registar essa arquitetura e as consequências aceites. A pessoa decide.",
-      },
+    back: "Voltar",
+    more: "Ver mais",
+    fail: "Onde falha",
+    close: "Como fechar",
+    note: "Melhoria",
+    cards: [
+      { id: "F-01", tone: "agreed", state: "Acordado", fail: "O REQ-IMG-03, MTF ótica, não tem método de verificação.", close: "Nomear o método nessa linha.", note: "A cadeia de imagem não fecha com a linha vazia." },
+      { id: "F-02", tone: "agreed", state: "Acordado", fail: "A ótica não tem controlo de contaminação nem de desgaseificação.", close: "Acrescentar o programa de limpeza e a avaliação de desgaseificação.", note: "Uma película nesta ótica baixa a modulação." },
+      { id: "F-03", tone: "agreed", state: "Acordado", fail: "Não há qualificação face ao ambiente mecânico do rideshare.", close: "Planear a qualificação. Os níveis ficam para quando o guia abrir.", note: "Sem fator de carga. O guia não está aberto." },
+      { id: "F-04", tone: "dispute", state: "Em disputa", fail: "A fiabilidade é afirmada. Não há FMEA.", close: "A cláusula exige a análise, não uma segunda câmara.", note: "Esta linha fica em disputa. Uma pessoa decide." },
     ],
     closed: [
-      {
-        id: "iso",
-        title: "ISO",
-        body: [
-          "Nenhum documento ISO foi aberto para a Lumen-1. Não se nomeia nenhuma cláusula e nada nesta linha é julgado.",
-        ],
-      },
-      {
-        id: "rideshare-guide",
-        title: "Guia do utilizador de carga útil Rideshare da SpaceX",
-        body: [
-          "O guia não foi aberto. Não há secção nem fator de carga. A linha em branco não é evidência de que o ambiente de rideshare está cumprido.",
-        ],
-      },
+      { id: "ISO", text: "Não aberto. Não é uma aprovação. Nenhuma cláusula é nomeada." },
+      { id: "Guia", text: "O guia de rideshare não está aberto. Sem secção e sem carga." },
     ],
   },
-};
+} as const;
 
-export function ComplianceModule({ locale }: { locale: "en" | "pt" }) {
-  const text = copy[locale];
-  const htmlLang = locale === "pt" ? "pt-PT" : "en";
+export function ComplianceModule({ locale }: { locale: Locale }) {
+  const reduced = useReducedMotion() === true;
+  const [more, setMore] = useState(false);
+  const text = detail[locale];
 
   return (
-    <section className="astraea-compliance scan-page" lang={htmlLang} aria-labelledby="astraea-compliance-title">
-      <h1 className="ac-title" id="astraea-compliance-title">
-        {text.title}
-      </h1>
-      <ul className="scan-list">
-        {text.findings.map((item) => (
-          <li key={item.id} className="scan-row" id={`compliance-${item.id}`}>
-            <span className="scan-id">{item.id}</span>
-            <span className="scan-title">{item.title}</span>
-            <span className={item.status === "agreed" ? "scan-status is-agreed" : "scan-status is-dispute"}>
-              {item.status === "agreed" ? text.agreed : text.dispute}
-            </span>
-            <span className="scan-clause" title={item.clauses.join(" · ")}>
-              {item.clauses.join(" · ")}
-            </span>
-          </li>
-        ))}
-        {text.closed.map((item) => (
-          <li key={item.id} className="scan-row" id={`compliance-${item.id}`}>
-            <span className="scan-id">{text.layerWord}</span>
-            <span className="scan-title">{item.title}</span>
-            <span className="scan-status is-wait">
-              {text.notOpened}
-              {" · "}
-              {text.notPass}
-            </span>
-            <span className="scan-clause" />
-          </li>
-        ))}
-      </ul>
+    <section className="comp-screen screen-pad" lang={locale === "pt" ? "pt-PT" : "en"}>
+      <AnimatePresence mode="wait">
+        {more ? (
+          <motion.div key="more" className="comp-detail" initial={reduced ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.35 }}>
+            <button type="button" className="comp-back" onClick={() => setMore(false)}>{text.back}</button>
+            <div className="comp-cards">
+              {text.cards.map((card) => (
+                <article key={card.id} className={`comp-card is-${card.tone}`}>
+                  <header><span>{card.id}</span><em>{card.state}</em></header>
+                  <p><strong>{text.fail}</strong>{card.fail}</p>
+                  <p><strong>{text.close}</strong>{card.close}</p>
+                  <p><strong>{text.note}</strong>{card.note}</p>
+                </article>
+              ))}
+            </div>
+            <ul className="comp-closed">
+              {text.closed.map((item) => (
+                <li key={item.id}><span>{item.id}</span>{item.text}</li>
+              ))}
+            </ul>
+          </motion.div>
+        ) : (
+          <motion.div key="board" initial={reduced ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.35 }}>
+            <div className="comp-board">
+              {board[locale].map((item, index) => (
+                <motion.article key={item.label} className={index === 3 ? "comp-stat is-dispute" : "comp-stat"} initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduced ? 0 : index * 0.06 }}>
+                  <strong>{item.n}</strong>
+                  <span>{item.label}</span>
+                  <em>{item.hint}</em>
+                </motion.article>
+              ))}
+            </div>
+            <div className="comp-toolbar">
+              <button type="button" className="comp-more" onClick={() => setMore(true)}>{text.more}</button>
+            </div>
+            <ul className="scan-list">
+              {rows[locale].map((row) => (
+                <li key={row.id} className="scan-row">
+                  <span className="scan-id">{row.id}</span>
+                  <span className="scan-title">{row.title}</span>
+                  <span className={row.tone === "dispute" ? "scan-status is-dispute" : row.tone === "agreed" ? "scan-status is-agreed" : "scan-status"}>{row.status}</span>
+                  <span className="scan-clause">{row.clause}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

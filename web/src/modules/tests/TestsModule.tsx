@@ -1,43 +1,72 @@
+import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+
 type Locale = "en" | "pt";
 
-const copy = {
-  en: { title: "Tests", missing: "Missing" },
-  pt: { title: "Ensaios", missing: "Em falta" },
-} as const;
-
-const rows = [
+const gaps = [
   {
     id: "F-01",
-    en: "Optical MTF, REQ-IMG-03",
-    pt: "MTF ótica, REQ-IMG-03",
+    en: "Optical MTF",
+    pt: "MTF ótica",
+    req: { en: "REQ-IMG-03", pt: "REQ-IMG-03" },
+    enNote: "No procedure is opened. No test level.",
+    ptNote: "Nenhum procedimento está aberto. Nenhum nível de ensaio.",
   },
   {
     id: "F-02",
-    en: "Contamination and outgassing on the optic",
-    pt: "Contaminação e desgaseificação na ótica",
+    en: "Contamination and outgassing",
+    pt: "Contaminação e desgaseificação",
+    req: { en: "Optic", pt: "Ótica" },
+    enNote: "No procedure is opened for the optic.",
+    ptNote: "Nenhum procedimento está aberto para a ótica.",
   },
   {
     id: "F-03",
     en: "Rideshare mechanical qualification",
     pt: "Qualificação mecânica do rideshare",
+    req: { en: "Not opened", pt: "Não aberto" },
+    enNote: "No procedure is opened. No load number. The guide is not opened.",
+    ptNote: "Nenhum procedimento está aberto. Sem fator de carga. O guia não está aberto.",
   },
 ] as const;
 
 export function TestsModule({ locale }: { locale: Locale }) {
-  const text = copy[locale];
+  const reduced = useReducedMotion() === true;
+  const [selected, setSelected] = useState<(typeof gaps)[number]["id"]>("F-01");
+  const missing = locale === "pt" ? "Em falta" : "Missing";
 
   return (
-    <section className="tests-panel scan-page" lang={locale} aria-labelledby="tests-title">
-      <h1 id="tests-title">{text.title}</h1>
-      <ul className="scan-list">
-        {rows.map((row) => (
-          <li key={row.id} className="scan-row review">
-            <span className="scan-id">{row.id}</span>
-            <span className="scan-title">{row[locale]}</span>
-            <span className="scan-status is-missing">{text.missing}</span>
-          </li>
-        ))}
-      </ul>
+    <section className="lab-screen screen-pad" lang={locale === "pt" ? "pt-PT" : "en"}>
+      <div className="lab-grid">
+        {gaps.map((gap, index) => {
+          const on = selected === gap.id;
+          return (
+            <motion.button
+              key={gap.id}
+              type="button"
+              className={on ? "lab-card is-on" : "lab-card"}
+              aria-pressed={on}
+              onClick={() => setSelected(gap.id)}
+              initial={reduced ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: reduced ? 0 : index * 0.08, duration: 0.4 }}
+            >
+              <header>
+                <span>{gap.id}</span>
+                <em>{missing}</em>
+              </header>
+              <div className="lab-scope" aria-hidden="true">
+                <span className="lab-beam" />
+                <i />
+                <i />
+              </div>
+              <h2>{gap[locale]}</h2>
+              <p className="lab-req">{gap.req[locale]}</p>
+              <p className="lab-note">{locale === "pt" ? gap.ptNote : gap.enNote}</p>
+            </motion.button>
+          );
+        })}
+      </div>
     </section>
   );
 }

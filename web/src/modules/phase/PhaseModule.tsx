@@ -1,211 +1,121 @@
 import { useState } from "react";
-import "./phase.css";
+import { motion, useReducedMotion } from "framer-motion";
 
-const GATE_ORDER = ["MCR", "SRR", "MDR", "SDR", "PDR", "CDR", "PRR", "TRR", "SAR", "ORR", "FRR"] as const;
-
-type GateCode = (typeof GATE_ORDER)[number];
-type GateState = "earlier" | "now" | "next" | "later";
-type FutureCode = "CDR" | "PRR" | "TRR" | "SAR" | "ORR" | "FRR";
 type Locale = "en" | "pt";
+type Code = "MCR" | "SRR" | "MDR" | "SDR" | "PDR" | "CDR" | "PRR" | "TRR" | "SAR" | "ORR" | "FRR";
 
-type PackRow = {
-  id: string;
-  title: string;
-  status: string;
-  tone?: "dispute";
+const order: Code[] = ["MCR", "SRR", "MDR", "SDR", "PDR", "CDR", "PRR", "TRR", "SAR", "ORR", "FRR"];
+
+const names: Record<Locale, Record<Code, string>> = {
+  en: {
+    MCR: "Mission concept",
+    SRR: "System requirements",
+    MDR: "Mission definition",
+    SDR: "System design",
+    PDR: "Preliminary design",
+    CDR: "Critical design",
+    PRR: "Production readiness",
+    TRR: "Test readiness",
+    SAR: "System acceptance",
+    ORR: "Operational readiness",
+    FRR: "Flight readiness",
+  },
+  pt: {
+    MCR: "Conceito de missão",
+    SRR: "Requisitos de sistema",
+    MDR: "Definição de missão",
+    SDR: "Projeto de sistema",
+    PDR: "Projeto preliminar",
+    CDR: "Projeto crítico",
+    PRR: "Prontidão de produção",
+    TRR: "Prontidão de ensaio",
+    SAR: "Aceitação do sistema",
+    ORR: "Prontidão operacional",
+    FRR: "Prontidão de voo",
+  },
 };
 
-const FUTURE: FutureCode[] = ["CDR", "PRR", "TRR", "SAR", "ORR", "FRR"];
-
-function gateState(code: GateCode): GateState {
+function stateOf(code: Code) {
   if (code === "PDR") return "now";
   if (code === "CDR") return "next";
-  return GATE_ORDER.indexOf(code) < GATE_ORDER.indexOf("PDR") ? "earlier" : "later";
+  return order.indexOf(code) < order.indexOf("PDR") ? "earlier" : "ahead";
 }
 
-function isFuture(code: GateCode): code is FutureCode {
-  return (FUTURE as readonly string[]).includes(code);
-}
+const when: Record<Locale, Record<string, string>> = {
+  en: { earlier: "Earlier", now: "Now", next: "Next · 8 weeks", ahead: "Ahead" },
+  pt: { earlier: "Anterior", now: "Agora", next: "Seguinte · 8 semanas", ahead: "À frente" },
+};
 
-const names: Record<Locale, Record<GateCode, string>> = {
+const lines: Record<Locale, Partial<Record<Code, string>>> = {
   en: {
-    MCR: "Mission concept review",
-    SRR: "System requirements review",
-    MDR: "Mission definition review",
-    SDR: "System design review",
-    PDR: "Preliminary design review",
-    CDR: "Critical design review",
-    PRR: "Production readiness review",
-    TRR: "Test readiness review",
-    SAR: "System acceptance review",
-    ORR: "Operational readiness review",
-    FRR: "Flight readiness review",
+    PDR: "Lumen-1 is here. It has not left PDR.",
+    CDR: "Next, in 8 weeks. Open actions are only the four findings.",
+    PRR: "Ahead. No production evidence is opened.",
+    TRR: "In 20 weeks. No test levels are opened.",
+    SAR: "Ahead. No acceptance evidence is opened.",
+    ORR: "Ahead. No operations evidence is opened.",
+    FRR: "In 36 weeks. No flight-readiness evidence is opened.",
   },
   pt: {
-    MCR: "Revisão do conceito de missão",
-    SRR: "Revisão dos requisitos de sistema",
-    MDR: "Revisão da definição de missão",
-    SDR: "Revisão do projeto de sistema",
-    PDR: "Revisão preliminar de projeto",
-    CDR: "Revisão crítica de projeto",
-    PRR: "Revisão de prontidão de produção",
-    TRR: "Revisão de prontidão de ensaio",
-    SAR: "Revisão de aceitação do sistema",
-    ORR: "Revisão de prontidão operacional",
-    FRR: "Revisão de prontidão de voo",
+    PDR: "O Lumen-1 está aqui. Não saiu da PDR.",
+    CDR: "Seguinte, em 8 semanas. As ações abertas são só as quatro constatações.",
+    PRR: "À frente. Nenhuma evidência de produção está aberta.",
+    TRR: "Em 20 semanas. Nenhum nível de ensaio está aberto.",
+    SAR: "À frente. Nenhuma evidência de aceitação está aberta.",
+    ORR: "À frente. Nenhuma evidência de operações está aberta.",
+    FRR: "Em 36 semanas. Nenhuma evidência de prontidão de voo está aberta.",
   },
 };
 
-const states: Record<Locale, Record<GateState, string>> = {
-  en: { earlier: "Earlier", now: "Now", next: "Next", later: "Later" },
-  pt: { earlier: "Anterior", now: "Agora", next: "Seguinte", later: "Depois" },
-};
-
-const forward: Record<Locale, Record<Exclude<FutureCode, "CDR">, string>> = {
-  en: {
-    PRR: "Ahead",
-    TRR: "In 20 weeks",
-    SAR: "Ahead",
-    ORR: "Ahead",
-    FRR: "In 36 weeks",
-  },
-  pt: {
-    PRR: "À frente",
-    TRR: "Em 20 semanas",
-    SAR: "À frente",
-    ORR: "À frente",
-    FRR: "Em 36 semanas",
-  },
-};
-
-const labels: Record<Locale, { title: string; open: string; dispute: string; closed: string; weeks8: string }> = {
-  en: {
-    title: "Phase",
-    open: "Open",
-    dispute: "In dispute",
-    closed: "Not opened",
-    weeks8: "In 8 weeks",
-  },
-  pt: {
-    title: "Fase",
-    open: "Em aberto",
-    dispute: "Em disputa",
-    closed: "Não aberto",
-    weeks8: "Em 8 semanas",
-  },
-};
-
-function railStatus(locale: Locale, code: GateCode): string {
-  if (code === "CDR") return states[locale].next;
-  if (isFuture(code)) return forward[locale][code];
-  return states[locale][gateState(code)];
-}
-
-function packRows(locale: Locale, code: FutureCode): PackRow[] {
-  const text = labels[locale];
-  if (code === "CDR") {
-    const en = locale === "en";
-    return [
-      { id: "CDR", title: text.weeks8, status: states[locale].next },
-      {
-        id: "F-01",
-        title: en
-          ? "Add a verification method for REQ-IMG-03, optical MTF"
-          : "Acrescentar um método de verificação ao REQ-IMG-03, MTF ótica",
-        status: text.open,
-      },
-      {
-        id: "F-02",
-        title: en
-          ? "Add contamination and outgassing control on the optic"
-          : "Acrescentar controlo de contaminação e desgaseificação na ótica",
-        status: text.open,
-      },
-      {
-        id: "F-03",
-        title: en
-          ? "Add qualification against the rideshare mechanical environment"
-          : "Acrescentar qualificação face ao ambiente mecânico do rideshare",
-        status: text.open,
-      },
-      {
-        id: "F-04",
-        title: en ? "Reliability asserted, no FMEA" : "Fiabilidade afirmada, sem FMEA",
-        status: text.dispute,
-        tone: "dispute",
-      },
-      {
-        id: "F-04",
-        title: en
-          ? "The clause requires the analysis, not a second camera"
-          : "A cláusula exige a análise, não uma segunda câmara",
-        status: text.dispute,
-        tone: "dispute",
-      },
-    ];
-  }
-  const evidence: Record<Exclude<FutureCode, "CDR">, Record<Locale, string>> = {
-    PRR: { en: "Production evidence", pt: "Evidência de produção" },
-    TRR: { en: "Test levels", pt: "Níveis de ensaio" },
-    SAR: { en: "Acceptance evidence", pt: "Evidência de aceitação" },
-    ORR: { en: "Operations evidence", pt: "Evidência de operações" },
-    FRR: { en: "Flight-readiness evidence", pt: "Evidência de prontidão de voo" },
-  };
-  return [{ id: code, title: evidence[code][locale], status: text.closed }];
-}
+const chips = {
+  en: [
+    ["F-01", "Verification method for optical MTF"],
+    ["F-02", "Contamination and outgassing"],
+    ["F-03", "Rideshare mechanical qualification"],
+    ["F-04", "In dispute · analysis, not a second camera"],
+  ],
+  pt: [
+    ["F-01", "Método de verificação da MTF ótica"],
+    ["F-02", "Contaminação e desgaseificação"],
+    ["F-03", "Qualificação mecânica do rideshare"],
+    ["F-04", "Em disputa · a análise, não uma segunda câmara"],
+  ],
+} as const;
 
 export function PhaseModule({ locale }: { locale: Locale }) {
-  const text = labels[locale];
-  const [selected, setSelected] = useState<FutureCode>("CDR");
-  const rows = packRows(locale, selected);
+  const reduced = useReducedMotion() === true;
+  const [selected, setSelected] = useState<Code>("PDR");
+  const state = stateOf(selected);
 
   return (
-    <section className="astraea-phase scan-page" lang={locale === "pt" ? "pt-PT" : "en"} aria-labelledby="astraea-phase-title">
-      <h1 className="ap-title" id="astraea-phase-title">
-        {text.title}
-      </h1>
-      <ul className="scan-list">
-        {GATE_ORDER.map((code) => {
-          const state = gateState(code);
-          const future = isFuture(code);
-          const on = future && selected === code;
-          const className = `scan-row review is-${state}${on ? " is-selected" : ""}`;
-          const status = railStatus(locale, code);
-          if (!future) {
-            return (
-              <li key={code} className={className} aria-current={state === "now" ? "step" : undefined}>
-                <span className="scan-id">{code}</span>
-                <span className="scan-title">{names[locale][code]}</span>
-                <span className="scan-status">{status}</span>
-              </li>
-            );
-          }
+    <section className="phase-screen screen-pad" lang={locale === "pt" ? "pt-PT" : "en"}>
+      <div className="phase-strip" role="list">
+        {order.map((code) => {
+          const gate = stateOf(code);
+          const on = selected === code;
           return (
-            <li key={code} className="scan-choice">
-              <button
-                type="button"
-                className={className}
-                aria-pressed={on}
-                aria-controls="phase-pack"
-                onClick={() => setSelected(code)}
-              >
-                <span className="scan-id">{code}</span>
-                <span className="scan-title">{names[locale][code]}</span>
-                <span className="scan-status">{status}</span>
-              </button>
-            </li>
+            <button key={code} type="button" role="listitem" className={`phase-card is-${gate}${on ? " is-on" : ""}`} aria-pressed={on} onClick={() => setSelected(code)}>
+              {gate === "now" && !reduced ? <span className="phase-pulse" aria-hidden="true" /> : null}
+              <span className="phase-code">{code}</span>
+              <span className="phase-name">{names[locale][code]}</span>
+              <span className="phase-when">{when[locale][gate]}</span>
+            </button>
           );
         })}
-      </ul>
-      <ul className="scan-list phase-pack" id="phase-pack" aria-label={names[locale][selected]}>
-        {rows.map((row, index) => (
-          <li key={`${row.id}-${index}`} className="scan-row review">
-            <span className="scan-id">{row.id}</span>
-            <span className="scan-title">{row.title}</span>
-            <span className={row.tone === "dispute" ? "scan-status is-dispute" : "scan-status"}>{row.status}</span>
-          </li>
-        ))}
-      </ul>
+      </div>
+      <motion.article key={selected} className={`phase-panel is-${state}`} initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.28 }}>
+        <p className="phase-kicker">{when[locale][state]}</p>
+        <h2>{selected}</h2>
+        <p>{names[locale][selected]}</p>
+        <p className="phase-line">{lines[locale][selected] ?? (locale === "pt" ? "Anterior à PDR. O Lumen-1 não saiu da PDR." : "Earlier than PDR. Lumen-1 has not left PDR.")}</p>
+        {selected === "CDR" ? (
+          <ul className="phase-chips">
+            {chips[locale].map(([id, label]) => (
+              <li key={id} className={id === "F-04" ? "is-dispute" : undefined}><span>{id}</span>{label}</li>
+            ))}
+          </ul>
+        ) : null}
+      </motion.article>
     </section>
   );
 }

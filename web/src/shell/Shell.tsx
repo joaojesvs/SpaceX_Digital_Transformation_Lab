@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { BlueprintsModule } from "../modules/blueprints/BlueprintsModule";
 import { BudgetModule } from "../modules/budget/BudgetModule";
 import { ComplianceModule } from "../modules/compliance/ComplianceModule";
 import { CorrespondenceModule } from "../modules/correspondence/CorrespondenceModule";
@@ -47,7 +48,8 @@ function ModuleView({ id, locale }: { id: ModuleId; locale: "en" | "pt" }) {
   if (id === "schedule") return <ScheduleModule locale={locale} />;
   if (id === "tests") return <TestsModule locale={locale} />;
   if (id === "correspondence") return <CorrespondenceModule locale={locale} />;
-  return <TeamModule locale={locale} />;
+  if (id === "team") return <TeamModule locale={locale} />;
+  return <BlueprintsModule locale={locale} />;
 }
 
 export function Shell() {

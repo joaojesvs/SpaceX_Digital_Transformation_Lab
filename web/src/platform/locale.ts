@@ -8,6 +8,7 @@ export type ModuleId =
   | "schedule"
   | "tests"
   | "correspondence"
-  | "team";
+  | "team"
+  | "blueprints";
 
 export type ViewId = ModuleId | "desk";
