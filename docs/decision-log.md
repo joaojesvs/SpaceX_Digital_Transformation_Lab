@@ -78,6 +78,12 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — regulation library location
+
+João: the 317 regulation files go to Google Drive, not into the GitHub repo. The folder link is not available yet. Git keeps the demo, the cards, and the team’s own documents. The agent does not vendor the PDFs. Pyrotechnics, explosives, and propulsion stay out.
+
+This entry does not remove files already on `main`.
+
 ### 26 Oct 2026 — finding quality review
 
 Finding quality review opened: https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/2
