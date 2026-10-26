@@ -1,21 +1,10 @@
 import { useCallback, useEffect, useState, type MouseEvent } from "react";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
 import { scenes, ui, type Lang, type Scene } from "./copy";
-import { MissionDesk } from "./desk";
 import { BrandScene, Figure } from "./figures";
 
 const EASE = [0.4, 0, 0.2, 1] as const;
-const STILLS = [
-  "/astrea-mark.png",
-  "/astrea-wordmark.png",
-  "/astraea-mark.jpg",
-  "/optical-payload.jpg",
-  "/atmosphere.jpg",
-  "/phase-rail.jpg",
-  "/desk-widget.jpg",
-];
-const DESK_W = 1180;
-const DESK_H = 704;
+const STILLS = ["/astrea-mark.png", "/astrea-wordmark.png", "/astraea-mark.jpg"];
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -42,7 +31,6 @@ export function App() {
   const [lang, setLang] = useState<Lang>("en");
   const [autoplay, setAutoplay] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [deskScale, setDeskScale] = useState(1);
   const scene = scenes[index];
 
   useEffect(() => {
@@ -54,17 +42,6 @@ export function App() {
       const image = new Image();
       image.src = src;
     }
-  }, []);
-
-  useEffect(() => {
-    const measure = () => {
-      const width = window.innerWidth * 0.9;
-      const height = window.innerHeight * 0.68;
-      setDeskScale(Math.min(width / DESK_W, height / DESK_H));
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
   }, []);
 
   const go = useCallback((direction: number) => {
@@ -147,7 +124,7 @@ export function App() {
           key={scene.id}
           className={`scene scene-${scene.layout}`}
           data-scene={scene.id}
-          data-tone={scene.tone ?? "plain"}
+          data-tone="plain"
           initial={reduced ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -157,15 +134,13 @@ export function App() {
           <div className="scrim" />
           {scene.layout === "brand" ? (
             <BrandScene lang={lang} />
-          ) : scene.layout === "desk" ? (
-            <DeskScene scene={scene} lang={lang} scale={deskScale} reduced={reduced} rise={rise} />
           ) : (
             <Copy scene={scene} lang={lang} reduced={reduced} rise={rise} />
           )}
         </motion.section>
       </AnimatePresence>
 
-      {scene.id !== "brand" ? (
+      {scene.id !== "cover" ? (
         <div className="lockup" aria-hidden="true">
           <img className="lockup-mark" src="/astrea-mark.png" alt="" />
           <img className="lockup-word" src="/astrea-wordmark.png" alt="" />
@@ -229,45 +204,10 @@ function Words({ scene, lang }: { scene: Scene; lang: Lang }) {
   return (
     <>
       {scene.eyebrow ? (
-        <p className={scene.tone === "dispute" ? "eyebrow eyebrow-dispute" : "eyebrow"}>{scene.eyebrow[lang]}</p>
+        <p className="eyebrow">{scene.eyebrow[lang]}</p>
       ) : null}
       <h1 className={scene.wide ? "wide" : undefined}>{scene.title[lang]}</h1>
-      {scene.figure === "finding" ? null : scene.detail ? <p className="detail">{scene.detail[lang]}</p> : null}
-      {scene.figure === "finding" ? null : scene.note ? <p className="note">{scene.note}</p> : null}
+      {scene.detail ? <p className="detail">{scene.detail[lang]}</p> : null}
     </>
-  );
-}
-
-function DeskScene({
-  scene,
-  lang,
-  scale,
-  reduced,
-  rise,
-}: {
-  scene: Scene;
-  lang: Lang;
-  scale: number;
-  reduced: boolean;
-  rise: Transition;
-}) {
-  return (
-    <div className="desk-scene">
-      <motion.div
-        className="desk-caption"
-        initial={reduced ? false : { opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={rise}
-      >
-        {scene.eyebrow ? <p className="eyebrow">{scene.eyebrow[lang]}</p> : null}
-        <h1>{scene.title[lang]}</h1>
-        {scene.detail ? <p className="detail">{scene.detail[lang]}</p> : null}
-      </motion.div>
-      <div className="desk-fit" style={{ width: DESK_W * scale, height: DESK_H * scale }}>
-        <div className="desk-scale" style={{ transform: `scale(${scale})` }}>
-          <MissionDesk lang={lang} />
-        </div>
-      </div>
-    </div>
   );
 }
