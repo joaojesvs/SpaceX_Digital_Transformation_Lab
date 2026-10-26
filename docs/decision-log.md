@@ -14,6 +14,14 @@ An audit agent for a CubeSat optical payload (camera) flying as a Falcon 9 rides
 
 English and Portuguese for the demo UI, the finding cards, and the presentation. The judged presentation is the English one. Default the live demo to English and keep a Portuguese toggle.
 
+### Corpus
+
+The regulation library is 317 files. They are arriving in parts. The tree on 26 Oct 2026 around 11:45 UTC (24 superseded engineering PDFs) is not the full library. Re-pull before freezing any card. Do not switch the instrument because an early batch is incomplete.
+
+Card only the demo slice below. Do not index all 317 files. Pyrotechnics, explosives, and propulsion stay out of the demo even if those files arrive.
+
+If a file the slice needs is not on `main` yet, mark that card "waiting on upload". Do not invent a clause from a file the repo does not hold.
+
 ### Standards slice
 
 Use only this slice:
@@ -72,7 +80,9 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ### 26 Oct 2026
 
-None yet. Later changes go here, newest first. Date each entry. Say what moved and why.
+João: the regulation library is 317 files, uploading in parts. The first batch is not the full corpus. The instrument stays the Falcon 9 rideshare CubeSat camera. The demo cards a slice only. Pyrotechnics, explosives, and propulsion stay out.
+
+A pull of `origin/main` after that note is still `cde8015` (README plus 65 PDFs). That batch is larger than the 24-file tree from about 11:45 UTC and is still not the 317-file library. Do not freeze cards from it, and do not switch the instrument because the upload is incomplete. ECSS-Q-ST-30, ECSS-Q-ST-70, and the SpaceX Rideshare Payload User's Guide are not in this batch, so those cards stay "waiting on upload". Do not invent a clause from a file the repo does not hold.
 
 ## Problems
 
