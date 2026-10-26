@@ -12,7 +12,7 @@ Clause identifiers below are the ones on the finding cards. For F-01 and F-03 th
 | --- | --- | --- | --- |
 | F-01 | REQ-IMG-03 has no verification method | Agree | ECSS-E-ST-10-02C Rev.1, 5.2.1e. Supporting: 5.2.2.1a |
 | F-02 | No contamination or outgassing control on the optic | Agree | waiting on upload. Expected document: ECSS-Q-ST-70. No clause invented |
-| F-03 | No qualification against rideshare launch loads | Agree | ECSS-E-ST-10-03C Rev.1, 4.5.2a. Supporting: 4.5.1b; 5.1b; 5.2a with Table 5-1 columns a and i; 5.5.2.3; 5.5.2.5; 5.5.2.6. Launch: Rideshare Payload User's Guide, Version 10 (September 2024), sections 4.1.2.1, 4.1.6, and 6.6 |
+| F-03 | No qualification against rideshare launch loads | Agree | ECSS-E-ST-10-03C Rev.1, 4.5.2a. Supporting: 4.5.1b; 5.1b; 5.2a with Table 5-1 columns a and i; 5.5.2.3; 5.5.2.5; 5.5.2.6. Launch guide: waiting on upload |
 | F-04 | Single-string camera, reliability asserted, no FMEA | Dispute | waiting on upload. Expected document: ECSS-Q-ST-30. No clause invented |
 
 ## F-01 — Requirement with no verification method — Agree
@@ -46,9 +46,9 @@ ECSS-E-ST-10-03C Rev.1 is on `main` (`ECSS-E-ST-10-03-Rev.1(31May2022).pdf`). Th
 - **5.1b** applies every required test of each type the unit fits. The standard's own example is a unit that is both electronic and optical. A camera with a detector and a controller fits type a and type i.
 - **5.2a** sets the qualification baseline as Table 5-1, read with 5.1b. In that table, sinusoidal vibration (5.5.2.5) and shock (5.5.2.6) are required for both type a and type i. Random vibration (5.5.2.3) is required for type a and is a customer decision for type i, so the electronic type makes random required. The campaign plans none of the three.
 
-The launch constraint is the public SpaceX Rideshare Payload User's Guide, Version 10 (September 2024), sections 4.1.2.1, 4.1.6, and 6.6, as named on the card. It is a public summary, not one of the 317 files, and the card does not mark it waiting on upload. Under the fully containerized claim, section 6.6 still requires a random-vibration test of the CubeSat. Section 4.1.6 is that environment. Section 4.1.2.1 is the dispenser load, not a number to copy onto the lens barrel. The guide does not require sine at CubeSat level in that containerized case, while Table 5-1 does, unless the customer tailors it. The project has done neither the random test the guide requires nor the qualification 4.5.2a describes.
+The SpaceX Rideshare Payload User's Guide is the environment those tests are aimed at. The card marks that guide waiting on upload. It is not open. This review does not name a guide section or a load factor. Both auditors still agree on the testing clause that is open: the campaign has no qualification model, no protoflight model, and no launch-load test, so 4.5.2a has no evidence.
 
-Agree. The proposed change on the card is the one an engineer can carry out: a qualification or protoflight random-vibration test of a flight-representative camera, three axes, against the guide's random environment and the section 6.6 margin; sine and shock as Table 5-1 requires, or a written customer tailoring; delete the line that the dispenser vendor covers the camera.
+Agree on ECSS-E-ST-10-03C Rev.1, 4.5.2a. The change on the card is a qualification or protoflight campaign for a flight-representative camera against the rideshare mechanical environment, including the sine, random, and shock tests Table 5-1 requires for an electronic optical unit, unless a written customer tailoring narrows that list. Delete the line that the dispenser vendor covers the camera. Environment levels wait until the guide can be opened.
 
 ## F-04 — Single-string camera, reliability asserted, no FMEA — Dispute
 
