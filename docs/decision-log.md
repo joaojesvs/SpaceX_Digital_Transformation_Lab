@@ -78,6 +78,15 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — bilingual pitch
+
+Bilingual pitch opened: https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/4
+
+- English deck: https://www.canva.com/d/n9BpVJvYGEyb2hu
+- Portuguese deck: https://www.canva.com/d/CCGGOlYNz7dAFcr
+
+The five-minute judged talk is English. A follow-up is aligning the spoken citations with the open files only: ECSS-E-ST-10-02C Rev.1 and ECSS-E-ST-10-03C Rev.1. Q-ST-70, Q-ST-30, and E-ST-10 stay unnamed as cited clauses until those files are open. No Drive URL.
+
 ### 26 Oct 2026 — finding quality review, second pass
 
 Finding quality review second pass updated: https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/2
