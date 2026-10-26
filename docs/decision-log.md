@@ -78,6 +78,10 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — demo interface
+
+Demo interface opened https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/6. Start with `cd web && npm install && npm run dev`, then http://localhost:5173. English default, Portuguese toggle, four finding cards. F-04 stays in dispute. No rideshare-guide section and no Drive URL in the UI. A Canva cover frame was not created because the cover request was refused for credit quota. The pitch decks already exist.
+
 ### 26 Oct 2026 — audit demo refreshed
 
 Audit demo on https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/5 refreshed from the finding cards. Command: `npm --prefix agent --silent run demo`. It prints F-01 agreed, F-02 agreed, F-03 agreed with the rideshare guide still waiting, and F-04 in dispute. No zip and no PDFs committed.
