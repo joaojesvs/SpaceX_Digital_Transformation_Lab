@@ -19,21 +19,12 @@ export type Intent = (typeof INTENTS)[number];
 type Copy = Record<Locale, string>;
 
 export const prompts: { intent: Intent; en: string; pt: string }[] = [
-  {
-    intent: "project",
-    en: "This mission",
-    pt: "Esta missão",
-  },
-  {
-    intent: "verification",
-    en: "The open MTF gap",
-    pt: "A lacuna aberta de MTF",
-  },
-  {
-    intent: "next",
-    en: "What CDR asks next",
-    pt: "O que a CDR pede a seguir",
-  },
+  { intent: "project", en: "This mission", pt: "Esta missão" },
+  { intent: "verification", en: "The missing MTF verification", pt: "A verificação de MTF em falta" },
+  { intent: "contamination", en: "Contamination", pt: "Contaminação" },
+  { intent: "qualification", en: "Launch qualification", pt: "Qualificação de lançamento" },
+  { intent: "fmea", en: "The FMEA dispute", pt: "A disputa da FMEA" },
+  { intent: "next", en: "What CDR asks next", pt: "O que a CDR pede a seguir" },
 ];
 
 export const nextPrompt: Copy = {
