@@ -86,11 +86,11 @@ What the project wrote in the interface note:
 
 "Falcon 9 rideshare, CubeSat dispenser, fully containerized. Launch loads are the dispenser's problem. Lumen-1 has no structural qualification."
 
-The SpaceX Rideshare Payload User's Guide is the launch constraint in the slice. It is not on `main`, and the Google Drive link is not in the decisions file, so this baseline does not state the guide's sections or load factors. The planted gap is the project's own record: no structural qualification, and no launch-load test in the campaign.
+The SpaceX Rideshare Payload User's Guide is the launch constraint in the slice. It is not on `main`, and it is not among the 317 names in the Drive zip, so this baseline does not state the guide's sections or load factors. The planted gap is the project's own record: no structural qualification, and no launch-load test in the campaign.
 
 ## Planted issues, for the script
 
 1. REQ-IMG-03 has no verification method. Both auditors agree.
 2. The optic has no contamination or outgassing control. Both auditors agree.
 3. There is no qualification against the rideshare launch loads. Both auditors agree.
-4. The camera is single-string and its reliability is asserted with no FMEA. The two auditors do not agree. The dependability file is not on `main` yet, so neither side cites a clause.
+4. The camera is single-string and its reliability is asserted with no FMEA. The two auditors do not agree. Both now cite ECSS-Q-ST-30C Rev.1 clause 6.4.2.2a. The dispute is whether "single-string" is itself the non-conformance.

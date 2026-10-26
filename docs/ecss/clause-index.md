@@ -2,15 +2,15 @@
 
 Applicability index for the hackathon demo. The source system is the synthetic project in `demo-baseline.md`. The finding register is `findings.md`. This file is the standards slice only.
 
-Frozen against `origin/main` at `cde8015` (26 Oct 2026), after a pull. That tree holds 65 PDFs. The locked decisions put the full library of 317 files on Google Drive, not in Git. The Drive link is not recorded in `docs/decisions.md` yet. This branch commits no PDFs. This index is the demo slice only, not a catalogue of the 65 and not an index of the 317.
+Read against `origin/main` at `cde8015` and against Google Drive file `1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo`, opened 26 Oct 2026. That file is one zip, `Files_ECSS.zip`, with 317 entries under `Files_PDF/`. This branch commits no PDFs and does not commit the zip. This index is the demo slice only.
 
-Until that link is in the decisions file, a card is written only from a PDF opened on `main`. Every other slice file is **waiting on upload**. When the link is recorded, those waiting files are read from Drive. A file that cannot be opened stays waiting. No clause is invented for it.
+A clause below was read from a file on `main` or from a PDF extracted from that zip. Pyrotechnics, explosives, and propulsion were not opened. The SpaceX rideshare guide is not in the zip, so that card stays **waiting on upload**.
 
 Explanations below are original. They are not quotations of the standards.
 
 ## Upload delta
 
-The files on `main` do not describe a mission. They are standards. The instrument stays a CubeSat optical payload (a camera) on a Falcon 9 rideshare. It was not switched to a magnetometer. The remaining library, when the Drive link is recorded, does not get indexed here. Pyrotechnics, explosives, and propulsion stay out even if they are on that Drive.
+The zip is a standards library, not a mission description. The instrument stays a CubeSat optical payload (a camera) on a Falcon 9 rideshare. Three current issues were opened from the zip: `ECSS-E-ST-10C-Rev.1(15February2017).pdf`, `ECSS-Q-ST-30C-Rev.1(15February2017).pdf`, and `ECSS-Q-ST-70C-Rev.2(15October2019).pdf`. Older issues of those same titles are in the zip and were not used. The other 314 names were not indexed. Pyrotechnics, explosives, and propulsion were not opened.
 
 Present on `main` and kept out of this index:
 
@@ -25,18 +25,24 @@ Present on `main` and kept out of this index:
 
 | Card | Document | Clause used | Status |
 | --- | --- | --- | --- |
-| Slice, no planted finding | ECSS-E-ST-10 | — | waiting on upload |
+| Slice, supports F-01 | ECSS-E-ST-10C Rev.1 (15 February 2017) | 5.2.3.4a | ready |
 | F-01 | ECSS-E-ST-10-02C Rev.1 (1 February 2018) | 5.2.1e | ready |
-| F-02 | ECSS-Q-ST-70 | — | waiting on upload |
+| F-02 | ECSS-Q-ST-70C Rev.2 (15 October 2019) | 4.4a | ready |
 | F-03 | ECSS-E-ST-10-03C Rev.1 (31 May 2022) | 4.5.2a | ready |
-| F-04 | ECSS-Q-ST-30 | — | waiting on upload |
+| F-04 | ECSS-Q-ST-30C Rev.1 (15 February 2017) | 6.4.2.2a | ready, in dispute |
 | Launch constraint for F-03 | SpaceX Rideshare Payload User's Guide | — | waiting on upload |
 
-## ECSS-E-ST-10 — system engineering
+## ECSS-E-ST-10C Rev.1 — system engineering
 
-**waiting on upload**
+**ready**
 
-The slice uses this standard so that requirements are traceable. No file titled `ECSS-E-ST-10` is on `main` at `cde8015`, and the Drive link is not in the decisions file. No clause identifier is stated.
+- Opened from the zip: `Files_PDF/ECSS-E-ST-10C-Rev.1(15February2017).pdf`
+- Cover read: ECSS-E-ST-10C Rev.1, 15 February 2017, Space engineering — System engineering general requirements
+- The 6 March 2009 issue is also in the zip and was not opened
+
+**5.2.2.** Every requirement is traced in both directions: to its source, to any lower-level requirement, to a design change that modifies it, and to the verification that closes it. The project keeps a requirements traceability matrix for that. Lumen-1 already gives each requirement a parent, so traceability is not one of the four planted gaps.
+
+**5.2.3.4a.** Each requirement in the technical specification has one verification method, or a combination of them. **5.2.3.4b** puts those methods in the verification matrix. REQ-IMG-03 has neither. That is the same gap as F-01, which is also cited from the verification standard on `main`.
 
 ## ECSS-E-ST-10-02C Rev.1 — verification
 
@@ -53,17 +59,27 @@ The standard is how a project shows that a deliverable meets the requirements it
 
 **5.2.4.2a.** The qualification stage is where the supplier shows that the design, margins included, meets the requirements. It is done on hardware and software that represent the flight item. This clause supports F-03; F-01 itself is the empty matrix cell.
 
-## ECSS-Q-ST-30 — dependability
+## ECSS-Q-ST-30C Rev.1 — dependability
 
-**waiting on upload**
+**ready**
 
-The slice uses this standard so that failures are analyzed rather than asserted. No `ECSS-Q-ST-30` file, and no other Q-branch file, is on `main` at `cde8015`. The Drive link is not in the decisions file. No clause identifier is stated. F-04 stays open until the file can be opened.
+- Opened from the zip: `Files_PDF/ECSS-Q-ST-30C-Rev.1(15February2017).pdf`
+- Cover read: ECSS-Q-ST-30C Rev.1, 15 February 2017, Space product assurance — Dependability
+- The 6 March 2009 issue is also in the zip and was not opened. `ECSS-Q-ST-30-02` is in the zip and was not opened. The parent states the FMEA obligation and points at that document for the worksheet rules.
 
-## ECSS-Q-ST-70 — materials, contamination, and outgassing
+**6.4.2.2a.** An FMEA, or an FMECA where criticality is included, is part of the dependability work. The how-to sits in ECSS-Q-ST-30-02. **6.4.2.2b** is the content that matters here: the analysis names the potential failure modes and classes them by the severity of the consequences, or by criticality when a FMECA is used. A reliability number with no such list is an assertion. The clause does not, by itself, require a second camera. That split is why F-04 stays in dispute.
 
-**waiting on upload**
+## ECSS-Q-ST-70C Rev.2 — materials, contamination, and outgassing
 
-The slice uses this standard because the payload is optical. No `ECSS-Q-ST-70` file is on `main` at `cde8015`. The Drive link is not in the decisions file. No clause identifier is stated. `ECSS-E-30 Part 8A` (mechanical materials, 25 April 2000) is on `main` and is not used as a substitute. F-02 records the project gap and waits for the clause.
+**ready**
+
+- Opened from the zip: `Files_PDF/ECSS-Q-ST-70C-Rev.2(15October2019).pdf`
+- Cover read: ECSS-Q-ST-70C Rev.2, 15 October 2019, Space product assurance — Materials, mechanical parts and processes
+- The 2009 issue and Rev.1 (15 October 2014) are in the zip and were not opened. `ECSS-Q-ST-70-01` and `ECSS-Q-ST-70-02` are in the zip and were not opened. The parent states the obligations and names those documents for the detailed plans and the screening method. No acceptance percentages are taken from them.
+
+**4.4a.** The supplier keeps a contamination and cleanliness control programme. The minimum content is cleaning procedures and a way to monitor cleanliness. Lumen-1 has neither. **4.4c** adds a chemical and particle requirement specification, and a cleanliness control plan, when the application is cleanliness-critical or contamination-critical. An optic whose film or particles would change the image is that case. The plan's document rules are in ECSS-Q-ST-70-01, which was not opened.
+
+**5.1.4b.** Outgassing screening of materials follows the method in clause 5 of ECSS-Q-ST-70-02. **5.1.4c** says every organic material used on the space system is evaluated for its outgassing behaviour. The silicone stake on the lens retainers is organic, and the baseline has no evaluation.
 
 ## ECSS-E-ST-10-03C Rev.1 — testing
 
@@ -72,7 +88,7 @@ The slice uses this standard because the payload is optical. No `ECSS-Q-ST-70` f
 - File on `main`: `ECSS-E-ST-10-03-Rev.1(31May2022).pdf`
 - Cover read: ECSS-E-ST-10-03C Rev.1, 31 May 2022, Space engineering — Testing. The filename omits the letter C; the cover carries it.
 
-The standard says how qualification, acceptance, and protoflight tests are built for space equipment and for larger space-segment elements. Levels and durations live in its tables. The Falcon 9 rideshare environment those tests have to cover is the user's guide. That guide is not on `main`, so its sections are not cited below.
+The standard says how qualification, acceptance, and protoflight tests are built for space equipment and for larger space-segment elements. Levels and durations live in its tables. The Falcon 9 rideshare environment those tests have to cover is the user's guide. That guide is not among the 317 names in the zip, and it is not on `main`, so its sections are not cited below.
 
 **4.5.1b.** When the test programme of a space-segment element is written, tests that show compatibility with the launch segment are part of that programme.
 
@@ -88,4 +104,4 @@ Table 5-1 uses three marks: R required, X decided by the customer, dash not requ
 
 **waiting on upload**
 
-Launch-side constraint for this slice, next to the testing clauses above. It is not on `main` at `cde8015`, and the Google Drive link is not in the decisions file. No section identifier and no load factor is stated. Lumen-1's own interface note still claims the dispenser covers launch loads. That claim is project text, not a reading of the guide.
+Launch-side constraint for this slice, next to the testing clauses above. The zip was listed by name. No rideshare guide, Falcon guide, or payload user's guide is in it. The guide is not on `main` either. No section identifier and no load factor is stated. Lumen-1's own interface note still claims the dispenser covers launch loads. That claim is project text, not a reading of the guide.
