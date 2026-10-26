@@ -78,6 +78,12 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — documentation link
+
+João sent the documentation link. File id `1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo`. Canonical URL: https://drive.google.com/file/d/1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo/view
+
+The 317 files stay out of Git. The baseline will open only ECSS-E-ST-10, ECSS-Q-ST-30, and ECSS-Q-ST-70 from it, plus the rideshare guide if that guide is inside the same file.
+
 ### 26 Oct 2026 — rideshare citation removed
 
 The rideshare-guide section citation was removed from https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/2. F-03 stays Agree on ECSS-E-ST-10-03C Rev.1, 4.5.2a. The guide stays waiting on upload.
