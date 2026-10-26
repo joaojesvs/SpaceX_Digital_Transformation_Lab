@@ -26,11 +26,10 @@ Presentation 20% is the whole five minutes: short lines, one demo, English, comm
 - Say the source system in two parts: a Google Drive folder of the 317 ECSS files, and a Git repo that holds the project pack and the cards.
 - Say that the demo does not read all 317 files. It reads the cards.
 - The Drive link is written under “If a judge asks”. Give it only if someone asks. Do not put it on a slide.
-- On the four-issue beat, cite only two cards: ECSS-E-ST-10-02C Rev.1 for the missing verification method, and ECSS-E-ST-10-03C Rev.1 for the launch loads.
-- ECSS-E-ST-10 is not open. Do not name it as a cited card.
-- Contamination: both auditors agree the gap is real. The clause waits until ECSS-Q-ST-70 can be opened. Do not speak as if that clause is already cited.
-- The FMEA stays in dispute and waits on ECSS-Q-ST-30. Do not cite a clause for it.
-- Do not name a rideshare-guide section or a load number. Do not read clause text aloud.
+- On the four-issue beat, cite the opened clauses. Verification: ECSS-E-ST-10-02C Rev.1, 5.2.1e, and ECSS-E-ST-10C Rev.1, 5.2.3.4a. Contamination: ECSS-Q-ST-70C Rev.2, 4.4a. Launch loads: ECSS-E-ST-10-03C Rev.1, 4.5.2a. FMEA: ECSS-Q-ST-30C Rev.1, 6.4.2.2a.
+- Contamination is cited. It is no longer waiting.
+- The FMEA stays in dispute. Clause 6.4.2.2a requires the analysis. It does not require a second camera.
+- Do not name a rideshare-guide section or a load number. Leave ECSS-Q-ST-70-01, ECSS-Q-ST-70-02, and ECSS-Q-ST-30-02 uncited. Those files were not opened. Do not read clause text aloud.
 - No catch-rate percentage. This does not certify the camera.
 - Leave the 13:00 deadline off the slides. It is the room clock, not a result.
 - If the UI fails, read slide 4. Do not invent a fifth issue.
@@ -98,24 +97,24 @@ Presentation 20%. Open the demo now. Backup is the next slide.
 
 **On the slide**
 
-- No verification method — ECSS-E-ST-10-02C Rev.1 — both agree
-- No contamination control — clause waits on Q-ST-70 — both agree
-- No launch qualification — ECSS-E-ST-10-03C Rev.1 — both agree
-- No FMEA — waits on Q-ST-30 — in dispute
+- No verification method — 5.2.1e and 10C 5.2.3.4a — both agree
+- Contamination and outgassing — Q-ST-70C Rev.2, 4.4a — both agree
+- No launch qualification — 10-03C Rev.1, 4.5.2a — both agree
+- No FMEA — 30C 6.4.2.2a — in dispute
 
 **Say**
 
-First. A requirement has no verification method. Both auditors agree. The change is a method — test, analysis, inspection, or review of design. The card cites only ECSS-E-ST-10-02C Rev.1.
+First. A requirement has no verification method. Both auditors agree. The change is a method — test, analysis, inspection, or review of design. The card cites ECSS-E-ST-10-02C Rev.1, clause 5.2.1e, and ECSS-E-ST-10C Rev.1, clause 5.2.3.4a.
 
-Second. No contamination or outgassing control on the optic. Both auditors agree the gap is real. A fogged optic does not take the picture. The clause waits until ECSS-Q-ST-70 can be opened.
+Second. No contamination or outgassing control on the optic. Both agree. The change is a cleanliness programme and an outgassing check on the materials in view of the detector. The card cites ECSS-Q-ST-70C Rev.2, clause 4.4a. A fogged optic does not take the picture.
 
-Third. No qualification against the rideshare launch loads. Both agree. The change is a qualification for that mechanical environment. The card cites only ECSS-E-ST-10-03C Rev.1.
+Third. No qualification against the rideshare launch loads. Both agree. The change is a qualification for that mechanical environment. The card cites ECSS-E-ST-10-03C Rev.1, clause 4.5.2a.
 
-Fourth. The camera is single-string. Reliability is asserted, and there is no FMEA. This one stays in dispute, and it waits on ECSS-Q-ST-30. I leave it open, and I accept one of the first three. The engineer decides. The baseline stays unedited.
+Fourth. Reliability is asserted, and there is no FMEA. Both auditors see that ECSS-Q-ST-30C Rev.1, clause 6.4.2.2a, requires the analysis. The clause does not require a second camera. That is the dispute. I leave it open, and I accept one of the first three. The engineer decides. The baseline stays unedited.
 
 **Notes**
 
-Innovation 30% and presentation 20%. Point at the finding card. Verdicts, in order: agree and cite 10-02C Rev.1; agree and wait on Q-ST-70; agree and cite 10-03C Rev.1; dispute, waiting on Q-ST-30. If the clock slips, cut the list of methods and keep each verdict.
+Innovation 30% and presentation 20%. Point at the finding card. Verdicts, in order: agree on 5.2.1e and 5.2.3.4a; agree on 4.4a; agree on 4.5.2a; dispute on 6.4.2.2a. If the clock slips, keep each verdict and its clause. If a judge asks for the supporting clauses, add 5.2.2.1a on verification, 4.4c, 5.1.4b and 5.1.4c on contamination, and 6.4.2.2b on the FMEA. Leave 70-01, 70-02, and 30-02 uncited.
 
 ## Slide 5 — Three closed, one still open
 
@@ -197,6 +196,6 @@ Stop at five minutes. Questions after the clock.
 ## If a judge asks
 
 - The 317 ECSS files are in a Google Drive folder. The project pack and the cards are in a Git repo. If they ask for the folder, the link is https://drive.google.com/file/d/1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo/view. Give it only as an answer. It stays off the slides.
-- The demo reads the cards, not every file in the folder. The open citations are ECSS-E-ST-10-02C Rev.1 and ECSS-E-ST-10-03C Rev.1. ECSS-E-ST-10 is not an open card. Contamination waits on ECSS-Q-ST-70. The FMEA dispute waits on ECSS-Q-ST-30.
+- The demo reads the cards, not every file in the folder. Open citations: ECSS-E-ST-10-02C Rev.1, 5.2.1e; ECSS-E-ST-10C Rev.1, 5.2.3.4a; ECSS-Q-ST-70C Rev.2, 4.4a; ECSS-E-ST-10-03C Rev.1, 4.5.2a; ECSS-Q-ST-30C Rev.1, 6.4.2.2a. The FMEA stays in dispute: the clause requires the analysis and does not require a second camera. No rideshare-guide section.
 - Pyrotechnics, explosives, and propulsion sit outside this camera.
 - Nothing on this stage is a compliance certificate.

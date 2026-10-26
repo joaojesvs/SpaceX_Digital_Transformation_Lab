@@ -26,11 +26,10 @@ A apresentação 20% é os cinco minutos inteiros: frases curtas, uma demonstra�
 - Dizer o sistema de origem em duas partes: uma pasta Google Drive com os 317 ficheiros ECSS, e um repositório Git com o pacote de projeto e as fichas.
 - Dizer que a demonstração não lê os 317 ficheiros. Lê as fichas.
 - A ligação do Drive está em “Se um júri perguntar”. Dá-la só se a pedirem. Não a pôr num diapositivo.
-- No momento dos quatro problemas, citar só duas fichas: ECSS-E-ST-10-02C Rev.1 para o método de verificação em falta, e ECSS-E-ST-10-03C Rev.1 para as cargas de lançamento.
-- A ECSS-E-ST-10 não está aberta. Não a nomear como ficha citada.
-- Contaminação: os dois auditores concordam que a falha é real. A cláusula espera até a ECSS-Q-ST-70 poder ser aberta. Não falar como se essa cláusula já estivesse citada.
-- A FMEA fica em disputa e espera pela ECSS-Q-ST-30. Não citar uma cláusula para ela.
-- Não nomear uma secção do guia de rideshare nem um valor de carga. Não ler o texto da cláusula em voz alta.
+- No momento dos quatro problemas, citar as cláusulas abertas. Verificação: ECSS-E-ST-10-02C Rev.1, 5.2.1e, e ECSS-E-ST-10C Rev.1, 5.2.3.4a. Contaminação: ECSS-Q-ST-70C Rev.2, 4.4a. Cargas de lançamento: ECSS-E-ST-10-03C Rev.1, 4.5.2a. FMEA: ECSS-Q-ST-30C Rev.1, 6.4.2.2a.
+- A contaminação está citada. Já não está à espera.
+- A FMEA fica em disputa. A cláusula 6.4.2.2a exige a análise. Não exige uma segunda câmara.
+- Não nomear uma secção do guia de rideshare nem um valor de carga. Deixar por citar a ECSS-Q-ST-70-01, a ECSS-Q-ST-70-02 e a ECSS-Q-ST-30-02. Esses ficheiros não foram abertos. Não ler o texto da cláusula em voz alta.
 - Sem percentagem de acerto. Isto não certifica a câmara.
 - O prazo das 13:00 fica fora dos diapositivos. É o relógio da sala, não um resultado.
 - Se a interface falhar, ler o diapositivo 4. Não inventar um quinto problema.
@@ -98,24 +97,24 @@ Apresentação 20%. Abrir a demonstração agora. A reserva é o diapositivo seg
 
 **No diapositivo**
 
-- Sem método de verificação — ECSS-E-ST-10-02C Rev.1 — concordam
-- Sem controlo de contaminação — os dois concordam; espera Q-ST-70
-- Sem qualificação às cargas — ECSS-E-ST-10-03C Rev.1
-- Câmara em cadeia única, sem FMEA — espera pela Q-ST-30 — em disputa
+- Sem método de verificação — 5.2.1e e 10C 5.2.3.4a — concordam
+- Contaminação e desgaseificação — Q-ST-70C Rev.2, 4.4a — concordam
+- Sem qualificação às cargas — 10-03C Rev.1, 4.5.2a — concordam
+- Sem FMEA — 30C 6.4.2.2a — em disputa
 
 **Dizer**
 
-Primeiro. Um requisito não tem método de verificação. Os dois auditores concordam. A alteração é um método — ensaio, análise, inspeção ou revisão do desenho. A ficha cita só a ECSS-E-ST-10-02C Rev.1.
+Primeiro. Um requisito não tem método de verificação. Os dois auditores concordam. A alteração é um método — ensaio, análise, inspeção ou revisão do desenho. A ficha cita a ECSS-E-ST-10-02C Rev.1, cláusula 5.2.1e, e a ECSS-E-ST-10C Rev.1, cláusula 5.2.3.4a.
 
-Segundo. Não há controlo de contaminação nem de desgaseificação na ótica. Os dois auditores concordam que a falha é real. Uma ótica embaciada não tira a fotografia. A cláusula espera até a ECSS-Q-ST-70 poder ser aberta.
+Segundo. Não há controlo de contaminação nem de desgaseificação na ótica. Os dois concordam. A alteração é um programa de limpeza e uma avaliação de desgaseificação dos materiais na vista do detetor. A ficha cita a ECSS-Q-ST-70C Rev.2, cláusula 4.4a. Uma ótica embaciada não tira a fotografia.
 
-Terceiro. Não há qualificação contra as cargas de lançamento do rideshare. Os dois concordam. A alteração é uma qualificação para esse ambiente mecânico. A ficha cita só a ECSS-E-ST-10-03C Rev.1.
+Terceiro. Não há qualificação contra as cargas de lançamento do rideshare. Os dois concordam. A alteração é uma qualificação para esse ambiente mecânico. A ficha cita a ECSS-E-ST-10-03C Rev.1, cláusula 4.5.2a.
 
-Quarto. A câmara é de cadeia única. A fiabilidade é afirmada, e não há FMEA. Este fica em disputa e espera pela ECSS-Q-ST-30. Deixo-o em aberto e aceito um dos três primeiros. O engenheiro decide. A linha de base não é editada.
+Quarto. A fiabilidade é afirmada, e não há FMEA. Os dois auditores veem que a ECSS-Q-ST-30C Rev.1, cláusula 6.4.2.2a, exige a análise. A cláusula não exige uma segunda câmara. É essa a disputa. Deixo-o em aberto e aceito um dos três primeiros. O engenheiro decide. A linha de base não é editada.
 
 **Notas**
 
-Inovação 30% e apresentação 20%. Apontar para o cartão do achado. Veredictos, por ordem: concordam e citam a 10-02C Rev.1; concordam e esperam pela Q-ST-70; concordam e citam a 10-03C Rev.1; disputa, à espera da Q-ST-30. Se o relógio apertar, cortar a lista de métodos e manter cada veredicto.
+Inovação 30% e apresentação 20%. Apontar para o cartão do achado. Veredictos, por ordem: concordam na 5.2.1e e na 5.2.3.4a; concordam na 4.4a; concordam na 4.5.2a; disputa na 6.4.2.2a. Se o relógio apertar, manter cada veredicto e a sua cláusula. Se um júri pedir as cláusulas de apoio, acrescentar a 5.2.2.1a na verificação, a 4.4c, a 5.1.4b e a 5.1.4c na contaminação, e a 6.4.2.2b na FMEA. Deixar por citar a 70-01, a 70-02 e a 30-02.
 
 ## Diapositivo 5 — Três fechados, um em aberto
 
@@ -198,6 +197,6 @@ Parar aos cinco minutos. Perguntas depois do relógio.
 ## Se um júri perguntar
 
 - Os 317 ficheiros ECSS estão numa pasta Google Drive. O pacote de projeto e as fichas estão num repositório Git. Se pedirem a pasta, a ligação é https://drive.google.com/file/d/1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo/view. Dá-la só como resposta. Fica fora dos diapositivos.
-- A demonstração lê as fichas, não todos os ficheiros da pasta. As citações abertas são a ECSS-E-ST-10-02C Rev.1 e a ECSS-E-ST-10-03C Rev.1. A ECSS-E-ST-10 não é uma ficha aberta. A contaminação espera pela ECSS-Q-ST-70. A disputa da FMEA espera pela ECSS-Q-ST-30.
+- A demonstração lê as fichas, não todos os ficheiros da pasta. Citações abertas: ECSS-E-ST-10-02C Rev.1, 5.2.1e; ECSS-E-ST-10C Rev.1, 5.2.3.4a; ECSS-Q-ST-70C Rev.2, 4.4a; ECSS-E-ST-10-03C Rev.1, 4.5.2a; ECSS-Q-ST-30C Rev.1, 6.4.2.2a. A FMEA fica em disputa: a cláusula exige a análise e não exige uma segunda câmara. Sem secção do guia de rideshare.
 - Pirotecnia, explosivos e propulsão ficam fora desta câmara.
 - Nada neste palco é um certificado de conformidade.
