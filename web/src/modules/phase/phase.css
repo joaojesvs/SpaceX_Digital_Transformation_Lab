@@ -1,10 +1,10 @@
 .astraea-phase {
-  --ap-ink: #f3f0e8;
-  --ap-body: #e4dfd6;
-  --ap-muted: #a39d93;
-  --ap-faint: #7d776e;
-  --ap-gold: #e4c48a;
-  --ap-card: #1b1d25;
+  --ap-ink: #f6f1e8;
+  --ap-body: #f6f1e8;
+  --ap-muted: #9a9286;
+  --ap-faint: #9a9286;
+  --ap-gold: #e4b15a;
+  --ap-card: #221f1c;
   box-sizing: border-box;
   display: flex;
   flex: 1 1 auto;
@@ -15,7 +15,7 @@
   overflow: auto;
   padding: 24px 28px 40px;
   color: var(--ap-ink);
-  background: #101114;
+  background: #0e0d0b;
   color-scheme: dark;
   font-family: Inter, "Segoe UI", sans-serif;
   font-size: 15.5px;
@@ -55,8 +55,10 @@
 
 .ap-title {
   margin-top: 8px;
-  font-size: 32px;
-  line-height: 1.12;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.05;
 }
 
 .ap-lede,

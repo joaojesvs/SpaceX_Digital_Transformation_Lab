@@ -4,15 +4,15 @@ import { useSession } from "../../platform/session";
 
 const copy = {
   hint: {
-    en: "Scripted answers from the opened findings, the phase list, and the next phase.",
-    pt: "Respostas escritas a partir das constatações abertas, da lista de fases e da fase seguinte.",
+    en: "Opened findings and the phase list.",
+    pt: "Constatações abertas e a lista de fases.",
   },
   close: { en: "Close", pt: "Fechar" },
   send: { en: "Send", pt: "Enviar" },
-  ask: { en: "Ask Astraea", pt: "Perguntar à Astraea" },
+  ask: { en: "Ask Astrea", pt: "Perguntar à Astrea" },
   placeholder: {
-    en: "This mission, a regulation, or the next step",
-    pt: "Esta missão, uma norma, ou o passo seguinte",
+    en: "Ask from the opened record",
+    pt: "Perguntar a partir do registo aberto",
   },
 };
 
@@ -36,16 +36,14 @@ export function Chat() {
   }
 
   return (
-    <section className="ask-panel" role="dialog" aria-label="Astraea">
+    <section className="ask-panel" role="dialog" aria-label="Astrea">
       <header>
-        <div>
-          <p className="appname">Astraea</p>
-          <p className="quiet">{copy.hint[locale]}</p>
-        </div>
+        <p className="wordmark">Astrea</p>
         <button type="button" className="text-btn" onClick={() => setChatOpen(false)}>
           {copy.close[locale]}
         </button>
       </header>
+      <p className="quiet">{copy.hint[locale]}</p>
       <div className="suggest">
         {prompts.map((prompt) => (
           <button key={prompt.intent} type="button" onClick={() => send(prompt[locale])}>

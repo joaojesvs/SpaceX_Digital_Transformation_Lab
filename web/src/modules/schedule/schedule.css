@@ -1,12 +1,12 @@
 .schedule-module {
-  --bg: #100f0e;
-  --card: #1c1a17;
-  --ink: #f6f2ea;
-  --muted: #c9c0b4;
-  --faint: #aea496;
-  --line: rgba(246, 242, 234, 0.1);
-  --gold: #e6c98a;
-  --sage: #9dbba8;
+  --bg: #0e0d0b;
+  --card: #221f1c;
+  --ink: #f6f1e8;
+  --muted: #9a9286;
+  --faint: #9a9286;
+  --line: rgba(246, 241, 232, 0.1);
+  --gold: #e4b15a;
+  --sage: #a87b3a;
   box-sizing: border-box;
   container-type: inline-size;
   width: 100%;
@@ -74,10 +74,11 @@
 }
 
 .schedule-title {
-  font-size: 28px;
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 1.15;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
 
 .schedule-disclaimer {

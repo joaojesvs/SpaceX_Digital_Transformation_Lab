@@ -1,13 +1,13 @@
 .astraea-compliance {
-  --ac-ink: #f3f0e8;
-  --ac-body: #e4dfd6;
-  --ac-muted: #a39d93;
-  --ac-faint: #7d776e;
-  --ac-gold: #e4c48a;
-  --ac-copper: #e7b79a;
-  --ac-card: #1b1d25;
-  --ac-dispute: #241f1c;
-  --ac-wait: #17191f;
+  --ac-ink: #f6f1e8;
+  --ac-body: #f6f1e8;
+  --ac-muted: #9a9286;
+  --ac-faint: #9a9286;
+  --ac-gold: #e4b15a;
+  --ac-copper: #a87b3a;
+  --ac-card: #221f1c;
+  --ac-dispute: #171614;
+  --ac-wait: #171614;
   box-sizing: border-box;
   display: flex;
   flex: 1 1 auto;
@@ -18,7 +18,7 @@
   overflow: auto;
   padding: 24px 28px 40px;
   color: var(--ac-ink);
-  background: #101114;
+  background: #0e0d0b;
   color-scheme: dark;
   font-family: Inter, "Segoe UI", sans-serif;
   font-size: 15.5px;
@@ -58,8 +58,10 @@
 
 .ac-title {
   margin-top: 8px;
-  font-size: 32px;
-  line-height: 1.12;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.05;
 }
 
 .ac-lede,

@@ -1,8 +1,8 @@
 .team-panel {
-  --ink: #f4f1eb;
-  --muted: #c9c0b6;
-  --faint: #a3988c;
-  --card: #242220;
+  --ink: #f6f1e8;
+  --muted: #9a9286;
+  --faint: #9a9286;
+  --card: #221f1c;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   margin: 0;
   padding: 28px 28px 36px;
   overflow: auto;
-  background: #0c0b0a;
+  background: #0e0d0b;
   color: var(--ink);
   font-family: Inter, "Segoe UI", sans-serif;
   font-size: 16px;
@@ -51,10 +51,11 @@
 
 .team-head h1 {
   margin-top: 8px;
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 1.15;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
 
 .team-lede {

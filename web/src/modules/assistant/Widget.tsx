@@ -37,7 +37,7 @@ export function Widget() {
   return (
     <section className="widget-panel" aria-label={copy.title[locale]}>
       <header className="widget-drag">
-        <p className="appname">Astraea</p>
+        <p className="appname">Astrea</p>
         <p className="quiet">{copy.title[locale]}</p>
       </header>
       <div className="modes" role="tablist">

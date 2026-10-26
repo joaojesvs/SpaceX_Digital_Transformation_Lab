@@ -14,30 +14,30 @@ import { Icon } from "./icons";
 import { moduleLabel, modules } from "./modules";
 
 const chrome = {
-  ask: { en: "Ask", pt: "Perguntar" },
-  widget: { en: "Widget", pt: "Widget" },
   language: { en: "Language", pt: "Língua" },
   close: { en: "Close", pt: "Fechar" },
   minimize: { en: "Minimize", pt: "Minimizar" },
   zoom: { en: "Zoom", pt: "Zoom" },
-  open: { en: "Open mission", pt: "Missão aberta" },
-  budget: { en: "Budget", pt: "Orçamento" },
-  spent: { en: "Spent", pt: "Gasto" },
-  budgetValue: "€2,400,000",
-  spentValue: "€1,100,000",
-  phaseNow: { en: "PDR now", pt: "PDR agora" },
-  phaseNext: { en: "Next, CDR", pt: "Seguinte, CDR" },
-  list: { en: "On the missions list", pt: "Na lista de missões" },
+  ask: { en: "Ask Astrea", pt: "Perguntar à Astrea" },
+  foot: { en: "Lumen-1  ·  PDR", pt: "Lumen-1  ·  PDR" },
 };
 
+function StarMark() {
+  return (
+    <svg className="star-mark" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="currentColor" d="M12 1.1 13.15 10.85 22.9 12 13.15 13.15 12 22.9 10.85 13.15 1.1 12 10.85 10.85Z" />
+    </svg>
+  );
+}
+
 export function Shell() {
-  const { locale, setLocale, view, setView, setChatOpen, desktop } = useSession();
+  const { locale, setLocale, view, setView, chatOpen, setChatOpen, desktop } = useSession();
   const bridge = desktopBridge();
   const moduleView: ModuleId = view === "desk" ? "missions" : view;
 
   useEffect(() => {
     document.documentElement.lang = locale;
-    document.title = "Astraea";
+    document.title = "Astrea";
   }, [locale]);
 
   return (
@@ -48,61 +48,23 @@ export function Shell() {
           <button type="button" className="light min" aria-label={chrome.minimize[locale]} onClick={() => bridge?.minimize()} />
           <button type="button" className="light zoom" aria-label={chrome.zoom[locale]} onClick={() => bridge?.zoom()} />
         </div>
-        <nav className="menubar" aria-label="Astraea">
-          <span className="appname">Astraea</span>
-          {modules.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={moduleView === item.id ? "menu-item is-on" : "menu-item"}
-              aria-current={moduleView === item.id ? "page" : undefined}
-              onClick={() => setView(item.id)}
-            >
-              {item[locale]}
-            </button>
-          ))}
-        </nav>
-        <div className="title-actions">
-          <button type="button" className="menu-item" onClick={() => setChatOpen(true)}>
-            {chrome.ask[locale]}
+        <p className="wordmark title-word">Astrea</p>
+        <div className="lang" role="group" aria-label={chrome.language[locale]}>
+          <button type="button" aria-pressed={locale === "en"} className={locale === "en" ? "is-on" : undefined} onClick={() => setLocale("en")}>
+            EN
           </button>
-          {desktop ? (
-            <button type="button" className="menu-item" onClick={() => bridge?.showWidget()}>
-              {chrome.widget[locale]}
-            </button>
-          ) : null}
-          <div className="lang" role="group" aria-label={chrome.language[locale]}>
-            <button type="button" aria-pressed={locale === "en"} className={locale === "en" ? "is-on" : undefined} onClick={() => setLocale("en")}>
-              EN
-            </button>
-            <button type="button" aria-pressed={locale === "pt"} className={locale === "pt" ? "is-on" : undefined} onClick={() => setLocale("pt")}>
-              PT
-            </button>
-          </div>
+          <button type="button" aria-pressed={locale === "pt"} className={locale === "pt" ? "is-on" : undefined} onClick={() => setLocale("pt")}>
+            PT
+          </button>
         </div>
       </header>
       <div className="workspace">
         <aside className="sidebar">
-          <p className="side-kicker">{chrome.open[locale]}</p>
-          <p className="side-name">Lumen-1</p>
-          <p className="side-quiet">{chrome.phaseNow[locale]}</p>
-          <p className="side-quiet">{chrome.phaseNext[locale]}</p>
-          <dl className="side-figures">
-            <div>
-              <dt>{chrome.budget[locale]}</dt>
-              <dd>{chrome.budgetValue}</dd>
-            </div>
-            <div>
-              <dt>{chrome.spent[locale]}</dt>
-              <dd>{chrome.spentValue}</dd>
-            </div>
-          </dl>
-          <p className="side-kicker">{chrome.list[locale]}</p>
-          <ul className="side-list">
-            <li>Halcyon-3</li>
-            <li>Cinder-2</li>
-          </ul>
-          <div className="side-rail" aria-label={moduleLabel(moduleView, locale)}>
+          <div className="brand">
+            <StarMark />
+            <span className="wordmark">Astrea</span>
+          </div>
+          <nav className="side-rail" aria-label={moduleLabel(moduleView, locale)}>
             {modules.map((item) => (
               <button
                 key={item.id}
@@ -115,15 +77,11 @@ export function Shell() {
                 <span>{item[locale]}</span>
               </button>
             ))}
-          </div>
+          </nav>
+          <p className="side-foot">{chrome.foot[locale]}</p>
         </aside>
         <main className={moduleView === "missions" ? "stage" : "stage stage-hosted"}>
-          {moduleView === "missions" ? (
-            <>
-              <h1>{moduleLabel(moduleView, locale)}</h1>
-              <MissionsModule locale={locale} />
-            </>
-          ) : null}
+          {moduleView === "missions" ? <MissionsModule locale={locale} /> : null}
           {moduleView === "compliance" ? <ComplianceModule locale={locale} /> : null}
           {moduleView === "phase" ? <PhaseModule locale={locale} /> : null}
           {moduleView === "budget" ? <BudgetModule locale={locale} /> : null}
@@ -133,6 +91,15 @@ export function Shell() {
           {moduleView === "team" ? <TeamModule locale={locale} /> : null}
         </main>
       </div>
+      <button
+        type="button"
+        className={chatOpen ? "ask-fab is-on" : "ask-fab"}
+        aria-expanded={chatOpen}
+        aria-label={chrome.ask[locale]}
+        onClick={() => setChatOpen(!chatOpen)}
+      >
+        <StarMark />
+      </button>
     </div>
   );
 }

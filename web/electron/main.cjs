@@ -42,7 +42,7 @@ function createMain() {
     backgroundColor: "#00000000",
     hasShadow: true,
     roundedCorners: true,
-    title: "Astraea",
+    title: "Astrea",
     webPreferences: webPreferences(),
   });
   mainWindow.loadFile(indexHtml);
@@ -82,7 +82,7 @@ function createWidget() {
     minimizable: false,
     skipTaskbar: true,
     hasShadow: true,
-    title: "Astraea",
+    title: "Astrea",
     webPreferences: webPreferences(),
   });
   widgetWindow.setAlwaysOnTop(true, "floating");
@@ -123,7 +123,6 @@ ipcMain.on("widget:show", () => createWidget());
 
 app.whenReady().then(() => {
   createMain();
-  createWidget();
 });
 
 app.on("window-all-closed", () => {

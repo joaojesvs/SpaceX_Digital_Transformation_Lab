@@ -21,18 +21,18 @@ type Copy = Record<Locale, string>;
 export const prompts: { intent: Intent; en: string; pt: string }[] = [
   {
     intent: "project",
-    en: "What is open on Lumen-1?",
-    pt: "O que está aberto no Lumen-1?",
+    en: "This mission",
+    pt: "Esta missão",
   },
   {
     intent: "verification",
-    en: "Which opened clause covers verification?",
-    pt: "Que cláusula aberta cobre a verificação?",
+    en: "The open MTF gap",
+    pt: "A lacuna aberta de MTF",
   },
   {
-    intent: "actions",
-    en: "What should we do next?",
-    pt: "O que devemos fazer a seguir?",
+    intent: "next",
+    en: "What CDR asks next",
+    pt: "O que a CDR pede a seguir",
   },
 ];
 
@@ -47,8 +47,8 @@ const answers: Record<Intent, Copy> = {
     pt: "O Lumen-1 é uma câmara ótica num CubeSat 6U, em piggyback num rideshare da Falcon 9. A revisão aberta está na PDR. Três constatações estão em acordo. O REQ-IMG-03 não tem método de verificação (ECSS-E-ST-10-02C Rev.1, 5.2.1e). A ótica não tem controlo de contaminação nem de desgaseificação (ECSS-Q-ST-70C Rev.2, 4.4a). Não há qualificação face ao ambiente mecânico do rideshare (ECSS-E-ST-10-03C Rev.1, 4.5.2a). Uma constatação está em disputa: a fiabilidade é afirmada sem FMEA (ECSS-Q-ST-30C Rev.1, 6.4.2.2a). Essa cláusula exige a análise, não uma segunda câmara. A ISO e o guia de rideshare não estão abertos.",
   },
   verification: {
-    en: "The opened verification clause is ECSS-E-ST-10-02C Rev.1, 5.2.1e. Each requirement in the verification set needs a strategy in the matrix: method, product level, and stage. REQ-IMG-03 leaves all three empty. Allowed methods, from 5.2.2.1a, are test, analysis, review of design, or inspection. ECSS-E-ST-10C Rev.1, 5.2.3.4a says the same from system engineering, and 5.2.3.4b puts the method in the matrix. No procedure is on the register for this row. Astraea will not invent one.",
-    pt: "A cláusula de verificação aberta é a ECSS-E-ST-10-02C Rev.1, 5.2.1e. Cada requisito no conjunto de verificação precisa de uma estratégia na matriz: método, nível de produto e fase. O REQ-IMG-03 deixa os três por preencher. Os métodos admitidos, pela 5.2.2.1a, são ensaio, análise, revisão de projeto ou inspeção. A ECSS-E-ST-10C Rev.1, 5.2.3.4a diz o mesmo do lado da engenharia de sistemas, e a 5.2.3.4b põe o método na matriz. Não há procedimento no registo para esta linha. A Astraea não inventa um.",
+    en: "The opened verification clause is ECSS-E-ST-10-02C Rev.1, 5.2.1e. Each requirement in the verification set needs a strategy in the matrix: method, product level, and stage. REQ-IMG-03 leaves all three empty. Allowed methods, from 5.2.2.1a, are test, analysis, review of design, or inspection. ECSS-E-ST-10C Rev.1, 5.2.3.4a says the same from system engineering, and 5.2.3.4b puts the method in the matrix. No procedure is on the register for this row. Astrea will not invent one.",
+    pt: "A cláusula de verificação aberta é a ECSS-E-ST-10-02C Rev.1, 5.2.1e. Cada requisito no conjunto de verificação precisa de uma estratégia na matriz: método, nível de produto e fase. O REQ-IMG-03 deixa os três por preencher. Os métodos admitidos, pela 5.2.2.1a, são ensaio, análise, revisão de projeto ou inspeção. A ECSS-E-ST-10C Rev.1, 5.2.3.4a diz o mesmo do lado da engenharia de sistemas, e a 5.2.3.4b põe o método na matriz. Não há procedimento no registo para esta linha. A Astrea não inventa um.",
   },
   contamination: {
     en: "ECSS-Q-ST-70C Rev.2, 4.4a requires a contamination and cleanliness control programme. The minimum is cleaning procedures plus a way to monitor cleanliness. The baseline has neither. Clause 4.4c applies because this optic is contamination-critical. Clause 5.1.4b requires outgassing screening of the materials. Clause 5.1.4c requires every organic material to be evaluated for outgassing. The silicone stake is organic and has no evaluation. No procedure on the register closes this gap.",
@@ -75,16 +75,16 @@ const answers: Record<Intent, Copy> = {
     pt: "A ordem das revisões, do conceito até ao voo, é MCR, SRR, MDR, SDR, PDR, CDR, PRR, TRR, SAR, ORR, FRR. O Lumen-1 está na PDR, a revisão preliminar de projeto. A fase seguinte é a CDR, a revisão crítica de projeto.",
   },
   iso: {
-    en: "ISO is a layer on the cross-check, and it is not opened. Astraea has no opened ISO source, and it will not quote an ISO clause.",
-    pt: "A ISO é uma camada na verificação cruzada, e não está aberta. A Astraea não tem uma fonte ISO aberta, e não cita uma cláusula ISO.",
+    en: "ISO is a layer on the cross-check, and it is not opened. Astrea has no opened ISO source, and it will not quote an ISO clause.",
+    pt: "A ISO é uma camada na verificação cruzada, e não está aberta. A Astrea não tem uma fonte ISO aberta, e não cita uma cláusula ISO.",
   },
   rideshare: {
     en: "The SpaceX Rideshare Payload User's Guide is the launch-side constraint named for this slice, and it is not opened. No section and no load number are cited. The agreed gap is the missing qualification evidence under ECSS-E-ST-10-03C Rev.1, 4.5.2a.",
     pt: "O guia de rideshare da SpaceX é a restrição de lançamento nomeada nesta fatia, e não está aberto. Não se cita secção nem número de carga. A lacuna em acordo é a falta de evidência de qualificação ao abrigo da ECSS-E-ST-10-03C Rev.1, 4.5.2a.",
   },
   refuse: {
-    en: "Astraea has no opened source for that. It only answers from the four Lumen-1 findings, the review phase list, and the next phase.",
-    pt: "A Astraea não tem uma fonte aberta para isso. Só responde a partir das quatro constatações do Lumen-1, da lista de fases de revisão e da fase seguinte.",
+    en: "Astrea has no opened source for that. It only answers from the four Lumen-1 findings, the review phase list, and the next phase.",
+    pt: "A Astrea não tem uma fonte aberta para isso. Só responde a partir das quatro constatações do Lumen-1, da lista de fases de revisão e da fase seguinte.",
   },
 };
 
