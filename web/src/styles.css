@@ -423,6 +423,8 @@ h1, h2, p, ul, ol { margin: 0; }
 }
 .scan-row:first-child { border-top: 0; }
 .scan-row.review { grid-template-columns: 64px minmax(0, 1fr) auto; }
+.scan-row.pair { grid-template-columns: 88px minmax(0, 1fr) auto; }
+.scan-status.is-missing { color: var(--gold); }
 .scan-id {
   font-family: var(--mono);
   font-size: 12px;
@@ -446,6 +448,7 @@ h1, h2, p, ul, ol { margin: 0; }
 .scan-status.is-agreed { color: var(--ink); }
 .scan-status.is-dispute,
 .scan-row.is-now .scan-status { color: var(--gold); }
+.schedule-module .scan-row.is-now .scan-title { color: var(--gold); }
 .scan-clause {
   font-family: var(--mono);
   font-size: 11px;
