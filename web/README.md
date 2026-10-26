@@ -1,14 +1,18 @@
-# Second Reader
+# Astraea
 
-Bilingual review screen for Lumen-1, a 6U CubeSat camera on a Falcon 9 rideshare.
+Desktop app for aerospace missions. The demo path is the Electron window, styled as a dark Mac app. `npm run dev` stays a browser fallback.
 
-English is the default. The EN / PT control switches the interface and the finding cards.
+## Desktop
 
-Open the dev server and press **Run review**. The run reads `src/data/baseline.json` and the opened clause cards in `src/data/clauses.json`, then applies the checks in code. It does not call a model and it does not use the network. The standards library stays on Google Drive. This screen does not browse Drive, and it has no library URL.
+```bash
+cd web
+npm install
+npm run desktop
+```
 
-Clause identifiers on the four cards are the opened clauses for the planted issues. The rideshare guide is not cited.
+That builds the renderer and opens two windows: the company app, with no address bar, and a small always-on-top employee widget at the bottom right. They share one session.
 
-## Start
+## Browser fallback
 
 ```bash
 cd web
@@ -18,12 +22,10 @@ npm run dev
 
 Open http://localhost:5173
 
-## Demo path
+## What is on screen
 
-1. Press **Run review**.
-2. Watch the baseline read, the five opened clause cards, and each check quote the project line that triggered it.
-3. The second reader accepts three findings. `ECSS-Q-ST-30C Rev.1, 6.4.2.2a` stays in dispute: the clause requires the analysis and does not require a second camera.
+The menu row is Missions, Compliance, Phase, Budget, Schedule, Tests, Correspondence, Team. Lumen-1 is the open mission. Halcyon-3 and Cinder-2 stay on the Missions list. The header figures are a demo budget of €2,400,000 and €1,100,000 spent. Lumen-1 is in PDR. The next phase is CDR.
 
-`node --experimental-strip-types src/review/check-stage.ts` checks that the loaded baseline produces that result, and that a corrected verification line or an added FMEA stays quiet.
+Compliance, Phase, Budget, Schedule, Tests, Correspondence, and Team show the module name until that module file exists. Ask is a scripted panel. The widget is the log book, a regulation question, and the next phase. A log or a question is filed on Lumen-1 in the same session.
 
-`npm run build` typechecks and writes a static build to `web/dist`.
+`npm run build` typechecks and writes `web/dist`.
