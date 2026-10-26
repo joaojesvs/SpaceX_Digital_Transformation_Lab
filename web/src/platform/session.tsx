@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { Intent } from "./answers";
+import { noneAccepted, type AcceptedMap, type AgreedId } from "./cdr";
 import { desktopBridge } from "./desktop";
 import type { Locale, ViewId } from "./locale";
 import type { Note } from "./notes";
@@ -21,6 +22,8 @@ type SessionValue = {
   chatOpen: boolean;
   setChatOpen: (open: boolean) => void;
   desktop: boolean;
+  accepted: AcceptedMap;
+  setAccepted: (id: AgreedId, next: boolean) => void;
 };
 
 const SessionContext = createContext<SessionValue | null>(null);
@@ -35,6 +38,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [view, setView] = useState<ViewId>("missions");
   const [notes, setNotes] = useState<Note[]>([]);
   const [chatOpen, setChatOpen] = useState(false);
+  const [accepted, setAcceptedState] = useState<AcceptedMap>(noneAccepted);
 
   useEffect(() => {
     if (!bridge) return;
@@ -93,8 +97,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       chatOpen,
       setChatOpen,
       desktop: Boolean(bridge),
+      accepted,
+      setAccepted: (id, next) => {
+        setAcceptedState((current) => (current[id] === next ? current : { ...current, [id]: next }));
+      },
     };
-  }, [bridge, locale, view, notes, chatOpen]);
+  }, [accepted, bridge, locale, view, notes, chatOpen]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }

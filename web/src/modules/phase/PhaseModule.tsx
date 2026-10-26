@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { CdrPack, cdrLine } from "../cdr/CdrPack";
+import { openAgreed } from "../../platform/cdr";
+import { useSession } from "../../platform/session";
 
 type Locale = "en" | "pt";
 type Code = "MCR" | "SRR" | "MDR" | "SDR" | "PDR" | "CDR" | "PRR" | "TRR" | "SAR" | "ORR" | "FRR";
@@ -49,43 +52,30 @@ const when: Record<Locale, Record<string, string>> = {
 const lines: Record<Locale, Partial<Record<Code, string>>> = {
   en: {
     PDR: "Lumen-1 is here. It has not left PDR.",
-    CDR: "Next, in 8 weeks. Open actions are only the four findings.",
     PRR: "Ahead. No production evidence is opened.",
-    TRR: "In 20 weeks. No test levels are opened.",
+    TRR: "15 Mar 2027. Ahead. No test levels are opened.",
     SAR: "Ahead. No acceptance evidence is opened.",
     ORR: "Ahead. No operations evidence is opened.",
-    FRR: "In 36 weeks. No flight-readiness evidence is opened.",
+    FRR: "5 Jul 2027. Ahead. No flight-readiness evidence is opened.",
   },
   pt: {
     PDR: "O Lumen-1 está aqui. Não saiu da PDR.",
-    CDR: "Seguinte, em 8 semanas. As ações abertas são só as quatro constatações.",
     PRR: "À frente. Nenhuma evidência de produção está aberta.",
-    TRR: "Em 20 semanas. Nenhum nível de ensaio está aberto.",
+    TRR: "15 mar 2027. À frente. Nenhum nível de ensaio está aberto.",
     SAR: "À frente. Nenhuma evidência de aceitação está aberta.",
     ORR: "À frente. Nenhuma evidência de operações está aberta.",
-    FRR: "Em 36 semanas. Nenhuma evidência de prontidão de voo está aberta.",
+    FRR: "5 jul 2027. À frente. Nenhuma evidência de prontidão de voo está aberta.",
   },
 };
 
-const chips = {
-  en: [
-    ["F-01", "Verification method for optical MTF"],
-    ["F-02", "Contamination and outgassing"],
-    ["F-03", "Rideshare mechanical qualification"],
-    ["F-04", "In dispute · analysis, not a second camera"],
-  ],
-  pt: [
-    ["F-01", "Método de verificação da MTF ótica"],
-    ["F-02", "Contaminação e desgaseificação"],
-    ["F-03", "Qualificação mecânica do rideshare"],
-    ["F-04", "Em disputa · a análise, não uma segunda câmara"],
-  ],
-} as const;
-
 export function PhaseModule({ locale }: { locale: Locale }) {
   const reduced = useReducedMotion() === true;
+  const { accepted } = useSession();
   const [selected, setSelected] = useState<Code>("PDR");
   const state = stateOf(selected);
+  const line = selected === "CDR"
+    ? cdrLine(locale, openAgreed(accepted))
+    : lines[locale][selected] ?? (locale === "pt" ? "Anterior à PDR. O Lumen-1 não saiu da PDR." : "Earlier than PDR. Lumen-1 has not left PDR.");
 
   return (
     <section className="phase-screen screen-pad" lang={locale === "pt" ? "pt-PT" : "en"}>
@@ -107,14 +97,8 @@ export function PhaseModule({ locale }: { locale: Locale }) {
         <p className="phase-kicker">{when[locale][state]}</p>
         <h2>{selected}</h2>
         <p>{names[locale][selected]}</p>
-        <p className="phase-line">{lines[locale][selected] ?? (locale === "pt" ? "Anterior à PDR. O Lumen-1 não saiu da PDR." : "Earlier than PDR. Lumen-1 has not left PDR.")}</p>
-        {selected === "CDR" ? (
-          <ul className="phase-chips">
-            {chips[locale].map(([id, label]) => (
-              <li key={id} className={id === "F-04" ? "is-dispute" : undefined}><span>{id}</span>{label}</li>
-            ))}
-          </ul>
-        ) : null}
+        <p className="phase-line">{line}</p>
+        {selected === "CDR" ? <CdrPack locale={locale} /> : null}
       </motion.article>
     </section>
   );
