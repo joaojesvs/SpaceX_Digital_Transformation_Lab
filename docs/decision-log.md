@@ -78,6 +78,12 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — Drive zip and audit demo
+
+The Drive file id `1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo` is one zip, `Files_ECSS.zip`, about 353 MB, owned by agn.cbr.pt@gmail.com. It is not public, and it could not be downloaded or listed. No new clauses were opened. ECSS-E-ST-10, ECSS-Q-ST-30, ECSS-Q-ST-70, and the rideshare guide stay waiting. Asked João to share an unzipped folder, or those three standards as separate files.
+
+The audit demo opened: https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/5. Command from the repo root: `npm --prefix agent --silent run demo`. It runs from committed cards, reports 3 agreed findings and 1 dispute, and does not download the zip. The pitch citations on https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/4 were aligned to the open files only. The Drive URL stays in the speaker notes.
+
 ### 26 Oct 2026 — documentation link
 
 João sent the documentation link. File id `1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo`. Canonical URL: https://drive.google.com/file/d/1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo/view
