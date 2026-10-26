@@ -78,6 +78,10 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — merged to main
+
+Pull requests 3, 2, 1, 4, 5, and 6 merged to `main` in that order. `docs/TEAM-GUIDE.md` is on `main` at commit `21160ca9da6af22a97c28f00a92a07297cf79d24`. The demo command printed F-01 through F-03 agreed and F-04 in dispute. The 65 PDFs already on `main` were left in place.
+
 ### 26 Oct 2026 — demo interface
 
 Demo interface opened https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/6. Start with `cd web && npm install && npm run dev`, then http://localhost:5173. English default, Portuguese toggle, four finding cards. F-04 stays in dispute. No rideshare-guide section and no Drive URL in the UI. A Canva cover frame was not created because the cover request was refused for credit quota. The pitch decks already exist.
