@@ -78,6 +78,10 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — stage run
+
+João asked for an agent he can show on stage. Second Reader will gain a Run review control. The run reads the Lumen-1 files and the opened clause cards in code, shows each step, and finishes on the same four findings. No model and no network. F-04 stays in dispute. The rideshare guide stays uncited.
+
 ### 26 Oct 2026 — merged to main
 
 Pull requests 3, 2, 1, 4, 5, and 6 merged to `main` in that order. `docs/TEAM-GUIDE.md` is on `main` at commit `21160ca9da6af22a97c28f00a92a07297cf79d24`. The demo command printed F-01 through F-03 agreed and F-04 in dispute. The 65 PDFs already on `main` were left in place.
