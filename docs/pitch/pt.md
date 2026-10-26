@@ -4,7 +4,7 @@
 
 **Missão:** carga útil ótica de um CubeSat — uma câmara — num rideshare da Falcon 9. Manter este instrumento em toda a fala.
 
-**Biblioteca:** 317 ficheiros ECSS numa pasta Google Drive, a chegar por partes. Um repositório Git guarda o pacote de projeto e as fichas. A demonstração lê as fichas, não os 317 ficheiros. A ligação do Drive não é pública. Não inventar um URL.
+**Biblioteca:** 317 ficheiros ECSS numa pasta Google Drive, a chegar por partes. Um repositório Git guarda o pacote de projeto e as fichas. A demonstração lê as fichas, não os 317 ficheiros. A ligação do Drive está nas notas da pergunta. Não entra num diapositivo.
 
 **Demonstração:** os quatro problemas plantados abaixo, a partir de dados commitados. Sem modelo ao vivo. Inglês no ecrã, português num botão.
 
@@ -25,9 +25,12 @@ A apresentação 20% é os cinco minutos inteiros: frases curtas, uma demonstra�
 
 - Dizer o sistema de origem em duas partes: uma pasta Google Drive com os 317 ficheiros ECSS, e um repositório Git com o pacote de projeto e as fichas.
 - Dizer que a demonstração não lê os 317 ficheiros. Lê as fichas.
-- Não inventar um URL. A ligação do Drive ainda não é pública. Se a pedirem, dizer que não é pública.
-- Fichas que se podem nomear: ECSS-E-ST-10, ECSS-E-ST-10-02, ECSS-Q-ST-30, ECSS-Q-ST-70, ECSS-E-ST-10-03, e o guia público SpaceX Rideshare Payload User's Guide.
-- Frases nossas e o identificador da cláusula. Não ler o texto da cláusula. Não ler o guia do rideshare em voz alta.
+- A ligação do Drive está em “Se um júri perguntar”. Dá-la só se a pedirem. Não a pôr num diapositivo.
+- No momento dos quatro problemas, citar só duas fichas: ECSS-E-ST-10-02C Rev.1 para o método de verificação em falta, e ECSS-E-ST-10-03C Rev.1 para as cargas de lançamento.
+- A ECSS-E-ST-10 não está aberta. Não a nomear como ficha citada.
+- Contaminação: os dois auditores concordam que a falha é real. A cláusula espera até a ECSS-Q-ST-70 poder ser aberta. Não falar como se essa cláusula já estivesse citada.
+- A FMEA fica em disputa e espera pela ECSS-Q-ST-30. Não citar uma cláusula para ela.
+- Não nomear uma secção do guia de rideshare nem um valor de carga. Não ler o texto da cláusula em voz alta.
 - Sem percentagem de acerto. Isto não certifica a câmara.
 - O prazo das 13:00 fica fora dos diapositivos. É o relógio da sala, não um resultado.
 - Se a interface falhar, ler o diapositivo 4. Não inventar um quinto problema.
@@ -95,24 +98,24 @@ Apresentação 20%. Abrir a demonstração agora. A reserva é o diapositivo seg
 
 **No diapositivo**
 
-- Sem método de verificação — os dois concordam
-- Sem controlo de contaminação ou desgaseificação — os dois concordam
-- Sem qualificação às cargas do rideshare — os dois concordam
-- Câmara em cadeia única, sem FMEA — em disputa
+- Sem método de verificação — ECSS-E-ST-10-02C Rev.1 — concordam
+- Sem controlo de contaminação — os dois concordam; espera Q-ST-70
+- Sem qualificação às cargas — ECSS-E-ST-10-03C Rev.1
+- Câmara em cadeia única, sem FMEA — espera pela Q-ST-30 — em disputa
 
 **Dizer**
 
-Primeiro. Um requisito não tem método de verificação. Os dois auditores concordam. A alteração é um método — ensaio, análise, inspeção ou revisão do desenho — para se manter rastreável ao abrigo da ECSS-E-ST-10 e da ECSS-E-ST-10-02.
+Primeiro. Um requisito não tem método de verificação. Os dois auditores concordam. A alteração é um método — ensaio, análise, inspeção ou revisão do desenho. A ficha cita só a ECSS-E-ST-10-02C Rev.1.
 
-Segundo. Não há controlo de contaminação nem de desgaseificação na ótica. Os dois concordam. A alteração é um controlo das superfícies óticas, ao abrigo da ECSS-Q-ST-70. Uma ótica embaciada não tira a fotografia.
+Segundo. Não há controlo de contaminação nem de desgaseificação na ótica. Os dois auditores concordam que a falha é real. Uma ótica embaciada não tira a fotografia. A cláusula espera até a ECSS-Q-ST-70 poder ser aberta.
 
-Terceiro. Não há qualificação contra as cargas de lançamento do rideshare. Os dois concordam. A alteração é uma qualificação para o ambiente mecânico da Falcon 9, ao abrigo da ECSS-E-ST-10-03, ao lado do nosso resumo do guia público do rideshare.
+Terceiro. Não há qualificação contra as cargas de lançamento do rideshare. Os dois concordam. A alteração é uma qualificação para esse ambiente mecânico. A ficha cita só a ECSS-E-ST-10-03C Rev.1.
 
-Quarto. A câmara é de cadeia única. A fiabilidade é afirmada, e não há FMEA. Este fica em disputa. Um auditor quer a análise ao abrigo da ECSS-Q-ST-30. O outro não fecha o achado. Deixo-o em aberto e aceito um dos três primeiros. O engenheiro decide. A linha de base não é editada.
+Quarto. A câmara é de cadeia única. A fiabilidade é afirmada, e não há FMEA. Este fica em disputa e espera pela ECSS-Q-ST-30. Deixo-o em aberto e aceito um dos três primeiros. O engenheiro decide. A linha de base não é editada.
 
 **Notas**
 
-Inovação 30% e apresentação 20%. Apontar para o cartão do achado. Veredictos, por ordem: concordam, concordam, concordam, disputa. Se o relógio apertar, cortar a lista de métodos e manter cada veredicto e a alteração.
+Inovação 30% e apresentação 20%. Apontar para o cartão do achado. Veredictos, por ordem: concordam e citam a 10-02C Rev.1; concordam e esperam pela Q-ST-70; concordam e citam a 10-03C Rev.1; disputa, à espera da Q-ST-30. Se o relógio apertar, cortar a lista de métodos e manter cada veredicto.
 
 ## Diapositivo 5 — Três fechados, um em aberto
 
@@ -168,7 +171,7 @@ Implementação técnica 30%. Dizer Google Drive, o repositório Git, o pacote d
 
 **Dizer**
 
-Quatro domínios de dados. O índice de aplicabilidade ECSS. A configuração do projeto. O registo de achados. E as restrições do rideshare da Falcon 9. O índice é o recorte em fichas no repositório Git: engenharia de sistemas, verificação, fiabilidade, materiais e contaminação, ensaios, e o guia do rideshare. Depois o segundo auditor, depois a pessoa.
+Quatro domínios de dados. O índice de aplicabilidade ECSS. A configuração do projeto. O registo de achados. E as restrições do rideshare da Falcon 9. O índice é o recorte em fichas no repositório Git. Depois o segundo auditor, depois a pessoa.
 
 **Notas**
 
@@ -194,7 +197,7 @@ Parar aos cinco minutos. Perguntas depois do relógio.
 
 ## Se um júri perguntar
 
-- Os 317 ficheiros ECSS estão numa pasta Google Drive. O pacote de projeto e as fichas estão num repositório Git. A ligação do Drive não é pública. Não inventar uma.
-- A demonstração lê as fichas, não todos os ficheiros da pasta. A ficha declara o identificador de que foi escrita.
+- Os 317 ficheiros ECSS estão numa pasta Google Drive. O pacote de projeto e as fichas estão num repositório Git. Se pedirem a pasta, a ligação é https://drive.google.com/file/d/1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo/view. Dá-la só como resposta. Fica fora dos diapositivos.
+- A demonstração lê as fichas, não todos os ficheiros da pasta. As citações abertas são a ECSS-E-ST-10-02C Rev.1 e a ECSS-E-ST-10-03C Rev.1. A ECSS-E-ST-10 não é uma ficha aberta. A contaminação espera pela ECSS-Q-ST-70. A disputa da FMEA espera pela ECSS-Q-ST-30.
 - Pirotecnia, explosivos e propulsão ficam fora desta câmara.
 - Nada neste palco é um certificado de conformidade.

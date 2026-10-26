@@ -4,7 +4,7 @@
 
 **Mission:** a CubeSat optical payload — a camera — on a Falcon 9 rideshare. Keep this instrument for the whole talk.
 
-**Library:** 317 ECSS files in a Google Drive folder, arriving in parts. A Git repo holds the project pack and the cards. The demo reads the cards, not all 317 files. The Drive link is not public. Do not invent a URL.
+**Library:** 317 ECSS files in a Google Drive folder, arriving in parts. A Git repo holds the project pack and the cards. The demo reads the cards, not all 317 files. The Drive link is in the question notes. It does not go on a slide.
 
 **Demo:** the four planted issues below, from committed data. No live model. English on screen, Portuguese on a toggle.
 
@@ -25,9 +25,12 @@ Presentation 20% is the whole five minutes: short lines, one demo, English, comm
 
 - Say the source system in two parts: a Google Drive folder of the 317 ECSS files, and a Git repo that holds the project pack and the cards.
 - Say that the demo does not read all 317 files. It reads the cards.
-- Do not invent a URL. The Drive link is not public yet. If someone asks for it, say it is not public yet.
-- Cards you may name: ECSS-E-ST-10, ECSS-E-ST-10-02, ECSS-Q-ST-30, ECSS-Q-ST-70, ECSS-E-ST-10-03, and the public SpaceX Rideshare Payload User's Guide.
-- Use our sentences and the clause identifier. Do not read clause text. Do not read the rideshare guide aloud.
+- The Drive link is written under “If a judge asks”. Give it only if someone asks. Do not put it on a slide.
+- On the four-issue beat, cite only two cards: ECSS-E-ST-10-02C Rev.1 for the missing verification method, and ECSS-E-ST-10-03C Rev.1 for the launch loads.
+- ECSS-E-ST-10 is not open. Do not name it as a cited card.
+- Contamination: both auditors agree the gap is real. The clause waits until ECSS-Q-ST-70 can be opened. Do not speak as if that clause is already cited.
+- The FMEA stays in dispute and waits on ECSS-Q-ST-30. Do not cite a clause for it.
+- Do not name a rideshare-guide section or a load number. Do not read clause text aloud.
 - No catch-rate percentage. This does not certify the camera.
 - Leave the 13:00 deadline off the slides. It is the room clock, not a result.
 - If the UI fails, read slide 4. Do not invent a fifth issue.
@@ -95,24 +98,24 @@ Presentation 20%. Open the demo now. Backup is the next slide.
 
 **On the slide**
 
-- No verification method — both agree
-- No contamination or outgassing control — both agree
-- No rideshare launch qualification — both agree
-- Single-string camera, no FMEA — in dispute
+- No verification method — ECSS-E-ST-10-02C Rev.1 — both agree
+- No contamination control — clause waits on Q-ST-70 — both agree
+- No launch qualification — ECSS-E-ST-10-03C Rev.1 — both agree
+- No FMEA — waits on Q-ST-30 — in dispute
 
 **Say**
 
-First. A requirement has no verification method. Both auditors agree. The change is a method — test, analysis, inspection, or review of design — so it stays traceable under ECSS-E-ST-10 and ECSS-E-ST-10-02.
+First. A requirement has no verification method. Both auditors agree. The change is a method — test, analysis, inspection, or review of design. The card cites only ECSS-E-ST-10-02C Rev.1.
 
-Second. No contamination or outgassing control on the optic. Both agree. The change is a control on the optical surfaces, under ECSS-Q-ST-70. A fogged optic does not take the picture.
+Second. No contamination or outgassing control on the optic. Both auditors agree the gap is real. A fogged optic does not take the picture. The clause waits until ECSS-Q-ST-70 can be opened.
 
-Third. No qualification against the rideshare launch loads. Both agree. The change is a qualification for the Falcon 9 mechanical environment, under ECSS-E-ST-10-03, beside our summary of the public rideshare guide.
+Third. No qualification against the rideshare launch loads. Both agree. The change is a qualification for that mechanical environment. The card cites only ECSS-E-ST-10-03C Rev.1.
 
-Fourth. The camera is single-string. Reliability is asserted, and there is no FMEA. This one stays in dispute. One auditor wants the analysis under ECSS-Q-ST-30. The other does not close it. I leave it open, and I accept one of the first three. The engineer decides. The baseline stays unedited.
+Fourth. The camera is single-string. Reliability is asserted, and there is no FMEA. This one stays in dispute, and it waits on ECSS-Q-ST-30. I leave it open, and I accept one of the first three. The engineer decides. The baseline stays unedited.
 
 **Notes**
 
-Innovation 30% and presentation 20%. Point at the finding card. Verdicts, in order: agree, agree, agree, dispute. If the clock slips, cut the list of methods and keep each verdict and the change.
+Innovation 30% and presentation 20%. Point at the finding card. Verdicts, in order: agree and cite 10-02C Rev.1; agree and wait on Q-ST-70; agree and cite 10-03C Rev.1; dispute, waiting on Q-ST-30. If the clock slips, cut the list of methods and keep each verdict.
 
 ## Slide 5 — Three closed, one still open
 
@@ -167,7 +170,7 @@ Technical implementation 30%. Say Google Drive, the Git repo, the project pack, 
 
 **Say**
 
-Four data domains. The ECSS applicability index. The project configuration. The finding register. And the Falcon 9 rideshare constraints. The index is the card slice in the Git repo: system engineering, verification, dependability, materials and contamination, testing, and the rideshare guide. Then the second auditor, then the human.
+Four data domains. The ECSS applicability index. The project configuration. The finding register. And the Falcon 9 rideshare constraints. The index is the card slice in the Git repo. Then the second auditor, then the human.
 
 **Notes**
 
@@ -193,7 +196,7 @@ Stop at five minutes. Questions after the clock.
 
 ## If a judge asks
 
-- The 317 ECSS files are in a Google Drive folder. The project pack and the cards are in a Git repo. The Drive link is not public. Do not invent one.
-- The demo reads the cards, not every file in the folder. The card states the identifier it was written from.
+- The 317 ECSS files are in a Google Drive folder. The project pack and the cards are in a Git repo. If they ask for the folder, the link is https://drive.google.com/file/d/1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo/view. Give it only as an answer. It stays off the slides.
+- The demo reads the cards, not every file in the folder. The open citations are ECSS-E-ST-10-02C Rev.1 and ECSS-E-ST-10-03C Rev.1. ECSS-E-ST-10 is not an open card. Contamination waits on ECSS-Q-ST-70. The FMEA dispute waits on ECSS-Q-ST-30.
 - Pyrotechnics, explosives, and propulsion sit outside this camera.
 - Nothing on this stage is a compliance certificate.
