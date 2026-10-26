@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CdrPack, cdrLine } from "../cdr/CdrPack";
+import { AheadPack, gateLine } from "./AheadPack";
 import { TrrPack } from "./TrrPack";
 import { openAgreed } from "../../platform/cdr";
 import { useSession } from "../../platform/session";
@@ -53,19 +54,19 @@ const when: Record<Locale, Record<string, string>> = {
 const lines: Record<Locale, Partial<Record<Code, string>>> = {
   en: {
     PDR: "Lumen-1 is here. It has not left PDR.",
-    PRR: "Ahead. No production evidence is opened.",
+    PRR: gateLine("en", "PRR"),
     TRR: "15 Mar 2027. Ahead. No test levels are opened.",
-    SAR: "Ahead. No acceptance evidence is opened.",
-    ORR: "Ahead. No operations evidence is opened.",
-    FRR: "5 Jul 2027. Ahead. No flight-readiness evidence is opened.",
+    SAR: gateLine("en", "SAR"),
+    ORR: gateLine("en", "ORR"),
+    FRR: gateLine("en", "FRR"),
   },
   pt: {
     PDR: "O Lumen-1 está aqui. Não saiu da PDR.",
-    PRR: "À frente. Nenhuma evidência de produção está aberta.",
+    PRR: gateLine("pt", "PRR"),
     TRR: "15 mar 2027. À frente. Nenhum nível de ensaio está aberto.",
-    SAR: "À frente. Nenhuma evidência de aceitação está aberta.",
-    ORR: "À frente. Nenhuma evidência de operações está aberta.",
-    FRR: "5 jul 2027. À frente. Nenhuma evidência de prontidão de voo está aberta.",
+    SAR: gateLine("pt", "SAR"),
+    ORR: gateLine("pt", "ORR"),
+    FRR: gateLine("pt", "FRR"),
   },
 };
 
@@ -101,6 +102,7 @@ export function PhaseModule({ locale }: { locale: Locale }) {
         <p className="phase-line">{line}</p>
         {selected === "CDR" ? <CdrPack locale={locale} /> : null}
         {selected === "TRR" ? <TrrPack locale={locale} /> : null}
+        {selected === "PRR" || selected === "SAR" || selected === "ORR" || selected === "FRR" ? <AheadPack locale={locale} code={selected} /> : null}
       </motion.article>
     </section>
   );

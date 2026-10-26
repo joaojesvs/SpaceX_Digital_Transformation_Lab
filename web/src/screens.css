@@ -212,6 +212,7 @@
   font-weight: 600;
 }
 .trr-pack li.is-open .trr-jump { grid-template-columns: 52px minmax(0, 1fr) auto auto; }
+.ahead-pack li { grid-template-columns: 72px minmax(0, 1fr) auto; }
 .cdr-locked {
   justify-self: end;
   color: var(--muted);
