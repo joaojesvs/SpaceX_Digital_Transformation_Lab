@@ -2,9 +2,24 @@ export type Lang = "en" | "pt";
 
 export type Pair = Record<Lang, string>;
 
-export type Layout = "mark" | "bleed" | "poster" | "desk" | "phase" | "split";
+export type Layout = "mark" | "bleed" | "poster" | "desk" | "split" | "brand";
 
 export type Tone = "plain" | "dispute";
+
+export type FigureId =
+  | "late"
+  | "spec"
+  | "reader"
+  | "method"
+  | "optic"
+  | "loads"
+  | "plate"
+  | "record"
+  | "auditors"
+  | "finding"
+  | "human"
+  | "source"
+  | "close";
 
 export type Scene = {
   id: string;
@@ -13,6 +28,7 @@ export type Scene = {
   image?: string;
   wide?: boolean;
   tone?: Tone;
+  figure?: FigureId;
   eyebrow?: Pair;
   title: Pair;
   detail?: Pair;
@@ -22,57 +38,57 @@ export type Scene = {
 
 export const phases = ["MCR", "SRR", "MDR", "SDR", "PDR", "CDR", "PRR", "TRR", "SAR", "ORR", "FRR"] as const;
 
+const line = {
+  en: "Astrea is the mission desk that audits a space project against the standards it has actually opened.",
+  pt: "Astrea é a secretária da missão que audita um projeto espacial face às normas que realmente abriu.",
+} as const;
+
 export const scenes: Scene[] = [
   {
-    id: "open",
-    ms: 12000,
-    layout: "mark",
-    image: "/astraea-mark.jpg",
-    eyebrow: { en: "Astraea", pt: "Astraea" },
-    title: { en: "Audit the review.", pt: "Auditar a revisão." },
+    id: "late",
+    ms: 18000,
+    layout: "poster",
+    wide: true,
+    figure: "late",
+    eyebrow: { en: "The cost", pt: "O custo" },
+    title: { en: "A missed requirement is found late.", pt: "Um requisito em falta encontra-se tarde." },
+    detail: { en: "The camera is already in review.", pt: "A câmara já está em revisão." },
   },
   {
     id: "instrument",
-    ms: 15000,
+    ms: 14000,
     layout: "bleed",
     image: "/optical-payload.jpg",
+    figure: "spec",
     eyebrow: { en: "The instrument", pt: "O instrumento" },
     title: { en: "A CubeSat optical payload.", pt: "Carga útil ótica de um CubeSat." },
     detail: { en: "Falcon 9 rideshare.", pt: "Rideshare da Falcon 9." },
   },
   {
-    id: "baseline",
-    ms: 12000,
-    layout: "poster",
-    eyebrow: { en: "The handoff", pt: "A passagem" },
-    title: { en: "One engineering baseline.", pt: "Uma linha de base de engenharia." },
-    detail: {
-      en: "It marks what is critical, and it names the change.",
-      pt: "Marca o que é crítico e nomeia a alteração.",
-    },
-  },
-  {
     id: "reader",
-    ms: 16000,
+    ms: 14000,
     layout: "bleed",
     image: "/atmosphere.jpg",
     wide: true,
+    figure: "reader",
     eyebrow: { en: "The wait", pt: "A espera" },
     title: { en: "The review waits on one reader.", pt: "A revisão espera por um leitor." },
-    detail: {
-      en: "ECSS and the design, read together.",
-      pt: "A ECSS e o desenho, lidos em conjunto.",
-    },
+    detail: { en: "ECSS and the design, read together.", pt: "A ECSS e o desenho, lidos em conjunto." },
   },
   {
     id: "gap-method",
-    ms: 13000,
+    ms: 14000,
     layout: "poster",
     wide: true,
+    figure: "method",
     eyebrow: { en: "01", pt: "01" },
     title: {
       en: "A requirement with no verification method.",
       pt: "Um requisito sem método de verificação.",
+    },
+    detail: {
+      en: "The optical MTF line names none.",
+      pt: "A linha de MTF ótico não nomeia nenhum.",
     },
   },
   {
@@ -80,10 +96,15 @@ export const scenes: Scene[] = [
     ms: 13000,
     layout: "poster",
     wide: true,
+    figure: "optic",
     eyebrow: { en: "02", pt: "02" },
     title: {
       en: "An optic with no contamination control.",
       pt: "Uma ótica sem controlo de contaminação.",
+    },
+    detail: {
+      en: "No outgassing check on the optic.",
+      pt: "Sem verificação de desgaseificação na ótica.",
     },
   },
   {
@@ -91,16 +112,19 @@ export const scenes: Scene[] = [
     ms: 13000,
     layout: "poster",
     wide: true,
+    figure: "loads",
     eyebrow: { en: "03", pt: "03" },
-    title: {
-      en: "Launch loads never qualified.",
-      pt: "Cargas de lançamento nunca qualificadas.",
+    title: { en: "Launch loads never qualified.", pt: "Cargas de lançamento nunca qualificadas." },
+    detail: {
+      en: "No qualification against the rideshare mechanical environment.",
+      pt: "Sem qualificação face ao ambiente mecânico do rideshare.",
     },
   },
   {
     id: "one",
     ms: 12000,
     layout: "poster",
+    figure: "plate",
     eyebrow: { en: "This camera", pt: "Esta câmara" },
     title: { en: "One camera. One review.", pt: "Uma câmara. Uma revisão." },
     detail: {
@@ -109,33 +133,38 @@ export const scenes: Scene[] = [
     },
   },
   {
-    id: "product",
-    ms: 22000,
-    layout: "desk",
-    eyebrow: { en: "Astraea", pt: "Astraea" },
-    title: { en: "The mission desk.", pt: "A secretária da missão." },
+    id: "brand",
+    ms: 20000,
+    layout: "brand",
+    title: line,
   },
   {
-    id: "phase",
-    ms: 16000,
-    layout: "phase",
-    image: "/phase-rail.jpg",
-    eyebrow: { en: "Lumen-1", pt: "Lumen-1" },
-    title: { en: "In PDR.\nNext, CDR.", pt: "Em PDR.\nA seguir, o CDR." },
+    id: "product",
+    ms: 26000,
+    layout: "desk",
+    eyebrow: { en: "Astrea", pt: "Astrea" },
+    title: { en: "The mission desk.", pt: "A secretária da missão." },
+    detail: { en: "Installed for aerospace missions.", pt: "Instalada para missões aeroespaciais." },
+  },
+  {
+    id: "record",
+    ms: 24000,
+    layout: "poster",
+    wide: true,
+    figure: "record",
+    eyebrow: { en: "The record", pt: "O registo" },
+    title: { en: "The open record is Lumen-1.", pt: "O registo aberto é o Lumen-1." },
     detail: {
-      en: "6U CubeSat optical camera. Falcon\u00a09 rideshare.",
-      pt: "Câmara ótica CubeSat 6U. Rideshare da Falcon\u00a09.",
-    },
-    aside: {
-      en: "Halcyon-3 stays at SRR. Cinder-2 stays at MDR.",
-      pt: "Halcyon-3 fica no SRR. Cinder-2 fica no MDR.",
+      en: "The rail opens that record. The other missions stay on the list.",
+      pt: "O carril abre esse registo. As outras missões ficam na lista.",
     },
   },
   {
     id: "decide",
-    ms: 15000,
+    ms: 14000,
     layout: "split",
     image: "/desk-widget.jpg",
+    figure: "auditors",
     eyebrow: { en: "The demo", pt: "A demonstração" },
     title: { en: "The engineer decides.", pt: "O engenheiro decide." },
     detail: {
@@ -145,9 +174,10 @@ export const scenes: Scene[] = [
   },
   {
     id: "f1",
-    ms: 20000,
+    ms: 16000,
     layout: "poster",
     wide: true,
+    figure: "finding",
     eyebrow: { en: "Agreed", pt: "Acordado" },
     title: {
       en: "No verification method for the optical MTF requirement.",
@@ -161,9 +191,10 @@ export const scenes: Scene[] = [
   },
   {
     id: "f2",
-    ms: 16000,
+    ms: 14000,
     layout: "poster",
     wide: true,
+    figure: "finding",
     eyebrow: { en: "Agreed", pt: "Acordado" },
     title: {
       en: "No contamination or outgassing control on the optic.",
@@ -177,9 +208,10 @@ export const scenes: Scene[] = [
   },
   {
     id: "f3",
-    ms: 16000,
+    ms: 14000,
     layout: "poster",
     wide: true,
+    figure: "finding",
     eyebrow: { en: "Agreed", pt: "Acordado" },
     title: {
       en: "No qualification against the rideshare mechanical environment.",
@@ -193,10 +225,11 @@ export const scenes: Scene[] = [
   },
   {
     id: "f4",
-    ms: 20000,
+    ms: 18000,
     layout: "poster",
     wide: true,
     tone: "dispute",
+    figure: "finding",
     eyebrow: { en: "In dispute", pt: "Em disputa" },
     title: {
       en: "Reliability is asserted. There is no FMEA.",
@@ -209,63 +242,38 @@ export const scenes: Scene[] = [
     note: "ECSS-Q-ST-30C Rev.1 · 6.4.2.2a",
   },
   {
-    id: "result",
-    ms: 16000,
+    id: "human",
+    ms: 18000,
     layout: "poster",
     wide: true,
-    eyebrow: { en: "On this baseline", pt: "Nesta linha de base" },
-    title: { en: "Three accepted. One left open.", pt: "Três aceites. Um em aberto." },
+    figure: "human",
+    eyebrow: { en: "The person", pt: "A pessoa" },
+    title: { en: "The engineer still decides.", pt: "O engenheiro ainda decide." },
     detail: {
-      en: "The engineer still decides. This does not certify the camera.",
-      pt: "O engenheiro ainda decide. Isto não certifica a câmara.",
+      en: "Three accepted. One left open. This does not certify the camera.",
+      pt: "Três aceites. Um em aberto. Isto não certifica a câmara.",
     },
   },
   {
     id: "source",
-    ms: 14000,
+    ms: 20000,
     layout: "poster",
     wide: true,
+    figure: "source",
     eyebrow: { en: "The source", pt: "A origem" },
-    title: { en: "The demo reads the cards.", pt: "A demonstração lê as fichas." },
-    detail: {
-      en: "Drive holds 317 ECSS files. Git holds the requirements, the FMEA, the verification plan, and the cards.",
-      pt: "O Drive guarda 317 ficheiros ECSS. O Git guarda os requisitos, a FMEA, o plano de verificação e as fichas.",
-    },
+    title: { en: "The demo reads the opened cards.", pt: "A demonstração lê as fichas abertas." },
+    detail: { en: "Not all 317 files.", pt: "Não são os 317 ficheiros." },
   },
   {
-    id: "domains",
-    ms: 14000,
-    layout: "poster",
-    wide: true,
-    eyebrow: { en: "Four domains", pt: "Quatro domínios" },
-    title: {
-      en: "Then the second auditor. Then the human.",
-      pt: "Depois o segundo auditor. Depois a pessoa.",
-    },
-    detail: {
-      en: "The ECSS applicability index, the project configuration, the finding register, and the Falcon 9 rideshare constraints.",
-      pt: "O índice de aplicabilidade ECSS, a configuração do projeto, o registo de achados e as restrições do rideshare da Falcon 9.",
-    },
-  },
-  {
-    id: "next",
-    ms: 12000,
-    layout: "poster",
-    wide: true,
-    eyebrow: { en: "Next", pt: "A seguir" },
-    title: { en: "The specialist takes the dispute.", pt: "O especialista fica com a disputa." },
-    detail: {
-      en: "The next review of this camera.",
-      pt: "A próxima revisão desta câmara.",
-    },
-  },
-  {
-    id: "thanks",
-    ms: 13000,
+    id: "close",
+    ms: 18000,
     layout: "mark",
     image: "/astraea-mark.jpg",
-    eyebrow: { en: "Astraea", pt: "Astraea" },
-    title: { en: "Thank you.", pt: "Obrigado." },
+    figure: "close",
+    eyebrow: { en: "Next", pt: "A seguir" },
+    title: { en: "The specialist\ntakes the dispute.", pt: "O especialista\nfica com a disputa." },
+    detail: { en: "The next review of this camera.", pt: "A próxima revisão desta câmara." },
+    aside: { en: "Thank you.", pt: "Obrigado." },
   },
 ];
 
@@ -273,4 +281,9 @@ export const ui = {
   hint: { en: "Space", pt: "Espaço" },
   playing: { en: "Playing", pt: "A correr" },
   language: { en: "Language", pt: "Língua" },
+  ground: { en: "Ground", pt: "Fundo" },
+  type: { en: "Type", pt: "Tipo" },
+  accent: { en: "Accent", pt: "Acento" },
 } as const;
+
+export const brandLine = line;

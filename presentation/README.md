@@ -1,4 +1,4 @@
-# Astraea
+# Astrea
 
 Fullscreen stage presentation. English is on screen. Portuguese keeps the same layout.
 

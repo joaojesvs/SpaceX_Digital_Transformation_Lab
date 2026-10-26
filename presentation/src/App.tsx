@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState, type MouseEvent } from "react";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
-import { phases, scenes, ui, type Lang, type Scene } from "./copy";
+import { scenes, ui, type Lang, type Scene } from "./copy";
 import { MissionDesk } from "./desk";
+import { BrandScene, Figure } from "./figures";
 
 const EASE = [0.4, 0, 0.2, 1] as const;
 const STILLS = [
+  "/astrea-mark.png",
+  "/astrea-wordmark.png",
   "/astraea-mark.jpg",
   "/optical-payload.jpg",
   "/atmosphere.jpg",
@@ -152,15 +155,22 @@ export function App() {
         >
           {scene.image ? <img className="bleed" src={scene.image} alt="" draggable={false} /> : null}
           <div className="scrim" />
-          {scene.layout === "desk" ? (
+          {scene.layout === "brand" ? (
+            <BrandScene lang={lang} />
+          ) : scene.layout === "desk" ? (
             <DeskScene scene={scene} lang={lang} scale={deskScale} reduced={reduced} rise={rise} />
-          ) : scene.layout === "phase" ? (
-            <PhaseScene scene={scene} lang={lang} reduced={reduced} rise={rise} />
           ) : (
             <Copy scene={scene} lang={lang} reduced={reduced} rise={rise} />
           )}
         </motion.section>
       </AnimatePresence>
+
+      {scene.id !== "brand" ? (
+        <div className="lockup" aria-hidden="true">
+          <img className="lockup-mark" src="/astrea-mark.png" alt="" />
+          <img className="lockup-word" src="/astrea-wordmark.png" alt="" />
+        </div>
+      ) : null}
 
       <div className="chrome">
         <p className="index">
@@ -202,12 +212,15 @@ function Copy({
 }) {
   return (
     <motion.div
-      className="copy"
+      className={scene.figure && scene.figure !== "close" ? "copy has-figure" : "copy"}
       initial={reduced ? false : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={rise}
     >
-      <Words scene={scene} lang={lang} />
+      <div className="words">
+        <Words scene={scene} lang={lang} />
+      </div>
+      {scene.figure ? <Figure scene={scene} lang={lang} /> : null}
     </motion.div>
   );
 }
@@ -219,46 +232,9 @@ function Words({ scene, lang }: { scene: Scene; lang: Lang }) {
         <p className={scene.tone === "dispute" ? "eyebrow eyebrow-dispute" : "eyebrow"}>{scene.eyebrow[lang]}</p>
       ) : null}
       <h1 className={scene.wide ? "wide" : undefined}>{scene.title[lang]}</h1>
-      {scene.detail ? <p className="detail">{scene.detail[lang]}</p> : null}
-      {scene.note ? <p className="note">{scene.note}</p> : null}
+      {scene.figure === "finding" ? null : scene.detail ? <p className="detail">{scene.detail[lang]}</p> : null}
+      {scene.figure === "finding" ? null : scene.note ? <p className="note">{scene.note}</p> : null}
     </>
-  );
-}
-
-function PhaseScene({
-  scene,
-  lang,
-  reduced,
-  rise,
-}: {
-  scene: Scene;
-  lang: Lang;
-  reduced: boolean;
-  rise: Transition;
-}) {
-  return (
-    <motion.div
-      className="copy phase-copy"
-      initial={reduced ? false : { opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={rise}
-    >
-      <div>
-        {scene.eyebrow ? <p className="eyebrow">{scene.eyebrow[lang]}</p> : null}
-        <h1>{scene.title[lang]}</h1>
-      </div>
-      <div className="rail-block">
-        {scene.detail ? <p className="detail phase-detail">{scene.detail[lang]}</p> : null}
-        <ol className="phases">
-          {phases.map((code) => (
-            <li key={code} data-state={code === "PDR" ? "now" : code === "CDR" ? "next" : "idle"}>
-              {code}
-            </li>
-          ))}
-        </ol>
-        {scene.aside ? <p className="aside">{scene.aside[lang]}</p> : null}
-      </div>
-    </motion.div>
   );
 }
 
@@ -285,6 +261,7 @@ function DeskScene({
       >
         {scene.eyebrow ? <p className="eyebrow">{scene.eyebrow[lang]}</p> : null}
         <h1>{scene.title[lang]}</h1>
+        {scene.detail ? <p className="detail">{scene.detail[lang]}</p> : null}
       </motion.div>
       <div className="desk-fit" style={{ width: DESK_W * scale, height: DESK_H * scale }}>
         <div className="desk-scale" style={{ transform: `scale(${scale})` }}>

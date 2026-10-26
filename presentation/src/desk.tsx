@@ -66,14 +66,14 @@ export function MissionDesk({ lang }: { lang: Lang }) {
           <i className="light light-y" />
           <i className="light light-g" />
         </span>
-        <span className="mac-title">Astraea</span>
+        <span className="mac-title">Astrea</span>
         <span />
       </div>
       <div className="mac-body">
         <aside className="side">
           <div className="brand">
             <Star />
-            <span>Astraea</span>
+            <span>Astrea</span>
           </div>
           <div className="nav">
             {modules.map((item) => (
@@ -86,7 +86,7 @@ export function MissionDesk({ lang }: { lang: Lang }) {
         </aside>
         <div className="main">
           <header className="main-top">
-            <span className="kicker">Astraea</span>
+            <span className="kicker">Astrea</span>
             <span className="mini-lang">
               <em data-on={lang === "en" ? "true" : "false"}>EN</em>
               <em data-on={lang === "pt" ? "true" : "false"}>PT</em>
