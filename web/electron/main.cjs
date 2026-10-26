@@ -169,9 +169,15 @@ F-03, agreed, critical. Missing qualification against the rideshare mechanical e
 
 F-04, in dispute. Reliability is asserted with no FMEA. REQ-REL-01 states 0.95 over two years. ECSS-Q-ST-30C Rev.1 6.4.2.2a requires an FMEA, or a FMECA when criticality is included. 6.4.2.2b requires the analysis to name potential failure modes and class them. The clause requires the analysis, not a second camera. A person decides. Do not close the dispute.
 
-ISO is not opened. Do not name an ISO clause and do not call ISO a pass.
+How to answer:
 
-You may answer a real question. If the opened record does not contain the fact, say it is not opened. Never invent an ECSS clause, an ISO pass, or a rideshare load. Be concise.`;
+A general question gets a real answer. That includes an acronym, a definition, and an ECSS concept that is not a question about this project's compliance. Explain the term. Do not answer a general question with only "It is not opened." That reply by itself is not allowed.
+
+A question about whether Lumen-1 complies uses only the four findings above. If the asked standard was not opened for this project, say the project was not checked against it. If the question also asks what a term means, explain the term in the same reply. Do not stop at the check.
+
+For Lumen-1, do not invent a clause number, an ISO pass, or a rideshare load. ISO was not checked for this project, so do not call it a pass and do not attach an ISO clause to the mission. The rideshare guide was not opened, so do not state a section or a load for this camera. None of that stops you from explaining a general term.
+
+Be concise.`;
 
 function calmMissing(locale) {
   return locale === "pt" ? "A chave não está definida." : "The key is not set.";
