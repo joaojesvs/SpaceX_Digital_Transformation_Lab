@@ -1,19 +1,17 @@
 # Red-team challenge
 
-Second pass, 26 Oct 2026. Bound to the Lumen-1 finding register in the project store and on [PR #3](https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/3) (`docs/ecss/findings.md`, `docs/ecss/clause-index.md`, `docs/ecss/demo-baseline.md`). Those three files match. This file was checked against `origin/main` at `cde8015`.
+Third pass, 26 Oct 2026. Bound to the Lumen-1 finding register after the baseline opened `Files_ECSS.zip` on Drive. The register commits no PDFs. This file was checked against `origin/main` at `cde8015` for the standards already there. Clause identifiers below are the ones on the finding cards. Standard text is not copied here.
 
-The product is the Lumen-1 6U CubeSat camera on a Falcon 9 rideshare. The 317-file library goes to Google Drive, not into Git. The Drive link is not in `docs/decisions.md`. A file that cannot be opened is **waiting on upload**. That is not out of scope. No clause is invented for a card marked waiting on upload.
+The product is the Lumen-1 6U CubeSat camera on a Falcon 9 rideshare. A file the cards did not open stays **waiting on upload**. That is not out of scope. No clause is invented for ECSS-Q-ST-70-01, ECSS-Q-ST-70-02, ECSS-Q-ST-30-02, or the rideshare guide.
 
-Pyrotechnics, explosives, and propulsion stay out. These files are on `main` and were not opened and not cited: `ECSS-E-30part6A25April2000.pdf`, `ECSS-E-33-11A17April2008.pdf`, `ECSS-E-30part5.1A2April2002.pdf`.
-
-Clause identifiers below are the ones on the finding cards. For F-01 and F-03 the identifiers were confirmed in the PDFs on `main`. The standard text is not copied here.
+Pyrotechnics, explosives, and propulsion stay unread. These files are on `main` and were not opened and not cited: `ECSS-E-30part6A25April2000.pdf`, `ECSS-E-33-11A17April2008.pdf`, `ECSS-E-30part5.1A2April2002.pdf`.
 
 | ID | Planted issue | Verdict | Clause |
 | --- | --- | --- | --- |
-| F-01 | REQ-IMG-03 has no verification method | Agree | ECSS-E-ST-10-02C Rev.1, 5.2.1e. Supporting: 5.2.2.1a |
-| F-02 | No contamination or outgassing control on the optic | Agree | waiting on upload. Expected document: ECSS-Q-ST-70. No clause invented |
-| F-03 | No qualification against rideshare launch loads | Agree | ECSS-E-ST-10-03C Rev.1, 4.5.2a. Supporting: 4.5.1b; 5.1b; 5.2a with Table 5-1 columns a and i; 5.5.2.3; 5.5.2.5; 5.5.2.6. Launch guide: waiting on upload |
-| F-04 | Single-string camera, reliability asserted, no FMEA | Dispute | waiting on upload. Expected document: ECSS-Q-ST-30. No clause invented |
+| F-01 | REQ-IMG-03 has no verification method | Agree | ECSS-E-ST-10-02C Rev.1, 5.2.1e. Supporting: 5.2.2.1a; ECSS-E-ST-10C Rev.1, 5.2.3.4a |
+| F-02 | No contamination or outgassing control on the optic | Agree | ECSS-Q-ST-70C Rev.2, 4.4a. Supporting: 4.4c; 5.1.4b; 5.1.4c |
+| F-03 | No qualification against rideshare launch loads | Agree | ECSS-E-ST-10-03C Rev.1, 4.5.2a. Supporting: 4.5.1b; 5.1b; 5.2a with Table 5-1 columns a and i; 5.5.2.3; 5.5.2.5; 5.5.2.6. Launch guide: waiting on upload. Not in the zip |
+| F-04 | Single-string camera, reliability asserted, no FMEA | Dispute | ECSS-Q-ST-30C Rev.1, 6.4.2.2a. Supporting: 6.4.2.2b |
 
 ## F-01 — Requirement with no verification method — Agree
 
@@ -23,15 +21,21 @@ REQ-IMG-03 sets an on-orbit modulation transfer function of at least 0.15 at Nyq
 
 ECSS-E-ST-10-02C Rev.1 is on `main` (`ECSS-E-ST-10-02C-Rev.1(1February2018).pdf`). Clause 5.2.1e requires, for each requirement to be verified, a strategy in the first issue of the verification matrix: the methods, the levels, and the stages, for customer approval. Clause 5.2.2.1a allows only test, analysis, review of design, or inspection, alone or combined. REQ-IMG-03 uses none of them. An empty row is not a strategy, so the requirement cannot be closed.
 
-Agree. Both identifiers are in that file. The card is not waiting on upload.
+ECSS-E-ST-10C Rev.1 was opened from the zip (`Files_PDF/ECSS-E-ST-10C-Rev.1(15February2017).pdf`). Clause 5.2.3.4a says the same thing from the system-engineering side: each requirement in the technical specification has a verification method. Clause 5.2.3.4b puts that method in the matrix. The row has neither.
+
+Agree. The identifiers are the ones on the card.
 
 ## F-02 — No contamination or outgassing control on the optic — Agree
 
-Card status on the finding: waiting on upload. Clause on the card: waiting on upload. Expected document: ECSS-Q-ST-70. Evidence: `demo-baseline.md`, "Materials and the optic".
+Card status on the finding: ready. Evidence: `demo-baseline.md`, "Materials and the optic".
 
-The lens, the silicone stake, the anodized baffle, and the coated filter sit in view of the detector. The baseline has no cleanliness level, no contamination budget, no bake-out, no witness sample, and no outgassing screen. Integration is "assemble on a clean bench". Both auditors agree that gap is real and critical at PDR. The red team agrees.
+Opened from the zip: `Files_PDF/ECSS-Q-ST-70C-Rev.2(15October2019).pdf`.
 
-The finding cannot be accepted until ECSS-Q-ST-70 can be opened. The file is not on `main`, and the Drive link is not in the decision log. No clause identifier is stated here. `ECSS-E-30 Part 8A` is not used as a substitute. The pyrotechnic, explosive, and propulsion files are not used either. Waiting on upload leaves the standard in the slice.
+The lens, the silicone stake, the anodized baffle, and the coated filter sit in view of the detector. The baseline has no cleanliness level, no contamination budget, no bake-out, no witness sample, and no outgassing screen. Integration is "assemble on a clean bench".
+
+ECSS-Q-ST-70C Rev.2, clause 4.4a, requires a contamination and cleanliness control programme. The minimum is cleaning procedures and a way to monitor cleanliness. The baseline has neither. Clause 4.4c applies because this optic is contamination-critical: it asks for a chemical and particle requirement specification and a cleanliness control plan. The detailed plan rules are in ECSS-Q-ST-70-01, which the card did not open, so this review does not invent them. Clause 5.1.4b requires outgassing screening of the materials. Clause 5.1.4c requires every organic material to be evaluated for outgassing. The silicone stake is organic and has no evaluation. The screening method is in ECSS-Q-ST-70-02, which the card did not open, so no acceptance percentages are stated.
+
+Agree. Both auditors agree this is critical at PDR. The change on the card is the one to carry: add the cleanliness programme and an outgassing evaluation of every material in view of the detector, including the silicone, and give that requirement a verification method. Write the detailed plan and the screening limits only when ECSS-Q-ST-70-01 and ECSS-Q-ST-70-02 are opened.
 
 ## F-03 — No qualification against rideshare launch loads — Agree
 
@@ -46,7 +50,7 @@ ECSS-E-ST-10-03C Rev.1 is on `main` (`ECSS-E-ST-10-03-Rev.1(31May2022).pdf`). Th
 - **5.1b** applies every required test of each type the unit fits. The standard's own example is a unit that is both electronic and optical. A camera with a detector and a controller fits type a and type i.
 - **5.2a** sets the qualification baseline as Table 5-1, read with 5.1b. In that table, sinusoidal vibration (5.5.2.5) and shock (5.5.2.6) are required for both type a and type i. Random vibration (5.5.2.3) is required for type a and is a customer decision for type i, so the electronic type makes random required. The campaign plans none of the three.
 
-The SpaceX Rideshare Payload User's Guide is the environment those tests are aimed at. The card marks that guide waiting on upload. It is not open. This review does not name a guide section or a load factor. Both auditors still agree on the testing clause that is open: the campaign has no qualification model, no protoflight model, and no launch-load test, so 4.5.2a has no evidence.
+The SpaceX Rideshare Payload User's Guide is the environment those tests are aimed at. The Drive zip was listed by name and the guide is not in it, and it is not on `main`. The card leaves the guide waiting on upload. This review does not name a guide section or a load factor. Both auditors still agree on the testing clause that is open: the campaign has no qualification model, no protoflight model, and no launch-load test, so 4.5.2a has no evidence.
 
 Agree on ECSS-E-ST-10-03C Rev.1, 4.5.2a. The change on the card is a qualification or protoflight campaign for a flight-representative camera against the rideshare mechanical environment, including the sine, random, and shock tests Table 5-1 requires for an electronic optical unit, unless a written customer tailoring narrows that list. Delete the line that the dispenser vendor covers the camera. Environment levels wait until the guide can be opened.
 
@@ -54,20 +58,22 @@ Agree on ECSS-E-ST-10-03C Rev.1, 4.5.2a. The change on the card is a qualificati
 
 This item stays in dispute. It is not agreed, not downgraded, and not escalated.
 
-Card status on the finding: waiting on upload. Clause on the card: waiting on upload. Expected document: ECSS-Q-ST-30. Evidence: `demo-baseline.md`, REQ-REL-01 and "Reliability claim".
+Card status on the finding: ready, and the auditors do not agree. Evidence: `demo-baseline.md`, REQ-REL-01 and "Reliability claim".
 
-What the file shows, and what both auditors already see: one detector, one controller, one power feed, and REQ-REL-01 stating 0.95 over two years. The only evidence offered is that the detector is commercial and that cameras of this class have flown. There is no failure-modes analysis. The single string is recorded as a mass saving.
+Opened from the zip: `Files_PDF/ECSS-Q-ST-30C-Rev.1(15February2017).pdf`.
 
-The finding cannot be accepted until ECSS-Q-ST-30 can be opened. The file is not on `main`, and the Drive link is not in the decision log. No clause identifier is invented. Waiting on upload is an acceptance hold. It leaves dependability in the slice, and it is not the dispute.
+What both auditors see: one detector, one controller, one power feed, and REQ-REL-01 stating 0.95 over two years. The only evidence offered is that the detector is commercial and that cameras of this class have flown. There is no failure-modes analysis. The single string is recorded as a mass saving.
 
-The dispute is the bundled claim.
+ECSS-Q-ST-30C Rev.1, clause 6.4.2.2a, requires an FMEA, or a FMECA when criticality is included. The worksheet rules are in ECSS-Q-ST-30-02, which the card did not open, so this review does not invent them. Clause 6.4.2.2b is the part both auditors use: the analysis names the potential failure modes and classes them by severity, or by criticality if a FMECA is used. The heritage sentence does not do that.
 
-A single-string science camera can be a chosen architecture. Dependability work has to analyse the failure and has to show the reliability requirement or record the accepted risk. A second camera is not the rule. Scoring "no redundancy" as a critical non-conformance overclaims a standard this review has not opened.
+The clause requires that analysis. It does not require a second camera. A science camera on a rideshare CubeSat can stay one string if the analysis records that architecture and the accepted consequences.
 
-REQ-REL-01 states 0.95, and the draft closes it with a heritage sentence. A number in a requirement is a claim the project has to earn. That claim is a different gap from the choice to fly one string. Dropping the whole item would let the number through. Holding it as one critical finding would treat the architecture itself as the violation.
+Auditor A treats the gap as critical. The 0.95 figure is a claim the project has not earned. On this single string, a failure of the detector, the controller, or the power feed ends the imaging mission, and the file never lists those modes. Auditor A's change is to remove 0.95, or to replace the sentence with an FMEA of the camera chain that names those modes and what would make each consequence acceptable.
 
-When ECSS-Q-ST-30 can be opened, the baseline has to split the two claims and name a clause read from that file. Agreement is then available for the unsupported 0.95. Agreement is not available for "single-string, therefore non-compliant" on its own. Until that split is written against an opened file, the red team holds F-04 open. The human decides.
+Auditor B accepts that 6.4.2.2a asks for the analysis, and that the heritage sentence is not one. Auditor B does not accept "single-string" as the non-conformance. Bundling "no redundancy" into the same critical finding overclaims the clause.
 
-## What this pass did not reopen
+The red team holds that bundle in dispute. The human decides.
 
-ECSS-E-ST-10, the parent system-engineering standard, is waiting on upload. No `ECSS-E-ST-10` file is on `main`. No clause is stated for it. F-01 does not depend on it. The older ECSS-E-10A, ECSS-E-10 Part 1B, and ECSS-E-ST-10-06C files are not used as stand-ins.
+## Left closed
+
+ECSS-Q-ST-70-01, ECSS-Q-ST-70-02, and ECSS-Q-ST-30-02 are named by the parent clauses and were not opened. The rideshare guide is not in the zip. No clause, section, load factor, plan rule, or acceptance percentage is taken from those files.
