@@ -1,0 +1,29 @@
+{
+  "id": "F-01",
+  "demoOrder": 1,
+  "document": "ECSS-E-ST-10-02C Rev.1",
+  "clause": "ECSS-E-ST-10-02C Rev.1, 5.2.1e",
+  "supportingClauses": "ECSS-E-ST-10-02C Rev.1, 5.2.2.1a; ECSS-E-ST-10C Rev.1, 5.2.3.4a",
+  "topic": "verification method",
+  "domain": "ecss-applicability",
+  "cardStatus": "ready",
+  "match": {
+    "section": "requirements",
+    "all": [{ "field": "verificationMethod", "op": "missing" }]
+  },
+  "whyCritical": {
+    "en": "Clause 5.2.1e says each requirement in the verification set carries a strategy in the first verification control document: the methods, the product level, and the stage. That document is the matrix. An empty row has no strategy, so the requirement cannot be closed. Clause 5.2.2.1a limits a method to test, analysis, review of design, or inspection, alone or combined. The row uses none of them. Clause 5.2.3.4a of ECSS-E-ST-10C Rev.1, opened from the Drive zip, says the same thing from the system-engineering side: each requirement in the technical specification has a verification method, and 5.2.3.4b puts that method in the matrix. This is critical at PDR because the image chain can pass the ground-sample-distance row and still be soft at Nyquist. Without a method, nobody can say how that softness would be found before flight.",
+    "pt": "A cláusula 5.2.1e diz que cada requisito no conjunto de verificação tem uma estratégia no primeiro documento de controlo da verificação: os métodos, o nível de produto e a fase. Esse documento é a matriz. Uma linha vazia não tem estratégia, por isso o requisito não pode ser fechado. A cláusula 5.2.2.1a limita um método a ensaio, análise, revisão de projeto ou inspeção, sozinho ou em combinação. A linha não usa nenhum deles. A cláusula 5.2.3.4a da ECSS-E-ST-10C Rev.1, aberta no zip do Drive, diz o mesmo do lado da engenharia de sistemas: cada requisito da especificação técnica tem um método de verificação, e a 5.2.3.4b põe esse método na matriz. É crítico na PDR porque a cadeia de imagem pode cumprir a linha da distância de amostragem ao solo e ainda assim ficar suave em Nyquist. Sem método, ninguém diz como essa suavidade seria descoberta antes do voo."
+  },
+  "recommendedChange": {
+    "en": "Set REQ-IMG-03 to test, at equipment level, in qualification, on an optical bench that measures modulation transfer at Nyquist. Write those three entries in the matrix and name the bench test in the campaign.",
+    "pt": "Pôr o REQ-IMG-03 como ensaio, ao nível do equipamento, na qualificação, num banco ótico que meça a transferência de modulação em Nyquist. Escrever essas três entradas na matriz e nomear o ensaio no plano de campanha."
+  },
+  "secondAuditor": {
+    "stance": "agree",
+    "note": {
+      "en": "The empty matrix row is the evidence, 5.2.1e is the open clause, and the change names the three entries.",
+      "pt": "A linha vazia da matriz é a evidência, a 5.2.1e é a cláusula aberta, e a alteração nomeia as três entradas."
+    }
+  }
+}

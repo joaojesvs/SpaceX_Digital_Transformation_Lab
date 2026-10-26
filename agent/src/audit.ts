@@ -67,16 +67,15 @@ function lineMatches(line: BaselineLine, card: Card): boolean {
 }
 
 function toFinding(card: Card, line: BaselineLine, rideshare: RideshareConstraints): FindingCard {
-  let launchConstraint: string | undefined;
-  if (card.environmentRef !== undefined) {
-    if (card.environmentRef !== rideshare.id) {
-      throw new Error(`Card ${card.id} points at ${card.environmentRef}, not the loaded rideshare constraints`);
-    }
-    launchConstraint = rideshare.document;
+  if (card.environmentRef !== undefined && card.environmentRef !== rideshare.id) {
+    throw new Error(`Card ${card.id} points at ${card.environmentRef}, not the loaded rideshare constraints`);
   }
   return {
     id: card.id,
+    status: card.secondAuditor.stance === "agree" ? "agreed" : "in dispute",
+    cardStatus: card.cardStatus,
     clause: formatClause(card),
+    supportingClauses: card.supportingClauses,
     triggeringLine: { id: line.id, en: line.text.en, pt: line.text.pt },
     whyCritical: card.whyCritical,
     recommendedChange: card.recommendedChange,
@@ -85,6 +84,6 @@ function toFinding(card: Card, line: BaselineLine, rideshare: RideshareConstrain
       primary: card.whyCritical,
       second: card.secondAuditor.note,
     },
-    launchConstraint,
+    launchConstraint: card.launchConstraint,
   };
 }

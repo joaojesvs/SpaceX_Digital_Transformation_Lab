@@ -14,7 +14,7 @@ import type {
   Text,
 } from "./types.ts";
 
-const PROSE_LIMIT = 800;
+const PROSE_LIMIT = 4500;
 
 export function packageRoot(): string {
   return resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -123,6 +123,15 @@ function readCard(file: string): Card {
   if (raw.libraryAnchor !== undefined) {
     libraryAnchor = readProse(raw.libraryAnchor, file, "libraryAnchor");
   }
+  let supportingClauses: string | undefined;
+  if (raw.supportingClauses !== undefined) {
+    supportingClauses = readProse(raw.supportingClauses, file, "supportingClauses");
+  }
+  let launchConstraint: string | undefined;
+  if (raw.launchConstraint !== undefined) {
+    launchConstraint = readShort(raw.launchConstraint, file, "launchConstraint");
+  }
+  if (raw.cardStatus !== "ready") fail(file, "cardStatus must be ready");
   const second = raw.secondAuditor;
   if (!isRecord(second)) fail(file, "secondAuditor is required");
   if (second.stance !== "agree" && second.stance !== "dispute") {
@@ -138,6 +147,9 @@ function readCard(file: string): Card {
     match,
     environmentRef,
     libraryAnchor,
+    supportingClauses,
+    launchConstraint,
+    cardStatus: "ready",
     whyCritical: readText(raw.whyCritical, file, "whyCritical"),
     recommendedChange: readText(raw.recommendedChange, file, "recommendedChange"),
     secondAuditor: {

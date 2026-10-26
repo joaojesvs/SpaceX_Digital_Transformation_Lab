@@ -1,0 +1,32 @@
+{
+  "id": "F-02",
+  "demoOrder": 2,
+  "document": "ECSS-Q-ST-70C Rev.2",
+  "clause": "ECSS-Q-ST-70C Rev.2, 4.4a",
+  "supportingClauses": "ECSS-Q-ST-70C Rev.2, 4.4c; 5.1.4b; 5.1.4c",
+  "topic": "optic contamination and outgassing",
+  "domain": "ecss-applicability",
+  "cardStatus": "ready",
+  "match": {
+    "section": "materials",
+    "all": [
+      { "field": "contaminationControl", "op": "equals", "value": false },
+      { "field": "outgassingScreening", "op": "equals", "value": false }
+    ]
+  },
+  "whyCritical": {
+    "en": "Both auditors agree this is critical. The lens, the silicone stake, the anodized baffle, and the coated filter sit in view of the detector. The file has no cleanliness level, no contamination budget, no bake-out, no witness sample, and no outgassing screen. The integration line is \"assemble on a clean bench\". A film or a particle on this optic lowers the modulation the image requirements ask for, and vacuum is when an unscreened silicone can move. Clause 4.4a requires a contamination and cleanliness control programme, and the minimum is cleaning procedures plus a way to monitor cleanliness. The baseline has neither. Clause 4.4c applies because this optic is contamination-critical: it asks for a chemical and particle requirement specification and a cleanliness control plan. The detailed plan rules are in ECSS-Q-ST-70-01, which was not opened, so this card does not invent those rules. Clause 5.1.4b requires outgassing screening of the materials. Clause 5.1.4c requires every organic material to be evaluated for outgassing. The silicone stake is organic and has no evaluation. The screening method is in ECSS-Q-ST-70-02, which was not opened, so no acceptance percentages are stated here.",
+    "pt": "Os dois auditores concordam que isto é crítico. A lente, o silicone de fixação, o baffle anodizado e o filtro com revestimento estão na vista do detetor. O ficheiro não tem nível de limpeza, orçamento de contaminação, bake-out, amostra testemunha, nem rastreio de desgaseificação. A linha de integração é \"montar num banco limpo\". Uma película ou uma partícula nesta ótica baixa a modulação que os requisitos de imagem pedem, e o vácuo é quando um silicone sem rastreio se pode deslocar. A cláusula 4.4a exige um programa de controlo de contaminação e limpeza, e o mínimo são procedimentos de limpeza mais uma forma de vigiar a limpeza. A linha de base não tem nenhum dos dois. A cláusula 4.4c aplica-se porque esta ótica é crítica à contaminação: pede uma especificação de requisitos químicos e de partículas e um plano de controlo de limpeza. As regras detalhadas do plano estão na ECSS-Q-ST-70-01, que não foi aberta, por isso este cartão não inventa essas regras. A cláusula 5.1.4b exige o rastreio de desgaseificação dos materiais. A cláusula 5.1.4c exige que cada material orgânico seja avaliado quanto à desgaseificação. O silicone de fixação é orgânico e não tem avaliação. O método de rastreio está na ECSS-Q-ST-70-02, que não foi aberta, por isso não se indicam percentagens de aceitação."
+  },
+  "recommendedChange": {
+    "en": "Add the cleanliness programme and an outgassing evaluation of every material in view of the detector, including the silicone, and give that requirement a verification method. Write the detailed plan and the screening limits only from ECSS-Q-ST-70-01 and ECSS-Q-ST-70-02 when those files are opened.",
+    "pt": "Acrescentar o programa de limpeza e uma avaliação de desgaseificação de cada material na vista do detetor, incluindo o silicone, e dar a esse requisito um método de verificação. Escrever o plano detalhado e os limites de rastreio só a partir da ECSS-Q-ST-70-01 e da ECSS-Q-ST-70-02 quando esses ficheiros forem abertos."
+  },
+  "secondAuditor": {
+    "stance": "agree",
+    "note": {
+      "en": "The optic line has neither a cleanliness programme nor an outgassing evaluation, and the change names both without inventing limits from files that were not opened.",
+      "pt": "A linha da ótica não tem programa de limpeza nem avaliação de desgaseificação, e a alteração nomeia os dois sem inventar limites de ficheiros que não foram abertos."
+    }
+  }
+}

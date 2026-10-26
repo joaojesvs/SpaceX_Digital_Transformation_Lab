@@ -7,6 +7,10 @@ export type Text = {
 
 export type Agreement = "agree" | "dispute";
 
+export type CardStatus = "ready";
+
+export type FindingStatus = "agreed" | "in dispute";
+
 export type FieldValue = string | boolean | null;
 
 export type MatchCondition =
@@ -28,6 +32,9 @@ export type Card = {
   match: CardMatch;
   environmentRef?: string;
   libraryAnchor?: string;
+  supportingClauses?: string;
+  launchConstraint?: string;
+  cardStatus: CardStatus;
   whyCritical: Text;
   recommendedChange: Text;
   secondAuditor: {
@@ -76,7 +83,10 @@ export type SkippedCard = {
 
 export type FindingCard = {
   id: string;
+  status: FindingStatus;
+  cardStatus: CardStatus;
   clause: string;
+  supportingClauses?: string;
   triggeringLine: { id: string; en: string; pt: string };
   whyCritical: Text;
   recommendedChange: Text;

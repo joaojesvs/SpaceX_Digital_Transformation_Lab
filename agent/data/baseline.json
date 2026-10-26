@@ -1,49 +1,67 @@
 {
-  "id": "LYRA-1",
-  "name": "Lyra-1",
+  "id": "LUMEN-1",
+  "name": "Lumen-1",
   "mission": {
-    "en": "Lyra-1, a CubeSat optical payload on a Falcon 9 rideshare.",
-    "pt": "Lyra-1, uma carga útil óptica de CubeSat num rideshare da Falcon 9."
+    "en": "Lumen-1, a 6U CubeSat optical payload on a Falcon 9 rideshare.",
+    "pt": "Lumen-1, uma carga útil óptica de CubeSat 6U num rideshare da Falcon 9."
   },
   "configuration": {
-    "spacecraft": "3U CubeSat",
-    "payload": "visible Earth-limb camera",
-    "optic": "commercial glass lens in an aluminium cell",
-    "launch": "Falcon 9 rideshare",
-    "redundancy": "single-string camera",
-    "phase": "preliminary definition"
+    "spacecraft": "6U CubeSat",
+    "payload": "single visible camera",
+    "optic": "refractive lens, silicone-staked retainers, anodized baffle, coated filter",
+    "launch": "Falcon 9 rideshare, CubeSat dispenser",
+    "redundancy": "single string: one detector, one controller, one power feed",
+    "phase": "preliminary design review"
   },
   "lines": [
     {
-      "id": "REQ-IMG-001",
+      "id": "REQ-IMG-01",
       "section": "requirements",
       "text": {
-        "en": "The camera shall image the Earth limb in the visible band.",
-        "pt": "A câmara deve observar o limbo terrestre na banda do visível."
+        "en": "From 500 km, the ground sample distance shall be 20 m or finer at nadir.",
+        "pt": "A partir de 500 km, a distância de amostragem ao solo deve ser 20 m ou melhor no nadir."
+      },
+      "fields": {
+        "verificationMethod": "Test",
+        "level": "Equipment",
+        "stage": "Acceptance",
+        "parentId": "MIS-01"
+      }
+    },
+    {
+      "id": "REQ-IMG-02",
+      "section": "requirements",
+      "text": {
+        "en": "The spectral band shall be 450 nm to 700 nm.",
+        "pt": "A banda espectral deve ser de 450 nm a 700 nm."
+      },
+      "fields": {
+        "verificationMethod": "Inspection",
+        "level": "Equipment",
+        "stage": "Qualification",
+        "parentId": "MIS-01"
+      }
+    },
+    {
+      "id": "REQ-IMG-03",
+      "section": "requirements",
+      "text": {
+        "en": "REQ-IMG-03 sets an on-orbit modulation transfer function of at least 0.15 at Nyquist. The verification matrix leaves method, level, and stage empty.",
+        "pt": "O REQ-IMG-03 fixa uma função de transferência de modulação em órbita de pelo menos 0,15 em Nyquist. A matriz de verificação deixa método, nível e fase por preencher."
       },
       "fields": {
         "verificationMethod": null,
-        "parentId": "NEED-SCI-001"
+        "level": null,
+        "stage": null,
+        "parentId": "MIS-01"
       }
     },
     {
-      "id": "REQ-IMG-002",
-      "section": "requirements",
-      "text": {
-        "en": "The camera shall store at least 100 images on board.",
-        "pt": "A câmara deve armazenar pelo menos 100 imagens a bordo."
-      },
-      "fields": {
-        "verificationMethod": "test",
-        "parentId": "NEED-SCI-001"
-      }
-    },
-    {
-      "id": "OPT-001",
+      "id": "MAT-OPT",
       "section": "materials",
       "text": {
-        "en": "The optic is a commercial glass lens in an aluminium cell. Cleanliness, contamination control, and outgassing screening are not defined.",
-        "pt": "A óptica é uma lente de vidro comercial numa célula de alumínio. Limpeza, controlo de contaminação e triagem de desgaseificação não estão definidos."
+        "en": "The lens, the silicone stake, the anodized baffle, and the coated filter sit in view of the detector. The file has no cleanliness level, no contamination budget, no bake-out, no witness sample, and no outgassing screen. The integration line is \"assemble on a clean bench\".",
+        "pt": "A lente, o silicone de fixação, o baffle anodizado e o filtro com revestimento estão na vista do detetor. O ficheiro não tem nível de limpeza, orçamento de contaminação, bake-out, amostra testemunha, nem rastreio de desgaseificação. A linha de integração é \"montar num banco limpo\"."
       },
       "fields": {
         "contaminationControl": false,
@@ -51,22 +69,22 @@
       }
     },
     {
-      "id": "VER-LAUNCH-001",
+      "id": "REQ-MEC-01",
       "section": "verification",
       "text": {
-        "en": "Qualification against Falcon 9 rideshare launch loads is marked N/A. No sine, random-vibration, or shock test is planned.",
-        "pt": "A qualificação face às cargas de lançamento do rideshare da Falcon 9 está marcada N/A. Não está planeado ensaio de seno, vibração aleatória ou choque."
+        "en": "REQ-MEC-01 says the camera survives the Falcon 9 rideshare mechanical environment and keeps optical alignment. The matrix says Test, equipment, qualification. The campaign then marks random vibration, sine, shock, static load, and acoustic as not applicable, because the dispenser vendor covers launch. No qualification model and no protoflight model exist.",
+        "pt": "O REQ-MEC-01 diz que a câmara sobrevive ao ambiente mecânico do rideshare da Falcon 9 e mantém o alinhamento ótico. A matriz diz ensaio, equipamento, qualificação. A campanha marca depois vibração aleatória, seno, choque, carga estática e acústica como não aplicáveis, porque o fornecedor do dispenser cobre o lançamento. Não há modelo de qualificação nem modelo protoflight."
       },
       "fields": {
         "rideshareQualification": false
       }
     },
     {
-      "id": "REL-001",
+      "id": "REQ-REL-01",
       "section": "dependability",
       "text": {
-        "en": "The camera is single-string. Reliability is stated as high because the sensor is commercial off-the-shelf. No failure-mode analysis is recorded.",
-        "pt": "A câmara é de cadeia única (single-string). A fiabilidade é declarada alta porque o sensor é comercial de prateleira. Não há análise de modos de falha."
+        "en": "One detector, one controller, one power feed, and REQ-REL-01 stating 0.95 over two years. The only evidence offered is the sentence that the detector is commercial and that cameras of this class have flown. There is no failure-modes analysis.",
+        "pt": "Um detetor, um controlador, uma alimentação, e o REQ-REL-01 a declarar 0,95 ao longo de dois anos. A única evidência é a frase de que o detetor é comercial e de que câmaras desta classe já voaram. Não há análise de modos de falha."
       },
       "fields": {
         "fmea": false,

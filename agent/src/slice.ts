@@ -40,9 +40,9 @@ export function formatClause(card: Pick<Card, "document" | "clause">): string {
   return card.clause;
 }
 
-export const PLANTED: { id: string; agreement: "agree" | "dispute" }[] = [
-  { id: "verification-method", agreement: "agree" },
-  { id: "optic-contamination", agreement: "agree" },
-  { id: "rideshare-qualification", agreement: "agree" },
-  { id: "dependability-fmea", agreement: "dispute" },
+export const PLANTED: { id: string; agreement: "agree" | "dispute"; status: "agreed" | "in dispute" }[] = [
+  { id: "F-01", agreement: "agree", status: "agreed" },
+  { id: "F-02", agreement: "agree", status: "agreed" },
+  { id: "F-03", agreement: "agree", status: "agreed" },
+  { id: "F-04", agreement: "dispute", status: "in dispute" },
 ];

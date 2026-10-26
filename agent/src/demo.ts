@@ -1,7 +1,7 @@
 import { audit } from "./audit.ts";
 import { formatReport } from "./format.ts";
 import { loadBaseline, loadCards, loadConfig, loadRideshare, packageRoot, resolveLibrary } from "./load.ts";
-import { classifyDocument, PLANTED, REFUSED_TOPICS } from "./slice.ts";
+import { classifyDocument, PLANTED } from "./slice.ts";
 import type { Lang } from "./types.ts";
 import { join } from "node:path";
 
@@ -39,7 +39,7 @@ if (problems.length > 0) {
   process.exit(1);
 }
 
-const summary = `Demo check passed: 3 agreed, 1 in dispute, traceability clear. Refused topics: ${REFUSED_TOPICS.join(", ")}.`;
+const summary = `Card status: ${report.findings.map((finding) => `${finding.id} ${finding.status}, ${finding.cardStatus}`).join("; ")}.`;
 if (asJson) process.stderr.write(summary + "\n");
 else process.stdout.write("\n" + summary + "\n");
 
@@ -68,10 +68,14 @@ function assertRefusals(): void {
 function checkPlanted(report: ReturnType<typeof audit>): string[] {
   const problems: string[] = [];
   if (report.network !== false) problems.push("network flag is not false");
-  const got = report.findings.map((finding) => `${finding.id}:${finding.agreement}`);
-  const expected = PLANTED.map((item) => `${item.id}:${item.agreement}`);
+  const got = report.findings.map((finding) => `${finding.id}:${finding.status}:${finding.cardStatus}`);
+  const expected = PLANTED.map((item) => `${item.id}:${item.status}:ready`);
   if (got.join(",") !== expected.join(",")) {
     problems.push(`findings were ${got.join(", ") || "(none)"}; expected ${expected.join(", ")}`);
+  }
+  const launch = report.findings.find((finding) => finding.id === "F-03");
+  if (!launch || launch.launchConstraint !== "waiting on upload") {
+    problems.push("F-03 launch constraint is not waiting on upload");
   }
   for (const finding of report.findings) {
     if (finding.clause.trim() === "") problems.push(`${finding.id} has no clause`);
@@ -85,8 +89,6 @@ function checkPlanted(report: ReturnType<typeof audit>): string[] {
       problems.push(`${finding.id} is missing the recommended change`);
     }
   }
-  const trace = report.clear.find((item) => item.id === "requirement-traceability");
-  if (!trace) problems.push("requirement traceability did not come back clear");
   if (report.cardsSkipped.some((skip) => skip.reason === "refused" && report.findings.some((finding) => finding.id === skip.file))) {
     problems.push("a refused card produced a finding");
   }

@@ -13,31 +13,31 @@ export function formatReport(report: AuditReport, lang: Lang): string {
     "",
   ];
 
-  report.findings.forEach((finding, index) => {
-    const agreement = finding.agreement === "agree"
-      ? label(lead, "Both auditors agree", "Os dois auditores concordam")
-      : label(lead, "In dispute", "Em disputa");
-    lines.push(`${index + 1}. ${agreement}`);
+  report.findings.forEach((finding) => {
+    lines.push(`${finding.id} — ${finding.status}, ${finding.cardStatus}`);
     for (const language of [lead, other]) {
       lines.push(language === "en" ? "English" : "Português");
       lines.push(`  ${label(language, "Clause", "Cláusula")}: ${finding.clause}`);
+      if (finding.supportingClauses) {
+        lines.push(`  ${label(language, "Supporting clauses", "Cláusulas de apoio")}: ${finding.supportingClauses}`);
+      }
       lines.push(`  ${label(language, "Triggering line", "Linha de origem")} (${finding.triggeringLine.id}): ${finding.triggeringLine[language]}`);
       if (finding.launchConstraint) {
         lines.push(`  ${label(language, "Launch constraint", "Restrição de lançamento")}: ${finding.launchConstraint}`);
       }
       lines.push(`  ${label(language, "Why it is critical", "Porque é crítico")}: ${finding.whyCritical[language]}`);
       lines.push(`  ${label(language, "Recommended change", "Alteração recomendada")}: ${finding.recommendedChange[language]}`);
-      const verb = finding.agreement === "agree"
-        ? label(language, "Agrees", "Concorda")
-        : label(language, "Disputes", "Contesta");
-      lines.push(`  ${label(language, "Second auditor", "Segundo auditor")}: ${verb}. ${finding.auditors.second[language]}`);
+      if (finding.agreement === "agree") {
+        lines.push(`  ${label(language, "Auditors", "Auditores")}: ${label(language, "both agree", "os dois concordam")}. ${finding.auditors.second[language]}`);
+      } else {
+        lines.push(`  ${label(language, "Auditor B", "Auditor B")}: ${finding.auditors.second[language]}`);
+      }
     }
     lines.push("");
   });
 
-  lines.push(label(lead, "Checked, no finding", "Revisto, sem achado"));
-  if (report.clear.length === 0) {
-    lines.push("  —");
+  if (report.clear.length > 0) {
+    lines.push(label(lead, "Checked, no finding", "Revisto, sem achado"));
   }
   for (const item of report.clear) {
     const ids = item.checkedLineIds.join(", ");

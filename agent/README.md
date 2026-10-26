@@ -1,6 +1,6 @@
 # Audit agent
 
-Deterministic demo for Lyra-1, a CubeSat camera on a Falcon 9 rideshare. No model, no API key, no network.
+Deterministic demo for Lumen-1, a 6U CubeSat camera on a Falcon 9 rideshare. No model, no API key, no network.
 
 From the repository root:
 
