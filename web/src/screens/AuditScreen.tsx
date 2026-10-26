@@ -1,70 +1,65 @@
-import { cards } from "../data/load";
-import { copy, formatLineNumbers } from "../i18n";
+import { copy } from "../i18n";
+import type { ReviewResult } from "../review/runReview";
 import type { Lang } from "../types";
 
-type AuditScreenProps = {
+const CHECK_INDEX: Record<string, number> = { "F-01": 0, "F-02": 1, "F-03": 2, "F-04": 3 };
+
+type ThreadProps = {
   lang: Lang;
-  baselineReady: boolean;
-  status: "idle" | "running" | "done";
-  step: number;
-  onRun: () => void;
-  onBack: () => void;
-  onFindings: () => void;
+  review: ReviewResult;
+  shown: number;
 };
 
-export function AuditScreen({
-  lang,
-  baselineReady,
-  status,
-  step,
-  onRun,
-  onBack,
-  onFindings,
-}: AuditScreenProps) {
-  const visible = cards.slice(0, step);
+export function Thread({ lang, review, shown }: ThreadProps) {
+  const steps = review.steps.slice(0, shown);
 
   return (
-    <section>
-      <p className="kicker">{copy.project[lang]}</p>
-      <h1>{copy.auditTitle[lang]}</h1>
-      <p className="lead">{copy.auditLead[lang]}</p>
-      <p className="path">{copy.cardsPath[lang]}</p>
-      {!baselineReady ? (
-        <div className="actions">
-          <p className="note">{copy.needBaseline[lang]}</p>
-          <button type="button" className="btn" onClick={onBack}>
-            {copy.backBaseline[lang]}
-          </button>
-        </div>
-      ) : (
-        <div className="actions">
-          {status === "idle" ? (
-            <button type="button" className="btn primary" onClick={onRun}>
-              {copy.run[lang]}
-            </button>
+    <ol className="thread" aria-live="polite">
+      {steps.map((step, index) => (
+        <li className="msg" key={`${step.kind}-${index}`}>
+          {index === 0 ? <p className="who">{copy.name[lang]}</p> : null}
+          {step.kind === "baseline" ? (
+            <>
+              <p>
+                {copy.readBaseline[lang]} {step.project}. {step.lineCount} {copy.lines[lang]}.
+              </p>
+              <p className="quote">
+                <span className="qn">{String(step.quote.n).padStart(2, "0")}</span>
+                {step.quote.text}
+              </p>
+            </>
           ) : null}
-          {status === "done" ? (
-            <button type="button" className="btn primary" onClick={onFindings}>
-              {copy.showFindings[lang]}
-            </button>
+          {step.kind === "clauses" ? (
+            <>
+              <p>{copy.openedCards[lang]}</p>
+              <ul className="ids">
+                {step.ids.map((id) => (
+                  <li key={id}>{id}</li>
+                ))}
+              </ul>
+            </>
           ) : null}
-        </div>
-      )}
-      <div className="pass" aria-live="polite">
-        {status === "running" && step < cards.length ? <p className="note">{copy.reading[lang]}</p> : null}
-        {status === "done" ? <p className="note">{copy.readDone[lang]}</p> : null}
-        {visible.length > 0 ? (
-          <ol className="pass-list">
-            {visible.map((card) => (
-              <li key={card.id}>
-                <span className="pass-clause">{card.clauseId}</span>
-                <span className="pass-lines">{formatLineNumbers(card.lineNumbers, lang)}</span>
-                <span className="pass-title">{card[lang].title}</span>
-              </li>
-            ))}
-          </ol>
-        ) : null}
-      </div>
-    </section>
+          {step.kind === "check" ? (
+            <>
+              <p>{copy.checkLabel[lang][CHECK_INDEX[step.id] ?? 0]}</p>
+              <p className="clause">{step.clauseId}</p>
+              {step.quiet ? <p className="quote">{copy.quiet[lang]}</p> : null}
+              {step.quotes.map((quote) => (
+                <p className="quote" key={quote.n}>
+                  <span className="qn">{String(quote.n).padStart(2, "0")}</span>
+                  {quote.text}
+                </p>
+              ))}
+            </>
+          ) : null}
+          {step.kind === "second-reader" ? <p>{step.note[lang]}</p> : null}
+          {step.kind === "done" ? (
+            <p>
+              {step.agreed} {copy.agreedCount[lang]}. {step.disputed} {copy.disputeCount[lang]}.
+            </p>
+          ) : null}
+        </li>
+      ))}
+    </ol>
   );
 }

@@ -1,5 +1,8 @@
 import baselineFile from "./baseline.json";
 import cardFile from "./cards.json";
+import clauseFile from "./clauses.json";
+import { findingCardsFor, runReview } from "../review/runReview";
+import type { ClauseCard } from "../review/runReview";
 import type { BaselineFile, Card } from "../types";
 
 const EXPECTED_CLAUSES = [
@@ -27,6 +30,13 @@ const UNCITED = ["Payload User", "User's Guide", "guia de rideshare", "guia do u
 
 export const baseline = baselineFile as BaselineFile;
 export const cards = cardFile as Card[];
+export const clauses = clauseFile as ClauseCard[];
+
+const stageReview = runReview(baseline, clauses);
+const stageCards = findingCardsFor(stageReview, cards);
+if (stageCards.map((card) => `${card.id}:${card.verdict}`).join(",") !== "F-01:agree,F-02:agree,F-03:agree,F-04:dispute") {
+  throw new Error("The loaded Lumen-1 baseline must produce three agreed findings and one dispute.");
+}
 
 function assertSample(list: Card[], lines: BaselineFile["lines"]) {
   if (list.length !== EXPECTED_CLAUSES.length) {

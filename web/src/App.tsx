@@ -1,100 +1,52 @@
 import { useEffect, useState } from "react";
 import { Frame } from "./components/Frame";
-import { cards } from "./data/load";
+import { baseline, cards, clauses } from "./data/load";
 import { prefersReducedMotion } from "./i18n";
-import { AuditScreen } from "./screens/AuditScreen";
-import { BaselineScreen } from "./screens/BaselineScreen";
-import { FindingsScreen } from "./screens/FindingsScreen";
-import type { Lang, Screen } from "./types";
+import { findingCardsFor, runReview, type ReviewResult } from "./review/runReview";
+import { Thread } from "./screens/AuditScreen";
+import { Intro } from "./screens/BaselineScreen";
+import { Findings } from "./screens/FindingsScreen";
+import type { Lang } from "./types";
 
-type BaselinePhase = "idle" | "loading" | "ready";
-type AuditStatus = "idle" | "running" | "done";
+type RunStatus = "idle" | "running" | "done";
 
 export function App() {
   const [lang, setLang] = useState<Lang>("en");
-  const [screen, setScreen] = useState<Screen>("baseline");
-  const [baselinePhase, setBaselinePhase] = useState<BaselinePhase>("idle");
-  const [auditStatus, setAuditStatus] = useState<AuditStatus>("idle");
-  const [auditStep, setAuditStep] = useState(0);
-  const [focusLine, setFocusLine] = useState<number | null>(null);
+  const [status, setStatus] = useState<RunStatus>("idle");
+  const [review, setReview] = useState<ReviewResult | null>(null);
+  const [shown, setShown] = useState(0);
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    document.title = lang === "en" ? "RANGE — ECSS audit" : "RANGE — auditoria ECSS";
+    document.title = "Second Reader";
   }, [lang]);
 
   useEffect(() => {
-    if (baselinePhase !== "loading") return;
-    const delay = prefersReducedMotion() ? 0 : 480;
-    const id = window.setTimeout(() => setBaselinePhase("ready"), delay);
-    return () => window.clearTimeout(id);
-  }, [baselinePhase]);
-
-  useEffect(() => {
-    if (auditStatus !== "running") return;
-    if (auditStep >= cards.length) {
-      setAuditStatus("done");
+    if (status !== "running" || !review) return;
+    if (shown >= review.steps.length) {
+      setStatus("done");
       return;
     }
-    const delay = prefersReducedMotion() ? 0 : 680;
-    const id = window.setTimeout(() => setAuditStep((step) => step + 1), delay);
+    const delay = prefersReducedMotion() ? 0 : 480;
+    const id = window.setTimeout(() => setShown((count) => count + 1), delay);
     return () => window.clearTimeout(id);
-  }, [auditStatus, auditStep]);
+  }, [status, shown, review]);
 
-  function loadBaseline() {
-    if (baselinePhase !== "idle") return;
-    setBaselinePhase("loading");
+  function startReview() {
+    if (status !== "idle") return;
+    const result = runReview(baseline, clauses);
+    setReview(result);
+    setShown(1);
+    setStatus("running");
   }
 
-  function runAudit() {
-    if (baselinePhase !== "ready" || auditStatus !== "idle") return;
-    setAuditStep(0);
-    setAuditStatus("running");
-  }
-
-  function showLine(lineNumber: number) {
-    setFocusLine(lineNumber);
-    setScreen("baseline");
-  }
+  const firedCards = review && status === "done" ? findingCardsFor(review, cards) : [];
 
   return (
-    <Frame
-      lang={lang}
-      screen={screen}
-      baselineReady={baselinePhase === "ready"}
-      auditDone={auditStatus === "done"}
-      onLang={setLang}
-      onScreen={setScreen}
-    >
-      {screen === "baseline" ? (
-        <BaselineScreen
-          lang={lang}
-          phase={baselinePhase}
-          auditDone={auditStatus === "done"}
-          focusLine={focusLine}
-          onLoad={loadBaseline}
-          onContinue={() => setScreen("audit")}
-        />
-      ) : null}
-      {screen === "audit" ? (
-        <AuditScreen
-          lang={lang}
-          baselineReady={baselinePhase === "ready"}
-          status={auditStatus}
-          step={auditStep}
-          onRun={runAudit}
-          onBack={() => setScreen("baseline")}
-          onFindings={() => setScreen("findings")}
-        />
-      ) : null}
-      {screen === "findings" ? (
-        <FindingsScreen
-          lang={lang}
-          auditDone={auditStatus === "done"}
-          onShowLine={showLine}
-          onBack={() => setScreen("audit")}
-        />
-      ) : null}
+    <Frame lang={lang} onLang={setLang}>
+      {status === "idle" ? <Intro lang={lang} onRun={startReview} /> : null}
+      {review && status !== "idle" ? <Thread lang={lang} review={review} shown={shown} /> : null}
+      {status === "done" ? <Findings lang={lang} cards={firedCards} /> : null}
     </Frame>
   );
 }
