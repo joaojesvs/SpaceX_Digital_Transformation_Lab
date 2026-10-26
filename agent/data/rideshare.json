@@ -1,0 +1,8 @@
+{
+  "id": "falcon9-rideshare",
+  "document": "SpaceX Rideshare Payload User's Guide",
+  "summary": {
+    "en": "Lumen-1 records a Falcon 9 rideshare in a CubeSat dispenser and says the dispenser vendor covers launch loads. The guide is not on main and was not in the Drive zip, so this file states no section and no load factor. Status: waiting on upload.",
+    "pt": "A Lumen-1 regista um rideshare da Falcon 9 num dispenser de CubeSat e diz que o fornecedor do dispenser cobre as cargas de lançamento. O guia não está em main e não vinha no zip do Drive, por isso este ficheiro não indica secção nem fator de carga. Estado: à espera do ficheiro."
+  }
+}

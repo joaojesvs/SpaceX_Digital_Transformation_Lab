@@ -1,0 +1,30 @@
+{
+  "id": "F-03",
+  "demoOrder": 3,
+  "document": "ECSS-E-ST-10-03C Rev.1",
+  "clause": "ECSS-E-ST-10-03C Rev.1, 4.5.2a",
+  "supportingClauses": "ECSS-E-ST-10-03C Rev.1, 4.5.1b; 5.1b; 5.2a with Table 5-1 columns a and i; 5.5.2.3; 5.5.2.5; 5.5.2.6",
+  "topic": "rideshare launch qualification",
+  "domain": "ecss-applicability",
+  "cardStatus": "ready",
+  "launchConstraint": "waiting on upload",
+  "match": {
+    "section": "verification",
+    "all": [{ "field": "rideshareQualification", "op": "equals", "value": false }]
+  },
+  "whyCritical": {
+    "en": "Clause 4.5.2a asks for qualification evidence that the item meets its specification in the intended environments, with the qualification margins, on a qualification model or under a protoflight approach. Clause 4.5.1b puts launch-segment compatibility into the test programme. Clause 5.1b treats a camera as both electronic (type a) and optical (type i). Table 5-1, via 5.2a, marks sinusoidal vibration and shock as required for both types, and random vibration as required for the electronic type. None of those tests is planned. The rideshare user's guide is the environment those tests are aimed at. The Drive zip was listed by name and the guide is not in it, and it is not on main, so this card does not name a guide section or a load factor. Both auditors still agree on the testing clause that is open: the campaign has no qualification model, no protoflight model, and no launch-load test, which leaves 4.5.2a without evidence.",
+    "pt": "A cláusula 4.5.2a pede evidência de qualificação de que o item cumpre a especificação nos ambientes previstos, com as margens de qualificação, num modelo de qualificação ou numa abordagem protoflight. A cláusula 4.5.1b mete a compatibilidade com o segmento de lançamento no programa de ensaios. A cláusula 5.1b trata uma câmara como eletrónica (tipo a) e ótica (tipo i). A Tabela 5-1, pela 5.2a, marca vibração sinusoidal e choque como obrigatórios para os dois tipos, e vibração aleatória como obrigatória para o tipo eletrónico. Nenhum desses ensaios está planeado. O guia de rideshare é o ambiente a que esses ensaios se destinam. O zip do Drive foi listado pelo nome e o guia não está lá, nem está em main, por isso este cartão não nomeia uma secção do guia nem um fator de carga. Os dois auditores ainda assim concordam na cláusula de ensaio que está aberta: a campanha não tem modelo de qualificação, nem modelo protoflight, nem ensaio de cargas de lançamento, e a 4.5.2a fica sem evidência."
+  },
+  "recommendedChange": {
+    "en": "Plan a qualification or protoflight campaign for a flight-representative camera against the rideshare mechanical environment, including the sine, random, and shock tests Table 5-1 requires for an electronic optical unit, unless a written customer tailoring narrows that list. Delete the line that the dispenser vendor covers the camera. Point REQ-MEC-01 at that campaign. Fill the environment levels when the guide can be opened.",
+    "pt": "Planear uma campanha de qualificação ou protoflight de uma câmara representativa de voo contra o ambiente mecânico do rideshare, incluindo os ensaios de seno, vibração aleatória e choque que a Tabela 5-1 exige para uma unidade eletrónica-ótica, salvo uma adaptação escrita do cliente que reduza essa lista. Apagar a frase de que o fornecedor do dispenser cobre a câmara. Apontar o REQ-MEC-01 para essa campanha. Preencher os níveis do ambiente quando o guia puder ser aberto."
+  },
+  "secondAuditor": {
+    "stance": "agree",
+    "note": {
+      "en": "The open clause is 4.5.2a. The campaign has no qualification model, no protoflight model, and no launch-load test. The guide section stays uncited.",
+      "pt": "A cláusula aberta é a 4.5.2a. A campanha não tem modelo de qualificação, nem modelo protoflight, nem ensaio de cargas de lançamento. A secção do guia fica por citar."
+    }
+  }
+}

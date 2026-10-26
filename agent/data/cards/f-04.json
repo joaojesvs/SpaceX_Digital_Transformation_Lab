@@ -1,0 +1,32 @@
+{
+  "id": "F-04",
+  "demoOrder": 4,
+  "document": "ECSS-Q-ST-30C Rev.1",
+  "clause": "ECSS-Q-ST-30C Rev.1, 6.4.2.2a",
+  "supportingClauses": "ECSS-Q-ST-30C Rev.1, 6.4.2.2b",
+  "topic": "camera failure analysis",
+  "domain": "ecss-applicability",
+  "cardStatus": "ready",
+  "match": {
+    "section": "dependability",
+    "all": [
+      { "field": "fmea", "op": "equals", "value": false },
+      { "field": "reliabilityAsserted", "op": "equals", "value": true }
+    ]
+  },
+  "whyCritical": {
+    "en": "Clause 6.4.2.2a requires an FMEA, or a FMECA when criticality is included. The worksheet rules are in ECSS-Q-ST-30-02, which was not opened, so this card does not invent them. Clause 6.4.2.2b is the part both auditors use: the analysis names the potential failure modes and classes them by severity, or by criticality if a FMECA is used. The heritage sentence does not do that. Auditor A treats the gap as critical. The 0.95 figure is a claim the project has not earned. On this single string, a failure of the detector, the controller, or the power feed ends the imaging mission, and the file never lists those modes.",
+    "pt": "A cláusula 6.4.2.2a exige uma FMEA, ou uma FMECA quando se inclui a criticidade. As regras da folha de trabalho estão na ECSS-Q-ST-30-02, que não foi aberta, por isso este cartão não as inventa. A cláusula 6.4.2.2b é a parte que os dois auditores usam: a análise nomeia os modos de falha potenciais e classifica-os pela severidade, ou pela criticidade se for uma FMECA. A frase de herança de voo não faz isso. O auditor A trata a falha como crítica. O valor 0,95 é uma afirmação que o projeto não sustentou. Nesta cadeia simples, uma falha do detetor, do controlador ou da alimentação acaba com a missão de imagem, e o ficheiro nunca lista esses modos."
+  },
+  "recommendedChange": {
+    "en": "Auditor A: remove 0.95, or replace the sentence with an FMEA of the camera chain that names those modes and what would make each consequence acceptable.",
+    "pt": "Auditor A: tirar o 0,95, ou substituir a frase por uma FMEA da cadeia da câmara que nomeie esses modos e o que tornaria cada consequência aceitável."
+  },
+  "secondAuditor": {
+    "stance": "dispute",
+    "note": {
+      "en": "Accepts that 6.4.2.2a asks for the analysis, and that the heritage sentence is not one. Does not accept \"single-string\" as the non-conformance. The clause does not require a second camera. A science camera on a rideshare CubeSat can stay one string if the analysis records that architecture and the accepted consequences. Bundling \"no redundancy\" into the same critical finding overclaims the clause. The dispute stays on that bundle. The human decides.",
+      "pt": "Aceita que a 6.4.2.2a pede a análise, e que a frase de herança não é uma análise. Não aceita \"cadeia simples\" como a não-conformidade. A cláusula não exige uma segunda câmara. Uma câmara científica num CubeSat de rideshare pode manter uma cadeia simples se a análise registar essa arquitetura e as consequências aceites. Juntar \"sem redundância\" ao mesmo achado crítico estica a cláusula. A disputa fica nesse conjunto. A pessoa decide."
+    }
+  }
+}
