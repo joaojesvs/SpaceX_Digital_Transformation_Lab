@@ -1,6 +1,6 @@
 # Astrea
 
-Fullscreen stage presentation. English is on screen. Portuguese keeps the same layout.
+Six short scenes, then the live app. English is on screen. Portuguese keeps the same layout.
 
 ```bash
 npm install && npm run present
