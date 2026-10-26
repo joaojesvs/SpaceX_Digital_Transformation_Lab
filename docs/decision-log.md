@@ -78,6 +78,19 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — finding quality review, second pass
+
+Finding quality review second pass updated: https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/2
+
+Reviewed against the Lumen-1 cards.
+
+- F-01: Agree on ECSS-E-ST-10-02C Rev.1 clause 5.2.1e.
+- F-02: Agree, waiting on ECSS-Q-ST-70.
+- F-03: Agree on ECSS-E-ST-10-03C Rev.1 clause 4.5.2a.
+- F-04: stays in dispute, waiting on ECSS-Q-ST-30.
+
+A rideshare-guide section citation (Version 10, 4.1.2.1, 4.1.6, 6.6) was not accepted, because the finding card left the guide unopened. That citation is being removed.
+
 ### 26 Oct 2026 — ECSS clause baseline
 
 ECSS clause baseline opened: https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/3
