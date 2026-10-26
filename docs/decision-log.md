@@ -78,6 +78,12 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — Astrea
+
+The product name is Astrea: a Mac desktop in charcoal, ivory, and gold. The open mission is Lumen-1 at PDR, with the four opened findings. The chat is live xAI. Do not invent clauses.
+
+The lock is one Mac-styled window, a module rail, and a small always-on-top employee widget. The corner agent and the widget are the same session. It is not an installer. Cite only clauses already opened. Do not invent an ECSS or ISO clause, a pass, or a rideshare load number.
+
 ### 26 Oct 2026 — stage screen on main
 
 Second Reader stage screen pushed to `main` at `a5cbaba0e04c192696d213e78bc832fbc09caf8b`. Soft one-column layout. Run review reads the loaded baseline and opened clause cards, no model and no network, and ends on three agreed findings and the FMEA dispute.
