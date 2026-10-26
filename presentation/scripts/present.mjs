@@ -36,17 +36,28 @@ function waitForPort() {
   });
 }
 
+function launch(command, args, onFailure) {
+  let settled = false;
+  const fail = () => {
+    if (settled) return;
+    settled = true;
+    onFailure();
+  };
+  const child = spawn(command, args, { detached: true, stdio: "ignore" });
+  child.on("error", fail);
+  child.on("exit", (code) => {
+    if (code !== 0) fail();
+    else child.unref();
+  });
+}
+
 function openFullscreen(target) {
   if (process.platform === "darwin") {
-    const child = spawn(
-      "open",
-      ["-a", "Google Chrome", "--args", "--new-window", "--start-fullscreen", target],
-      { detached: true, stdio: "ignore" },
-    );
-    child.on("error", () => {
-      console.log(`\nOpen ${target} and press F for fullscreen.\n`);
+    launch("open", ["-a", "Google Chrome", "--args", "--new-window", "--start-fullscreen", target], () => {
+      launch("open", [target], () => {
+        console.log(`\n${url}\n`);
+      });
     });
-    child.unref();
     return;
   }
 
