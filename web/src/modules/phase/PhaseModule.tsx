@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CdrPack, cdrLine } from "../cdr/CdrPack";
+import { TrrPack } from "./TrrPack";
 import { openAgreed } from "../../platform/cdr";
 import { useSession } from "../../platform/session";
 
@@ -99,6 +100,7 @@ export function PhaseModule({ locale }: { locale: Locale }) {
         <p>{names[locale][selected]}</p>
         <p className="phase-line">{line}</p>
         {selected === "CDR" ? <CdrPack locale={locale} /> : null}
+        {selected === "TRR" ? <TrrPack locale={locale} /> : null}
       </motion.article>
     </section>
   );

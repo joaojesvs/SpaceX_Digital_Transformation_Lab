@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useSession } from "../../platform/session";
 
 type Locale = "en" | "pt";
 
@@ -32,21 +32,24 @@ const gaps = [
 
 export function TestsModule({ locale }: { locale: Locale }) {
   const reduced = useReducedMotion() === true;
-  const [selected, setSelected] = useState<(typeof gaps)[number]["id"]>("F-01");
+  const { testId, setTestId, accepted } = useSession();
   const missing = locale === "pt" ? "Em falta" : "Missing";
+  const fromCdr = locale === "pt"
+    ? "Ação da CDR aceite. O procedimento continua em falta."
+    : "CDR action accepted. The procedure is still missing.";
 
   return (
     <section className="lab-screen screen-pad" lang={locale === "pt" ? "pt-PT" : "en"}>
       <div className="lab-grid">
         {gaps.map((gap, index) => {
-          const on = selected === gap.id;
+          const on = testId === gap.id;
           return (
             <motion.button
               key={gap.id}
               type="button"
               className={on ? "lab-card is-on" : "lab-card"}
               aria-pressed={on}
-              onClick={() => setSelected(gap.id)}
+              onClick={() => setTestId(gap.id)}
               initial={reduced ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: reduced ? 0 : index * 0.08, duration: 0.4 }}
@@ -63,6 +66,7 @@ export function TestsModule({ locale }: { locale: Locale }) {
               <h2>{gap[locale]}</h2>
               <p className="lab-req">{gap.req[locale]}</p>
               <p className="lab-note">{locale === "pt" ? gap.ptNote : gap.enNote}</p>
+              {accepted[gap.id] ? <p className="lab-note">{fromCdr}</p> : null}
             </motion.button>
           );
         })}

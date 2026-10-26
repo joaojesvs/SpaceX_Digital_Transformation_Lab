@@ -192,6 +192,26 @@
   white-space: nowrap;
 }
 .cdr-accept.is-on { background: var(--gold); color: var(--ground); }
+.trr-pack li { grid-template-columns: minmax(0, 1fr) auto; padding: 0 12px 0 0; }
+.trr-jump {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+.trr-go {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 600;
+}
+.trr-pack li.is-open .trr-jump { grid-template-columns: 52px minmax(0, 1fr) auto auto; }
 .cdr-locked {
   justify-self: end;
   color: var(--muted);

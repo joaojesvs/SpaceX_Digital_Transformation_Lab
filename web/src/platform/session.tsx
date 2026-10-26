@@ -24,6 +24,8 @@ type SessionValue = {
   desktop: boolean;
   accepted: AcceptedMap;
   setAccepted: (id: AgreedId, next: boolean) => void;
+  testId: AgreedId;
+  setTestId: (id: AgreedId) => void;
 };
 
 const SessionContext = createContext<SessionValue | null>(null);
@@ -39,6 +41,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [notes, setNotes] = useState<Note[]>([]);
   const [chatOpen, setChatOpen] = useState(false);
   const [accepted, setAcceptedState] = useState<AcceptedMap>(noneAccepted);
+  const [testId, setTestId] = useState<AgreedId>("F-01");
 
   useEffect(() => {
     if (!bridge) return;
@@ -101,8 +104,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       setAccepted: (id, next) => {
         setAcceptedState((current) => (current[id] === next ? current : { ...current, [id]: next }));
       },
+      testId,
+      setTestId,
     };
-  }, [accepted, bridge, locale, view, notes, chatOpen]);
+  }, [accepted, bridge, locale, view, notes, chatOpen, testId]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }
