@@ -2,13 +2,15 @@
 
 Applicability index for the hackathon demo. The source system is the synthetic project in `demo-baseline.md`. The finding register is `findings.md`. This file is the standards slice only.
 
-Frozen against `origin/main` at `cde8015` (26 Oct 2026), after a pull. That tree holds 65 PDFs. The locked decisions say the regulation library is 317 files and is still arriving. This index is not a catalogue of the 65, and it is not limited to the first 24.
+Frozen against `origin/main` at `cde8015` (26 Oct 2026), after a pull. That tree holds 65 PDFs. The locked decisions put the full library of 317 files on Google Drive, not in Git. The Drive link is not recorded in `docs/decisions.md` yet. This branch commits no PDFs. This index is the demo slice only, not a catalogue of the 65 and not an index of the 317.
 
-Explanations below are original. They are not quotations of the standards. Clause identifiers for a file on `main` were read from that PDF. Where the named file is not on `main`, the card says **waiting on upload** and gives no clause identifier and no clause text.
+Until that link is in the decisions file, a card is written only from a PDF opened on `main`. Every other slice file is **waiting on upload**. When the link is recorded, those waiting files are read from Drive. A file that cannot be opened stays waiting. No clause is invented for it.
+
+Explanations below are original. They are not quotations of the standards.
 
 ## Upload delta
 
-The uploads do not describe a mission. They are standards. The instrument stays a CubeSat optical payload (a camera) on a Falcon 9 rideshare. It was not switched to a magnetometer.
+The files on `main` do not describe a mission. They are standards. The instrument stays a CubeSat optical payload (a camera) on a Falcon 9 rideshare. It was not switched to a magnetometer. The remaining library, when the Drive link is recorded, does not get indexed here. Pyrotechnics, explosives, and propulsion stay out even if they are on that Drive.
 
 Present on `main` and kept out of this index:
 
@@ -28,13 +30,13 @@ Present on `main` and kept out of this index:
 | F-02 | ECSS-Q-ST-70 | — | waiting on upload |
 | F-03 | ECSS-E-ST-10-03C Rev.1 (31 May 2022) | 4.5.2a | ready |
 | F-04 | ECSS-Q-ST-30 | — | waiting on upload |
-| Launch constraint for F-03 | SpaceX Rideshare Payload User's Guide, Version 10 (September 2024) | sections 4.1.2.1 and 6.6 | public summary |
+| Launch constraint for F-03 | SpaceX Rideshare Payload User's Guide | — | waiting on upload |
 
 ## ECSS-E-ST-10 — system engineering
 
 **waiting on upload**
 
-The slice uses this standard so that requirements are traceable. No file titled `ECSS-E-ST-10` is on `main` at `cde8015`. No clause identifier is stated.
+The slice uses this standard so that requirements are traceable. No file titled `ECSS-E-ST-10` is on `main` at `cde8015`, and the Drive link is not in the decisions file. No clause identifier is stated.
 
 ## ECSS-E-ST-10-02C Rev.1 — verification
 
@@ -55,13 +57,13 @@ The standard is how a project shows that a deliverable meets the requirements it
 
 **waiting on upload**
 
-The slice uses this standard so that failures are analyzed rather than asserted. No `ECSS-Q-ST-30` file, and no other Q-branch file, is on `main` at `cde8015`. No clause identifier is stated. F-04 stays open until the file arrives.
+The slice uses this standard so that failures are analyzed rather than asserted. No `ECSS-Q-ST-30` file, and no other Q-branch file, is on `main` at `cde8015`. The Drive link is not in the decisions file. No clause identifier is stated. F-04 stays open until the file can be opened.
 
 ## ECSS-Q-ST-70 — materials, contamination, and outgassing
 
 **waiting on upload**
 
-The slice uses this standard because the payload is optical. No `ECSS-Q-ST-70` file is on `main` at `cde8015`. No clause identifier is stated. `ECSS-E-30 Part 8A` (mechanical materials, 25 April 2000) is on `main` and is not used as a substitute. F-02 records the project gap and waits for the clause.
+The slice uses this standard because the payload is optical. No `ECSS-Q-ST-70` file is on `main` at `cde8015`. The Drive link is not in the decisions file. No clause identifier is stated. `ECSS-E-30 Part 8A` (mechanical materials, 25 April 2000) is on `main` and is not used as a substitute. F-02 records the project gap and waits for the clause.
 
 ## ECSS-E-ST-10-03C Rev.1 — testing
 
@@ -70,7 +72,7 @@ The slice uses this standard because the payload is optical. No `ECSS-Q-ST-70` f
 - File on `main`: `ECSS-E-ST-10-03-Rev.1(31May2022).pdf`
 - Cover read: ECSS-E-ST-10-03C Rev.1, 31 May 2022, Space engineering — Testing. The filename omits the letter C; the cover carries it.
 
-The standard says how qualification, acceptance, and protoflight tests are built for space equipment and for larger space-segment elements. Levels and durations live in its tables. The mechanical environment those tests have to cover, for this demo, is the rideshare guide summarized below, not a launch spectrum copied out of the standard.
+The standard says how qualification, acceptance, and protoflight tests are built for space equipment and for larger space-segment elements. Levels and durations live in its tables. The Falcon 9 rideshare environment those tests have to cover is the user's guide. That guide is not on `main`, so its sections are not cited below.
 
 **4.5.1b.** When the test programme of a space-segment element is written, tests that show compatibility with the launch segment are part of that programme.
 
@@ -84,12 +86,6 @@ Table 5-1 uses three marks: R required, X decided by the customer, dash not requ
 
 ## SpaceX Rideshare Payload User's Guide
 
-Public launch constraint, named in the locked decisions. It is not an ECSS file and it is not part of the 317-file upload. Issue used: **Version 10, September 2024**. This is a summary, not an extract.
+**waiting on upload**
 
-The guide's flight environments are maximum predicted environments for a rideshare-plate mission. Integrated flight hardware is tested so that the primary mission and the co-payloads stay safe. The verification section of the guide is section 6.
-
-For a CubeSat dispenser loaded with CubeSats, section 4.1.2.1 gives combined design load factors of **10 g axial** and **17 g lateral** (root-sum-square of the two lateral axes), when the CubeSats meet the guide's frequency rule and the loaded dispenser mass is at least 20 kg. Those factors describe the dispenser including the CubeSats. They are the environment the dispenser is designed to, not a component load to paste onto the camera.
-
-A fully containerized CubeSat may be tested as a constituent rather than only inside the integrated payload. Section 6.6 is that unit test. At that level the guide **requires random vibration**. Quasi-static load, sine vibration, and acoustic tests are not required on the CubeSat itself. Shock is advised. The random-vibration maximum predicted environment is section 4.1.6. The guide prefers a protoflight qualification approach. Durations and margins stay in the guide's table; they are not reproduced here.
-
-If the dispenser is not fully containerized under the guide's hole rule, the CubeSat leaves section 6.6 and is tested at the integrated-payload levels. Lumen-1's baseline claims the fully containerized case and then performs none of the tests.
+Launch-side constraint for this slice, next to the testing clauses above. It is not on `main` at `cde8015`, and the Google Drive link is not in the decisions file. No section identifier and no load factor is stated. Lumen-1's own interface note still claims the dispenser covers launch loads. That claim is project text, not a reading of the guide.

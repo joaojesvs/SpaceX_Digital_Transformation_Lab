@@ -82,18 +82,11 @@ No failure-modes list. No worksheet. No single-point-failure record. No severity
 
 ## Rideshare constraint the project is using
 
-The project points at the public SpaceX Rideshare Payload User's Guide, Version 10 (September 2024), and then does not apply it.
-
 What the project wrote in the interface note:
 
 "Falcon 9 rideshare, CubeSat dispenser, fully containerized. Launch loads are the dispenser's problem. Lumen-1 has no structural qualification."
 
-What that guide actually asks, in summary (see `clause-index.md` for the section pointers, not a copy of the tables):
-
-- A loaded dispenser that meets the guide's conditions is designed to combined factors of 10 g axial and 17 g lateral.
-- A fully containerized CubeSat still has a required random-vibration test at constituent level. Shock is advised. Quasi-static, sine, and acoustic tests are not required on the CubeSat itself under that containerized rule.
-
-Lumen-1 records the containerized claim and schedules none of those tests.
+The SpaceX Rideshare Payload User's Guide is the launch constraint in the slice. It is not on `main`, and the Google Drive link is not in the decisions file, so this baseline does not state the guide's sections or load factors. The planted gap is the project's own record: no structural qualification, and no launch-load test in the campaign.
 
 ## Planted issues, for the script
 
