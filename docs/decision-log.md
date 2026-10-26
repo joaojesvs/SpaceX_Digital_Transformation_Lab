@@ -78,6 +78,21 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — ECSS clause baseline
+
+ECSS clause baseline opened: https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/3
+
+Mission name used in the pack: Lumen-1, a Falcon 9 rideshare CubeSat camera.
+
+Planted issues:
+
+1. No verification method. ECSS-E-ST-10-02C Rev.1 clause 5.2.1e.
+2. Contamination and outgassing, waiting on ECSS-Q-ST-70.
+3. Launch loads. ECSS-E-ST-10-03C Rev.1 clause 4.5.2a. The rideshare guide is still waiting.
+4. Reliability with no FMEA stays in dispute and waits on ECSS-Q-ST-30.
+
+ECSS-E-ST-10 is also waiting. No PDFs were committed. Cards came from the files already on `main`.
+
 ### 26 Oct 2026 — regulation library location
 
 João: the 317 regulation files go to Google Drive, not into the GitHub repo. The folder link is not available yet. Git keeps the demo, the cards, and the team’s own documents. The agent does not vendor the PDFs. Pyrotechnics, explosives, and propulsion stay out.
