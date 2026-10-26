@@ -10,7 +10,6 @@ import { TestsModule } from "../modules/tests/TestsModule";
 import { desktopBridge } from "../platform/desktop";
 import type { ModuleId } from "../platform/locale";
 import { useSession } from "../platform/session";
-import { Icon } from "./icons";
 import { moduleLabel, modules } from "./modules";
 
 const chrome = {
@@ -19,7 +18,7 @@ const chrome = {
   minimize: { en: "Minimize", pt: "Minimizar" },
   zoom: { en: "Zoom", pt: "Zoom" },
   ask: { en: "Ask Astrea", pt: "Perguntar à Astrea" },
-  foot: { en: "Lumen-1  ·  PDR", pt: "Lumen-1  ·  PDR" },
+  foot: { en: "Open · Lumen-1", pt: "Aberto · Lumen-1" },
 };
 
 function StarMark() {
@@ -48,7 +47,6 @@ export function Shell() {
           <button type="button" className="light min" aria-label={chrome.minimize[locale]} onClick={() => bridge?.minimize()} />
           <button type="button" className="light zoom" aria-label={chrome.zoom[locale]} onClick={() => bridge?.zoom()} />
         </div>
-        <p className="wordmark title-word">Astrea</p>
         <div className="lang" role="group" aria-label={chrome.language[locale]}>
           <button type="button" aria-pressed={locale === "en"} className={locale === "en" ? "is-on" : undefined} onClick={() => setLocale("en")}>
             EN
@@ -73,7 +71,6 @@ export function Shell() {
                 aria-current={moduleView === item.id ? "page" : undefined}
                 onClick={() => setView(item.id)}
               >
-                <Icon name={item.id} />
                 <span>{item[locale]}</span>
               </button>
             ))}

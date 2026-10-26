@@ -54,10 +54,10 @@
 
 .tests-head h1 {
   margin-top: 8px;
-  font-family: "Instrument Serif", Georgia, serif;
-  font-size: 40px;
-  font-weight: 400;
-  letter-spacing: -0.03em;
+  font-family: Inter, "Segoe UI", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1.05;
 }
 

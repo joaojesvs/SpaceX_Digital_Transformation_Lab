@@ -24,7 +24,7 @@ Open http://localhost:5173
 
 ## What is on screen
 
-The rail is Missions, Compliance, Phase, Budget, Schedule, Tests, Correspondence, Team. Lumen-1 is the open mission. Halcyon-3 and Cinder-2 stay on the Missions list. The mission charts are labelled demo: budget €2,400,000, spent €1,100,000, remaining €1,300,000. Lumen-1 is in PDR. The next phase is CDR.
+The rail is Missions, Compliance, Phase, Budget, Schedule, Tests, Correspondence, Team. The Missions screen is a 1440×900 bento for Lumen-1: a budget ring (€2,400,000 total, €1,100,000 spent, €1,300,000 left) and one allocation chart (camera €980,000, platform €720,000, AIT €460,000, operations €240,000). Those figures are the demo set. Findings read 3 agreed and 1 in dispute. The phase rail marks PDR as now, with CDR next. Halcyon-3 and Cinder-2 stay on the list.
 
 All eight panels are real. The chat answers only from the opened findings and the phase list.
 

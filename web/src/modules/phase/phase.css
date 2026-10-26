@@ -55,9 +55,9 @@
 
 .ap-title {
   margin-top: 8px;
-  font-family: "Instrument Serif", Georgia, serif;
-  font-size: 40px;
-  font-weight: 400;
+  font-family: Inter, "Segoe UI", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
   line-height: 1.05;
 }
 

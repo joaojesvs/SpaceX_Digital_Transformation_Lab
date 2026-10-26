@@ -5,6 +5,7 @@ if (typeof process.getuid === "function" && process.getuid() === 0) {
   app.commandLine.appendSwitch("no-sandbox");
 }
 app.commandLine.appendSwitch("enable-transparent-visuals");
+app.commandLine.appendSwitch("force-device-scale-factor", "1");
 
 Menu.setApplicationMenu(null);
 
@@ -32,21 +33,22 @@ function broadcast() {
 
 function createMain() {
   mainWindow = new BrowserWindow({
-    width: 1180,
-    height: 760,
-    minWidth: 960,
-    minHeight: 640,
+    width: 1440,
+    height: 900,
+    minWidth: 1440,
+    minHeight: 900,
     show: false,
     frame: false,
-    transparent: true,
-    backgroundColor: "#00000000",
-    hasShadow: true,
-    roundedCorners: true,
+    backgroundColor: "#0e0d0b",
+    hasShadow: false,
+    roundedCorners: false,
     title: "Astrea",
+    useContentSize: true,
     webPreferences: webPreferences(),
   });
   mainWindow.loadFile(indexHtml);
   mainWindow.once("ready-to-show", () => {
+    mainWindow.setContentSize(1440, 900);
     mainWindow.show();
     mainWindow.focus();
   });
