@@ -1,0 +1,8 @@
+{
+  "id": "falcon9-rideshare",
+  "document": "SpaceX Rideshare Payload User's Guide",
+  "summary": {
+    "en": "A rideshare payload has to live through the guide's mechanical environment for its dispenser: quasi-static loads, sinusoidal vibration, random vibration, and shock. This note cites that guide and does not copy its tables.",
+    "pt": "Uma carga útil de rideshare tem de suportar o ambiente mecânico do guia para o seu dispensador: cargas quase-estáticas, vibração sinusoidal, vibração aleatória e choque. Esta nota cita esse guia e não copia as tabelas."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "verification-method",
+  "demoOrder": 1,
+  "document": "ECSS-E-ST-10-02C Rev.1",
+  "clause": "5.2.2",
+  "topic": "verification method",
+  "domain": "ecss-applicability",
+  "match": {
+    "section": "requirements",
+    "all": [{ "field": "verificationMethod", "op": "missing" }]
+  },
+  "whyCritical": {
+    "en": "A requirement with no verification method cannot be closed. Nothing in the baseline tests, analyses, inspects, or reviews the design of the Earth-limb image, so the need is only a sentence.",
+    "pt": "Um requisito sem método de verificação não pode ser fechado. Nada na linha de base ensaia, analisa, inspeciona ou revê o projeto da imagem do limbo, por isso a necessidade fica só numa frase."
+  },
+  "recommendedChange": {
+    "en": "In the verification matrix, set REQ-IMG-001 to Test: a ground end-to-end imaging run whose pass criterion comes from the parent need NEED-SCI-001.",
+    "pt": "Na matriz de verificação, atribuir ao REQ-IMG-001 o método Ensaio: uma imagem de ponta a ponta em terra, com critério de aceitação na necessidade-mãe NEED-SCI-001."
+  },
+  "secondAuditor": {
+    "stance": "agree",
+    "note": {
+      "en": "REQ-IMG-001 has no verification method, clause 5.2.2 is on this card, and the change edits the verification matrix.",
+      "pt": "O REQ-IMG-001 não tem método de verificação, a cláusula 5.2.2 está neste cartão, e a alteração edita a matriz de verificação."
+    }
+  }
+}

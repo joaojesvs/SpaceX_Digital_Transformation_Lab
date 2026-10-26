@@ -1,0 +1,77 @@
+{
+  "id": "LYRA-1",
+  "name": "Lyra-1",
+  "mission": {
+    "en": "Lyra-1, a CubeSat optical payload on a Falcon 9 rideshare.",
+    "pt": "Lyra-1, uma carga útil óptica de CubeSat num rideshare da Falcon 9."
+  },
+  "configuration": {
+    "spacecraft": "3U CubeSat",
+    "payload": "visible Earth-limb camera",
+    "optic": "commercial glass lens in an aluminium cell",
+    "launch": "Falcon 9 rideshare",
+    "redundancy": "single-string camera",
+    "phase": "preliminary definition"
+  },
+  "lines": [
+    {
+      "id": "REQ-IMG-001",
+      "section": "requirements",
+      "text": {
+        "en": "The camera shall image the Earth limb in the visible band.",
+        "pt": "A câmara deve observar o limbo terrestre na banda do visível."
+      },
+      "fields": {
+        "verificationMethod": null,
+        "parentId": "NEED-SCI-001"
+      }
+    },
+    {
+      "id": "REQ-IMG-002",
+      "section": "requirements",
+      "text": {
+        "en": "The camera shall store at least 100 images on board.",
+        "pt": "A câmara deve armazenar pelo menos 100 imagens a bordo."
+      },
+      "fields": {
+        "verificationMethod": "test",
+        "parentId": "NEED-SCI-001"
+      }
+    },
+    {
+      "id": "OPT-001",
+      "section": "materials",
+      "text": {
+        "en": "The optic is a commercial glass lens in an aluminium cell. Cleanliness, contamination control, and outgassing screening are not defined.",
+        "pt": "A óptica é uma lente de vidro comercial numa célula de alumínio. Limpeza, controlo de contaminação e triagem de desgaseificação não estão definidos."
+      },
+      "fields": {
+        "contaminationControl": false,
+        "outgassingScreening": false
+      }
+    },
+    {
+      "id": "VER-LAUNCH-001",
+      "section": "verification",
+      "text": {
+        "en": "Qualification against Falcon 9 rideshare launch loads is marked N/A. No sine, random-vibration, or shock test is planned.",
+        "pt": "A qualificação face às cargas de lançamento do rideshare da Falcon 9 está marcada N/A. Não está planeado ensaio de seno, vibração aleatória ou choque."
+      },
+      "fields": {
+        "rideshareQualification": false
+      }
+    },
+    {
+      "id": "REL-001",
+      "section": "dependability",
+      "text": {
+        "en": "The camera is single-string. Reliability is stated as high because the sensor is commercial off-the-shelf. No failure-mode analysis is recorded.",
+        "pt": "A câmara é de cadeia única (single-string). A fiabilidade é declarada alta porque o sensor é comercial de prateleira. Não há análise de modos de falha."
+      },
+      "fields": {
+        "fmea": false,
+        "reliabilityAsserted": true
+      }
+    }
+  ]
+}
