@@ -78,6 +78,21 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — finding quality review
+
+Finding quality review opened: https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/2
+
+First pass only, because `docs/ecss/findings.md` was not on `main` yet.
+
+Verdicts:
+
+1. Verification method: agreed. ECSS-E-ST-10-02C Rev.1 is on `main`.
+2. Optic contamination: agreed, but waiting on ECSS-Q-ST-70.
+3. Launch loads: agreed on ECSS-E-ST-10-03C Rev.1, and waiting on the rideshare guide.
+4. Single-string camera with no FMEA: stays in dispute, and also waits on ECSS-Q-ST-30.
+
+A second pass will bind clause identifiers when the baseline findings exist.
+
 ### 26 Oct 2026
 
 João: the regulation library is 317 files, uploading in parts. The first batch is not the full corpus. The instrument stays the Falcon 9 rideshare CubeSat camera. The demo cards a slice only. Pyrotechnics, explosives, and propulsion stay out.
