@@ -78,6 +78,17 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — three standards opened
+
+`Files_ECSS.zip` opened. 317 names under `Files_PDF/`. Updated https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/3. Opened only ECSS-E-ST-10C Rev.1 (15 February 2017), ECSS-Q-ST-30C Rev.1 (15 February 2017), and ECSS-Q-ST-70C Rev.2 (15 October 2019). The rideshare guide is not in the zip.
+
+- F-01 adds ECSS-E-ST-10C Rev.1 clause 5.2.3.4a beside ECSS-E-ST-10-02C Rev.1 clause 5.2.1e.
+- F-02 cites ECSS-Q-ST-70C Rev.2 clauses 4.4a and 5.1.4b.
+- F-03 stays ECSS-E-ST-10-03C Rev.1 clause 4.5.2a.
+- F-04 cites ECSS-Q-ST-30C Rev.1 clause 6.4.2.2a and stays in dispute: the clause requires the analysis and does not require a second camera.
+
+Pyrotechnics, explosives, and propulsion were not opened. No zip and no PDF committed.
+
 ### 26 Oct 2026 — Drive file set to view-only
 
 João set Drive file `1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo` to view-only. A second attempt to open `Files_ECSS.zip` is in progress. The file is not to be edited. If the 353 MB zip still cannot be fetched, ECSS-E-ST-10, ECSS-Q-ST-30, and ECSS-Q-ST-70 stay waiting.
