@@ -264,6 +264,23 @@ h1, h2, p, ul, ol { margin: 0; }
   padding: 8px 0;
   border-top: 1px solid rgba(246, 241, 232, 0.08);
 }
+.activity-list li:has(> button) { display: block; padding: 0; }
+.activity-list button {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 8px 4px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.activity-list button.is-on { background: rgba(228, 177, 90, 0.12); }
 .activity-mark {
   width: 36px;
   height: 28px;
@@ -423,6 +440,23 @@ h1, h2, p, ul, ol { margin: 0; }
 }
 .scan-row:first-child { border-top: 0; }
 .scan-row.review { grid-template-columns: 64px minmax(0, 1fr) auto; }
+.scan-choice { display: contents; }
+button.scan-row {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid rgba(246, 241, 232, 0.08);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+button.scan-row.is-selected { background: rgba(228, 177, 90, 0.12); }
+.phase-pack { margin-top: 14px; }
+.astraea-phase.scan-page { padding-bottom: 88px; }
+.astraea-phase .scan-list { flex-shrink: 0; }
 .scan-row.pair { grid-template-columns: 88px minmax(0, 1fr) auto; }
 .scan-status.is-missing { color: var(--gold); }
 .scan-id {
