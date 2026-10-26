@@ -78,6 +78,10 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — Drive file set to view-only
+
+João set Drive file `1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo` to view-only. A second attempt to open `Files_ECSS.zip` is in progress. The file is not to be edited. If the 353 MB zip still cannot be fetched, ECSS-E-ST-10, ECSS-Q-ST-30, and ECSS-Q-ST-70 stay waiting.
+
 ### 26 Oct 2026 — Drive zip and audit demo
 
 The Drive file id `1H2dbtphO6zBMIbwKF5uQ5hnqZ46MCHEo` is one zip, `Files_ECSS.zip`, about 353 MB, owned by agn.cbr.pt@gmail.com. It is not public, and it could not be downloaded or listed. No new clauses were opened. ECSS-E-ST-10, ECSS-Q-ST-30, ECSS-Q-ST-70, and the rideshare guide stay waiting. Asked João to share an unzipped folder, or those three standards as separate files.
