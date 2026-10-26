@@ -78,6 +78,10 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — audit demo refreshed
+
+Audit demo on https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/5 refreshed from the finding cards. Command: `npm --prefix agent --silent run demo`. It prints F-01 agreed, F-02 agreed, F-03 agreed with the rideshare guide still waiting, and F-04 in dispute. No zip and no PDFs committed.
+
 ### 26 Oct 2026 — pitch cites the opened clauses
 
 Pitch and both Canva decks on https://github.com/joaojesvs/SpaceX_Digital_Transformation_Lab/pull/4 now cite the opened clauses. Verification: ECSS-E-ST-10-02C Rev.1 5.2.1e and ECSS-E-ST-10C Rev.1 5.2.3.4a. Contamination: ECSS-Q-ST-70C Rev.2 4.4a. Launch loads: ECSS-E-ST-10-03C Rev.1 4.5.2a, no guide section. FMEA stays in dispute on ECSS-Q-ST-30C Rev.1 6.4.2.2a. Drive URL stays in the speaker notes only.
