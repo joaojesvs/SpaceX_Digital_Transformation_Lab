@@ -26,6 +26,6 @@ Open http://localhost:5173
 
 The menu row is Missions, Compliance, Phase, Budget, Schedule, Tests, Correspondence, Team. Lumen-1 is the open mission. Halcyon-3 and Cinder-2 stay on the Missions list. The header figures are a demo budget of €2,400,000 and €1,100,000 spent. Lumen-1 is in PDR. The next phase is CDR.
 
-Compliance, Phase, Budget, Schedule, Tests, Correspondence, and Team show the module name until that module file exists. Ask is a scripted panel. The widget is the log book, a regulation question, and the next phase. A log or a question is filed on Lumen-1 in the same session.
+Missions, Compliance, Phase, Budget, Schedule, Tests, Correspondence, and Team are the real panels. Ask is a scripted panel. The widget is the log book, a regulation question, and the next phase. A log or a question is filed on Lumen-1 in the same session.
 
 `npm run build` typechecks and writes `web/dist`.

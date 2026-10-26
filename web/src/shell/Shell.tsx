@@ -1,10 +1,16 @@
 import { useEffect } from "react";
+import { BudgetModule } from "../modules/budget/BudgetModule";
+import { ComplianceModule } from "../modules/compliance/ComplianceModule";
+import { CorrespondenceModule } from "../modules/correspondence/CorrespondenceModule";
 import { MissionsModule } from "../modules/missions/MissionsModule";
+import { PhaseModule } from "../modules/phase/PhaseModule";
+import { ScheduleModule } from "../modules/schedule/ScheduleModule";
+import { TeamModule } from "../modules/team/TeamModule";
+import { TestsModule } from "../modules/tests/TestsModule";
 import { desktopBridge } from "../platform/desktop";
 import type { ModuleId } from "../platform/locale";
 import { useSession } from "../platform/session";
 import { Icon } from "./icons";
-import { ModuleHost } from "./ModuleHost";
 import { moduleLabel, modules } from "./modules";
 
 const chrome = {
@@ -111,9 +117,20 @@ export function Shell() {
             ))}
           </div>
         </aside>
-        <main className="stage">
-          <h1>{moduleLabel(moduleView, locale)}</h1>
-          {moduleView === "missions" ? <MissionsModule locale={locale} /> : <ModuleHost id={moduleView} locale={locale} />}
+        <main className={moduleView === "missions" ? "stage" : "stage stage-hosted"}>
+          {moduleView === "missions" ? (
+            <>
+              <h1>{moduleLabel(moduleView, locale)}</h1>
+              <MissionsModule locale={locale} />
+            </>
+          ) : null}
+          {moduleView === "compliance" ? <ComplianceModule locale={locale} /> : null}
+          {moduleView === "phase" ? <PhaseModule locale={locale} /> : null}
+          {moduleView === "budget" ? <BudgetModule locale={locale} /> : null}
+          {moduleView === "schedule" ? <ScheduleModule locale={locale} /> : null}
+          {moduleView === "tests" ? <TestsModule locale={locale} /> : null}
+          {moduleView === "correspondence" ? <CorrespondenceModule locale={locale} /> : null}
+          {moduleView === "team" ? <TeamModule locale={locale} /> : null}
         </main>
       </div>
     </div>

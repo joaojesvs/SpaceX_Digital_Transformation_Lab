@@ -1,0 +1,252 @@
+.astraea-phase {
+  --ap-ink: #f3f0e8;
+  --ap-body: #e4dfd6;
+  --ap-muted: #a39d93;
+  --ap-faint: #7d776e;
+  --ap-gold: #e4c48a;
+  --ap-card: #1b1d25;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  padding: 24px 28px 40px;
+  color: var(--ap-ink);
+  background: #101114;
+  color-scheme: dark;
+  font-family: Inter, "Segoe UI", sans-serif;
+  font-size: 15.5px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  scrollbar-color: rgba(243, 240, 232, 0.28) transparent;
+}
+
+.astraea-phase *,
+.astraea-phase *::before,
+.astraea-phase *::after {
+  box-sizing: border-box;
+}
+
+.astraea-phase h1,
+.astraea-phase h2,
+.astraea-phase h3,
+.astraea-phase p,
+.astraea-phase ol {
+  margin: 0;
+}
+
+.astraea-phase h1,
+.astraea-phase h2,
+.astraea-phase h3 {
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.ap-kicker {
+  color: var(--ap-gold);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ap-title {
+  margin-top: 8px;
+  font-size: 32px;
+  line-height: 1.12;
+}
+
+.ap-lede,
+.ap-note {
+  max-width: 46rem;
+  color: var(--ap-muted);
+}
+
+.ap-lede {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.ap-note {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.ap-ask {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.ap-ask-card {
+  padding: 18px 20px 20px;
+  border-radius: 18px;
+  background: var(--ap-card);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 16px 36px rgba(0, 0, 0, 0.22);
+}
+
+.ap-ask-now {
+  box-shadow:
+    inset 2px 0 0 rgba(228, 196, 138, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 16px 36px rgba(0, 0, 0, 0.22);
+}
+
+.ap-ask-next {
+  box-shadow:
+    inset 2px 0 0 rgba(243, 240, 232, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 16px 36px rgba(0, 0, 0, 0.22);
+}
+
+.ap-eyebrow {
+  color: var(--ap-faint);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ap-ask-now .ap-eyebrow {
+  color: var(--ap-gold);
+}
+
+.ap-ask-card h2 {
+  margin-top: 8px;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.ap-ask-card p {
+  max-width: 62ch;
+  margin-top: 10px;
+  color: var(--ap-body);
+  font-size: 14.5px;
+}
+
+.ap-order {
+  margin: 26px 0 10px;
+  color: var(--ap-faint);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ap-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  list-style: none;
+  border-radius: 20px;
+  background: #181a21;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 16px 36px rgba(0, 0, 0, 0.2);
+}
+
+.ap-step {
+  display: grid;
+  grid-template-columns: 28px 52px minmax(0, 1fr) auto;
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: center;
+  padding: 9px 12px;
+  border-radius: 14px;
+}
+
+.ap-index,
+.ap-code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 12.5px;
+}
+
+.ap-index {
+  color: var(--ap-faint);
+}
+
+.ap-code {
+  color: #d4cdc2;
+  font-weight: 500;
+}
+
+.ap-name {
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.ap-gloss {
+  grid-column: 3;
+  color: var(--ap-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ap-state {
+  grid-column: 4;
+  grid-row: 1 / span 2;
+  align-self: center;
+  color: var(--ap-faint);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.ap-step-now {
+  background: rgba(228, 196, 138, 0.12);
+}
+
+.ap-step-now .ap-code,
+.ap-step-now .ap-state {
+  color: var(--ap-gold);
+}
+
+.ap-step-next {
+  background: rgba(243, 240, 232, 0.04);
+}
+
+.ap-step-next .ap-state {
+  color: var(--ap-ink);
+}
+
+@media (max-width: 800px) {
+  .ap-ask {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .astraea-phase {
+    padding: 16px 16px 28px;
+  }
+
+  .ap-title {
+    font-size: 28px;
+  }
+
+  .ap-step {
+    grid-template-columns: 28px 48px minmax(0, 1fr);
+  }
+
+  .ap-state {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .ap-name {
+    grid-column: 2 / 4;
+    grid-row: 2;
+  }
+
+  .ap-gloss {
+    grid-column: 2 / 4;
+    grid-row: 3;
+  }
+}

@@ -120,7 +120,8 @@ dd { margin: 0; font-variant-numeric: tabular-nums; }
 .icon { width: 16px; height: 16px; }
 
 .stage { overflow: auto; padding: 18px 20px 28px; }
-.stage h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.03em; }
+.stage-hosted { display: flex; min-height: 0; padding: 0; overflow: hidden; }
+.stage > h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.03em; }
 .lede { color: var(--muted); margin-top: 6px; }
 .stack { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
 .card {
