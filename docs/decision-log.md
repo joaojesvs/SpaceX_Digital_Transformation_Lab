@@ -78,6 +78,10 @@ The corpus is wider than the slice above. It includes older E-branch issues and 
 
 ## Changes
 
+### 26 Oct 2026 — stage screen on main
+
+Second Reader stage screen pushed to `main` at `a5cbaba0e04c192696d213e78bc832fbc09caf8b`. Soft one-column layout. Run review reads the loaded baseline and opened clause cards, no model and no network, and ends on three agreed findings and the FMEA dispute.
+
 ### 26 Oct 2026 — stage run
 
 João asked for an agent he can show on stage. Second Reader will gain a Run review control. The run reads the Lumen-1 files and the opened clause cards in code, shows each step, and finishes on the same four findings. No model and no network. F-04 stays in dispute. The rideshare guide stays uncited.
