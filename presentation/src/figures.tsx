@@ -126,7 +126,7 @@ function GrokUse({ lang }: { lang: Lang }) {
         ]
       : [
           ["Grokbot", "A pergunta"],
-          ["API da xAI", "A chamada"],
+          ["xAI API", "A chamada"],
           ["Chave", "Nunca aparece"],
         ];
   return (

@@ -65,7 +65,7 @@ export const scenes: Scene[] = [
     layout: "poster",
     figure: "grok",
     eyebrow: { en: "Grokbot", pt: "Grokbot" },
-    title: { en: "Asked through the xAI API.", pt: "Perguntado pela API da xAI." },
+    title: { en: "Grokbot, through the xAI API.", pt: "Grokbot, pela API da xAI." },
     detail: { en: "The key is never shown.", pt: "A chave nunca aparece." },
   },
   {
