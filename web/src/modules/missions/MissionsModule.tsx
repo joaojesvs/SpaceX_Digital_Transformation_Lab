@@ -19,7 +19,43 @@ const copy = {
   halcyon: { en: "Hosted S-band beacon", pt: "Baliza em banda S alojada" },
   cinder: { en: "12U thermal pathfinder", pt: "Demonstrador térmico 12U" },
   notOpen: { en: "Not the open record", pt: "Não é o registo aberto" },
+  budgetLeft: { en: "Budget left", pt: "Orçamento restante" },
+  budget: { en: "Budget", pt: "Orçamento" },
+  deadline: { en: "Next deadline", pt: "Próximo prazo" },
+  phase: { en: "Phase", pt: "Fase" },
+  current: { en: "Current phase", pt: "Fase atual" },
+  undated: { en: "The next gate is not dated.", pt: "O próximo marco não tem data." },
 };
+
+const cards = {
+  lumen: {
+    budgetLabel: "budgetLeft" as const,
+    budget: "€1,300,000",
+    budgetNote: { en: "Left · Demo", pt: "Restante · Demonstração" },
+    time: { en: "8 weeks", pt: "8 semanas" },
+    timeNote: { en: "CDR · 21 Dec 2026", pt: "CDR · 21 dez 2026" },
+    timeLine: false,
+    phase: "PDR",
+  },
+  halcyon: {
+    budgetLabel: "budget" as const,
+    budget: "€0.86M",
+    budgetNote: { en: "Demo", pt: "Demonstração" },
+    time: copy.undated,
+    timeNote: { en: "SRR", pt: "SRR" },
+    timeLine: true,
+    phase: "SRR",
+  },
+  cinder: {
+    budgetLabel: "budget" as const,
+    budget: "€1.15M",
+    budgetNote: { en: "Demo", pt: "Demonstração" },
+    time: copy.undated,
+    timeNote: { en: "MDR", pt: "MDR" },
+    timeLine: true,
+    phase: "MDR",
+  },
+} as const;
 
 function useCount(target: number, reduced: boolean) {
   const [value, setValue] = useState(reduced ? target : 0);
@@ -59,19 +95,26 @@ export function MissionsModule({ locale }: { locale: Locale }) {
   const agreed = useCount(3, reduced);
   const dispute = useCount(1, reduced);
   const [selected, setSelected] = useState<RecordId>("lumen");
+  const card = cards[selected];
+  const phaseNow = card.phase;
 
   return (
     <div className="bento">
-      <div className="stat-row compact">
-        <motion.article className="stat-card" whileHover={lift(reduced)}>
-          <p className="stat-label">{copy.findings[locale]}</p>
-          <p className="stat-split">
-            <span className="stat-value">{agreed}</span>
-            <span className="stat-unit">{copy.agreed[locale]}</span>
-            <span className="stat-value is-gold">{dispute}</span>
-            <span className="stat-unit is-gold">{copy.dispute[locale]}</span>
-          </p>
-          <p className="stat-note">{copy.demo[locale]}</p>
+      <div className="stat-row trio">
+        <motion.article key={`${selected}-budget`} className="stat-card" whileHover={lift(reduced)} initial={reduced ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
+          <p className="stat-label">{copy[card.budgetLabel][locale]}</p>
+          <p className="stat-value">{card.budget}</p>
+          <p className="stat-note">{card.budgetNote[locale]}</p>
+        </motion.article>
+        <motion.article key={`${selected}-time`} className="stat-card" whileHover={lift(reduced)} initial={reduced ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
+          <p className="stat-label">{copy.deadline[locale]}</p>
+          <p className={card.timeLine ? "stat-value is-line" : "stat-value"}>{card.time[locale]}</p>
+          <p className="stat-note">{card.timeLine ? copy.demo[locale] : card.timeNote[locale]}</p>
+        </motion.article>
+        <motion.article key={`${selected}-phase`} className="stat-card" whileHover={lift(reduced)} initial={reduced ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
+          <p className="stat-label">{copy.phase[locale]}</p>
+          <p className="stat-value is-gold">{card.phase}</p>
+          <p className="stat-note">{copy.current[locale]}</p>
         </motion.article>
       </div>
 
@@ -82,9 +125,9 @@ export function MissionsModule({ locale }: { locale: Locale }) {
         </header>
         <ol className="gates">
           {GATES.map((gate, index) => {
-            const state = gate === "PDR" ? "now" : index < 4 ? "done" : "later";
+            const state = gate === phaseNow ? "now" : selected === "lumen" && index < 4 ? "done" : "later";
             return (
-              <li key={gate} className={`is-${state}`} aria-current={gate === "PDR" ? "step" : undefined}>
+              <li key={gate} className={`is-${state}`} aria-current={gate === phaseNow ? "step" : undefined}>
                 <span className={state === "now" ? "gate-now" : `gate-dot is-${state}`} />
                 <span className="gate-code">{gate}</span>
               </li>

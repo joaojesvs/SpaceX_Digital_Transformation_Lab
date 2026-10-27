@@ -252,6 +252,59 @@
 .money-bar > div:first-child { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 6px; font-size: 13px; }
 .money-track { height: 8px; border-radius: 99px; background: rgba(246, 241, 232, 0.08); overflow: hidden; }
 .money-track span { display: block; height: 100%; border-radius: inherit; background: var(--gold); }
+.money-screen { flex: 1; min-height: 0; overflow: auto; }
+.money-detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(246, 241, 232, 0.1);
+  background: rgba(246, 241, 232, 0.04);
+}
+.money-detail-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.money-detail-head h2 { font-family: var(--sans); font-size: 16px; font-weight: 600; }
+.money-detail-head span {
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.money-same { color: var(--muted); font-size: 13px; }
+.money-objs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.money-objs li {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  gap: 4px 8px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(14, 13, 11, 0.35);
+}
+.money-objs i { width: 10px; height: 10px; border-radius: 99px; grid-row: span 3; }
+.money-objs span { font-size: 13px; font-weight: 600; }
+.money-objs em { color: var(--muted); font-style: normal; font-size: 12px; }
+.money-objs b { font-family: var(--mono); font-weight: 500; font-size: 12px; }
+.money-sums {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: auto 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(246, 241, 232, 0.1);
+}
+.money-sums div { display: flex; flex-direction: column; gap: 4px; }
+.money-sums dt { color: var(--muted); font-size: 12px; }
+.money-sums dd { margin: 0; font-family: var(--mono); font-size: 14px; }
 
 .cal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 16px; align-items: start; }
 .cal-main, .cal-side {
@@ -445,17 +498,21 @@
 .mail-read p { max-width: 58ch; line-height: 1.5; }
 .mail-read p + p { margin-top: 10px; }
 
-.crew-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.crew-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: start; }
 .crew-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+  width: 100%;
   padding: 16px;
   border-radius: 22px;
   border: 1px solid rgba(246, 241, 232, 0.1);
   background: rgba(246, 241, 232, 0.03);
+  color: inherit;
+  text-align: left;
 }
+.crew-card.is-open { border-color: rgba(228, 177, 90, 0.55); background: rgba(228, 177, 90, 0.06); }
 .crew-card img {
   width: 112px;
   height: 112px;
@@ -465,7 +522,7 @@
 }
 .crew-role { font-size: 16px; font-weight: 600; }
 .crew-line { color: var(--muted); font-size: 13px; line-height: 1.4; min-height: 2.8em; }
-.crew-card span {
+.crew-flag {
   margin-top: auto;
   color: var(--gold);
   font-family: var(--mono);
@@ -473,6 +530,19 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+.crew-more { display: grid; gap: 12px; width: 100%; overflow: hidden; }
+.crew-more h3 {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.crew-more p { color: var(--ink); font-size: 13px; line-height: 1.4; }
+.crew-meta { margin: 6px 0 0; display: grid; gap: 6px; }
+.crew-meta div { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 8px; }
+.crew-meta dt { color: var(--muted); font-size: 11px; }
+.crew-meta dd { margin: 0; font-size: 12px; }
 
 .bp-layout { display: grid; grid-template-columns: 168px minmax(0, 1fr) 250px; gap: 14px; align-items: stretch; }
 .bp-picker { display: grid; gap: 8px; align-content: start; }
@@ -530,14 +600,15 @@
 }
 .bp-stamp { color: var(--gold); }
 .bp-warn { color: var(--muted); margin-top: 4px; letter-spacing: 0.04em; text-transform: none; }
-.bp-split { position: relative; z-index: 1; display: grid; grid-template-columns: 180px 1fr; gap: 12px; margin-top: 18px; align-items: center; }
+.bp-split { position: relative; z-index: 1; display: grid; grid-template-columns: 240px 1fr; gap: 12px; margin-top: 18px; align-items: center; }
 .bp-flat {
   padding: 12px;
   border-radius: 16px;
   background: rgba(14, 13, 11, 0.45);
 }
 .bp-flat span { font-family: var(--mono); font-size: 11px; color: var(--gold); }
-.bp-flat svg { height: 120px; }
+.bp-flat svg { height: 210px; }
+.bp-picker svg .dim, .bp-flat svg .dim { stroke-dasharray: 2 3; opacity: 0.65; }
 .bp-view {
   position: relative;
   height: 320px;
@@ -560,6 +631,28 @@
   background: linear-gradient(160deg, rgba(228, 177, 90, 0.2), rgba(23, 22, 20, 0.92) 45%);
   box-shadow: inset 0 0 0 8px rgba(14, 13, 11, 0.35);
 }
+.bp-rotor i b,
+.bp-rotor i s {
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid rgba(228, 177, 90, 0.8);
+}
+.bp-rotor.is-camera .front b { width: 34%; height: 24%; left: 33%; top: 38%; border-radius: 50%; }
+.bp-rotor.is-camera .front s { left: 18%; right: 18%; top: 22%; height: 0; border-width: 1px 0 0; }
+.bp-rotor.is-camera .left b,
+.bp-rotor.is-camera .right b { left: 16%; right: 16%; top: 18%; bottom: 18%; border-left: 0; border-right: 0; }
+.bp-rotor.is-camera .back b,
+.bp-rotor.is-camera .top b,
+.bp-rotor.is-camera .bottom b { inset: 22%; }
+.bp-rotor.is-optic i b { inset: 22% 18%; border-radius: 50%; }
+.bp-rotor.is-optic i s { left: 10%; right: 10%; top: 50%; height: 0; border-width: 1px 0 0; }
+.bp-rotor.is-detector .front b { inset: 24% 20%; }
+.bp-rotor.is-detector .front s { inset: 36% 32%; }
+.bp-rotor.is-detector .left b,
+.bp-rotor.is-detector .right b,
+.bp-rotor.is-detector .back b { inset: 20%; }
+.bp-rotor.is-baffle i b { inset: 18%; border-radius: 50%; }
+.bp-rotor.is-baffle i s { inset: 34%; border-radius: 50%; }
 .bp-rotor .front { transform: translateZ(46px); }
 .bp-rotor .back { transform: rotateY(180deg) translateZ(46px); }
 .bp-rotor .left { width: 92px; transform: rotateY(-90deg) translateZ(46px); }
@@ -575,8 +668,8 @@
 .bp-hot {
   position: absolute;
   z-index: 2;
-  left: calc(18% + var(--hot) * 46%);
-  top: calc(22% + var(--hot) * 38%);
+  left: 18%;
+  top: 22%;
   display: flex;
   align-items: center;
   justify-content: center;

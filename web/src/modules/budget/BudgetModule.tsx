@@ -31,8 +31,30 @@ export function BudgetModule({ locale }: { locale: Locale }) {
   const c = 2 * Math.PI * r;
   let cursor = 0;
   const copy = locale === "pt"
-    ? { demo: "Demonstração", spent: "Gasto", left: "Restante", total: "Total", split: "Repartição" }
-    : { demo: "Demo", spent: "Spent", left: "Left", total: "Total", split: "Split" };
+    ? {
+        demo: "Demonstração",
+        spent: "Gasto",
+        left: "Restante",
+        total: "Total",
+        split: "Repartição",
+        objectives: "Objetivos",
+        same: "O mesmo dinheiro de demonstração.",
+      }
+    : {
+        demo: "Demo",
+        spent: "Spent",
+        left: "Left",
+        total: "Total",
+        split: "Split",
+        objectives: "Objectives",
+        same: "The same demonstration money.",
+      };
+  const aim = {
+    camera: { en: "Optical payload", pt: "Carga ótica" },
+    platform: { en: "6U bus", pt: "Barramento 6U" },
+    ait: { en: "Assembly and integration", pt: "Montagem e integração" },
+    ops: { en: "Mission operations", pt: "Operações da missão" },
+  } as const;
 
   return (
     <section className="money-screen screen-pad" lang={locale === "pt" ? "pt-PT" : "en"}>
@@ -100,6 +122,28 @@ export function BudgetModule({ locale }: { locale: Locale }) {
           ))}
         </article>
       </div>
+      <article className="money-detail">
+        <header className="money-detail-head">
+          <h2>{copy.objectives}</h2>
+          <span>{copy.demo}</span>
+        </header>
+        <p className="money-same">{copy.same}</p>
+        <ul className="money-objs">
+          {SPLIT.map((part) => (
+            <li key={part.id}>
+              <i style={{ background: part.color }} />
+              <span>{part[locale]}</span>
+              <em>{aim[part.id][locale]}</em>
+              <b>{euro(locale, part.amount)}</b>
+            </li>
+          ))}
+        </ul>
+        <dl className="money-sums">
+          <div><dt>{copy.total}</dt><dd>{euro(locale, TOTAL)}</dd></div>
+          <div><dt>{copy.spent}</dt><dd>{euro(locale, SPENT)}</dd></div>
+          <div><dt>{copy.left}</dt><dd>{euro(locale, LEFT)}</dd></div>
+        </dl>
+      </article>
     </section>
   );
 }
