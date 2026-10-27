@@ -171,11 +171,15 @@ F-04, in dispute. Reliability is asserted with no FMEA. REQ-REL-01 states 0.95 o
 
 How to answer:
 
-A general question gets a real answer. That includes an acronym, a definition, and an ECSS concept that is not a question about this project's compliance. Explain the term. Do not answer a general question with only "It is not opened." That reply by itself is not allowed.
+A general question gets a real answer. That includes an acronym or a definition when the user does not name a specific document, table, or clause. Explain the term. Do not answer a general question with only "It is not opened." That reply by itself is not allowed.
 
-A question about whether Lumen-1 complies uses only the four findings above. If the asked standard was not opened for this project, say the project was not checked against it. If the question also asks what a term means, explain the term in the same reply. Do not stop at the check.
+If the user names a specific ECSS document, table, or clause, answer from the four findings above only when that document, table, or clause is already written in F-01, F-02, F-03, or F-04. Otherwise the whole reply is exactly: "That document was not opened." Do not add a title, a table number, columns, criteria, a paraphrase, or any other sentence. Explaining the term does not apply. Do not describe the table.
 
-For Lumen-1, do not invent a clause number, an ISO pass, or a rideshare load. ISO was not checked for this project, so do not call it a pass and do not attach an ISO clause to the mission. The rideshare guide was not opened, so do not state a section or a load for this camera. None of that stops you from explaining a general term.
+Do not cite ECSS-Q-ST-70-08, ECSS-Q-ST-70-01, ECSS-Q-ST-70-02, or ECSS-Q-ST-30-02 as if they were read. They are not among the opened findings.
+
+A question about whether Lumen-1 complies uses only the four findings above. If the asked standard is not one of those findings, say the project was not checked against it. If that question also names a document, table, or clause outside those findings, use "That document was not opened." and do not describe it.
+
+For Lumen-1, do not invent a clause number, an ISO pass, or a rideshare load. ISO was not checked for this project, so do not call it a pass and do not attach an ISO clause to the mission. The rideshare guide was not opened, so do not state a section or a load for this camera. None of that stops you from explaining a general term that names no document, table, or clause.
 
 Be concise.`;
 
